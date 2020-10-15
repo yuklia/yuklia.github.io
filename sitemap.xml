@@ -3,27 +3,17 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://yuklia.github.io/posts/first-post/</loc>
-    <lastmod>2020-10-15T12:54:07+03:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://yuklia.github.io/posts/</loc>
-    <lastmod>2020-10-15T12:54:07+03:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://yuklia.github.io/</loc>
-    <lastmod>2020-10-15T12:54:07+03:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://yuklia.github.io/tags/docker/</loc>
     <lastmod>2020-10-14T18:56:57+03:00</lastmod>
   </url>
   
   <url>
     <loc>https://yuklia.github.io/tags/php/</loc>
+    <lastmod>2020-10-14T18:56:57+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://yuklia.github.io/posts/</loc>
     <lastmod>2020-10-14T18:56:57+03:00</lastmod>
   </url>
   
@@ -39,6 +29,11 @@
   
   <url>
     <loc>https://yuklia.github.io/posts/php/xdebug-macos/</loc>
+    <lastmod>2020-10-14T18:56:57+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://yuklia.github.io/</loc>
     <lastmod>2020-10-14T18:56:57+03:00</lastmod>
   </url>
   

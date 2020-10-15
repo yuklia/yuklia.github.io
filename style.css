@@ -1,0 +1,15 @@
+.iq {
+  border-radius: 50%;
+}
+
+.post-meta {
+  display: flex;
+}
+
+.post-min-read {
+
+}
+
+.iq, .post-author, .post-date {
+  margin-right: 12px;
+}

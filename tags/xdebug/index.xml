@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>xdebug on Yulia Kostrikova - Tech blog</title>
+    <link>https://yuklia.github.io/tags/xdebug/</link>
+    <description>Recent content in xdebug on Yulia Kostrikova - Tech blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 14 Oct 2020 18:56:57 +0300</lastBuildDate><atom:link href="https://yuklia.github.io/tags/xdebug/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>XDebug for PHP docker container on macOS</title>
+      <link>https://yuklia.github.io/posts/php/xdebug-macos/</link>
+      <pubDate>Wed, 14 Oct 2020 18:56:57 +0300</pubDate>
+      
+      <guid>https://yuklia.github.io/posts/php/xdebug-macos/</guid>
+      <description>Into 💆 Pre-conditions: macOS Sierra Docker CE Version 17.06.2-ce-mac27 PHP 7.1.8 XDebug v2.5.0 PhpStorm 2017.2 If you want to set up remote debug from your container you have 2 options:
+ xdebug.remote_host = %host_ip% %host_ip% — The IP of the machine running your IDE. It’s assumed on the same host as Docker. xdebug.remote_connect_back = on checks $_SERVER[‘HTTP_X_FORWARDED_FOR’] and $_SERVER[‘REMOTE_ADDR’] variables to find out which IP address to use.  You cannot use xdebug.</description>
+    </item>
+    
+  </channel>
+</rss>

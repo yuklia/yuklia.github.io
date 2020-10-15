@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+    <title>XDebug for PHP docker container on macOS :: Yulia Kostrikova - Tech blog</title>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Into 💆 Pre-conditions: macOS Sierra Docker CE Version 17.06.2-ce-mac27 PHP 7.1.8 XDebug v2.5.0 PhpStorm 2017.2 If you want to set up remote debug from your container you have 2 options:
+ xdebug.remote_host = %host_ip% %host_ip% — The IP of the machine running your IDE. It’s assumed on the same host as Docker. xdebug.remote_connect_back = on checks $_SERVER[‘HTTP_X_FORWARDED_FOR’] and $_SERVER[‘REMOTE_ADDR’] variables to find out which IP address to use.  You cannot use xdebug." />
+<meta name="keywords" content=", " />
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="https://yuklia.github.io/posts/php/xdebug-macos/" />
+
+
+
+
+<link rel="stylesheet" href="https://yuklia.github.io/assets/style.css">
+
+  <link rel="stylesheet" href="https://yuklia.github.io/assets/green.css">
+
+
+
+<link rel="stylesheet" href="https://yuklia.github.io/style.css">
+
+
+<link rel="apple-touch-icon" href="https://yuklia.github.io/img/apple-touch-icon-192x192.png">
+
+  <link rel="shortcut icon" href="https://yuklia.github.io/img/favicon/green.png">
+
+
+
+<meta name="twitter:card" content="summary" />
+
+
+
+<meta property="og:locale" content="en" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="XDebug for PHP docker container on macOS">
+<meta property="og:description" content="How to guide: Configure remote debugging with XDebug for php docker container on macOS" />
+<meta property="og:url" content="https://yuklia.github.io/posts/php/xdebug-macos/" />
+<meta property="og:site_name" content="Yulia Kostrikova - Tech blog" />
+
+  <meta property="og:image" content="https://yuklia.github.io/php/xdebug.gif">
+
+<meta property="og:image:width" content="2048">
+<meta property="og:image:height" content="1024">
+
+
+  <meta property="article:published_time" content="2020-10-14 18:56:57 &#43;0300 EEST" />
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+<body class="green">
+
+
+<div class="container center headings--one-size">
+
+  <header class="header">
+  <div class="header__inner">
+    <div class="header__logo">
+      <a href="/">
+  <div class="logo">
+    Yulia Kostrikova | Tech blog
+  </div>
+</a>
+
+    </div>
+    <div class="menu-trigger">menu</div>
+  </div>
+  
+    <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="https://app.codesignal.com/profile/yulia_k2">CodeSignal</a></li>
+        
+      
+        
+          <li><a href="https://github.com/yuklia">Github</a></li>
+        
+      
+        
+          <li><a href="https://www.linkedin.com/in/yulia-kostrikova-67268585/">Linkedin</a></li>
+        
+      
+        
+          <li><a href="https://stackoverflow.com/users/2207007/yuklia">StackOverflow</a></li>
+        
+      
+      
+    
+
+    
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="https://app.codesignal.com/profile/yulia_k2">CodeSignal</a></li>
+      
+    
+      
+        <li><a href="https://github.com/yuklia">Github</a></li>
+      
+    
+      
+        <li><a href="https://www.linkedin.com/in/yulia-kostrikova-67268585/">Linkedin</a></li>
+      
+    
+      
+        <li><a href="https://stackoverflow.com/users/2207007/yuklia">StackOverflow</a></li>
+      
+    
+    
+  </ul>
+</nav>
+
+  
+</header>
+
+
+  <div class="content">
+    
+<div class="post">
+  <h1 class="post-title">
+    <a href="https://yuklia.github.io/posts/php/xdebug-macos/">XDebug for PHP docker container on macOS</a></h1>
+  <div class="post-meta">
+    <a>
+      <img class="iq" src="/me/micro-me.png" width="27" height="28"/>
+    </a>
+    
+    <span class="post-author">Yulia Kostrikova</span>
+    
+    
+    <span class="post-date">
+      Oct 14, 2020 
+    </span>
+    
+    <span class="post-min-read">
+      <span>·</span>
+      2 min 👁️
+    </span>
+  </div>
+
+  
+  <span class="post-tags">
+    
+    #<a href="https://yuklia.github.io/tags/php/">php</a>&nbsp;
+    
+    #<a href="https://yuklia.github.io/tags/xdebug/">xdebug</a>&nbsp;
+    
+    #<a href="https://yuklia.github.io/tags/docker/">docker</a>&nbsp;
+    
+  </span>
+  
+
+  
+    <img src="https://yuklia.github.io/php/xdebug.gif" class="post-cover" alt="XDebug for PHP docker container on macOS" />
+  
+
+  
+
+  <div class="post-content"><div>
+        <h3 id="into-">Into 💆<a href="#into-" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h3>
+<pre><code>Pre-conditions:
+  macOS Sierra
+  Docker CE Version 17.06.2-ce-mac27
+  PHP 7.1.8
+  XDebug v2.5.0
+  PhpStorm 2017.2
+</code></pre><p>If you want to set up remote debug from your container you have 2 options:</p>
+<ol>
+<li><code>xdebug.remote_host = %host_ip%</code> <code>%host_ip%</code> — The IP of the machine running your IDE. It’s assumed on the same host as Docker.</li>
+<li><code>xdebug.remote_connect_back = on</code> checks <code>$_SERVER[‘HTTP_X_FORWARDED_FOR’] and $_SERVER[‘REMOTE_ADDR’]</code> variables to find out which IP address to use.</li>
+</ol>
+<p>You cannot use <code>xdebug.remote_connect_back</code> because it takes containers’s internal IP. So <code>xdebug.remote_host</code> is the only option we have.
+It’s pretty simple to get host IP on Linux OS just look at : <code>ifconfig &gt; docker0</code>. Moreover you can create a fixed set of IPs for both host and containers using docker network. For instance:</p>
+<pre><code>docker network create -d bridge \
+— subnet 192.168.0.0/24 \
+— gateway 192.168.0.1 \
+dockernet
+</code></pre><p>Now each container can connect to the host under the fixed IP <code>192.168.0.1</code>
+But the <code>docker0 interface</code> is not available for Docker in macOS. This interface is actually within HyperKit. So unfortunately there is no a reliable way of looping back to host for macOS. The only solution is to create your local IP’s alias to something else : sudo ifconfig lo0 alias <code>10.254.254.254</code></p>
+<h3 id="howto-guide-">HowTo guide 👩‍💻<a href="#howto-guide-" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h3>
+<ol>
+<li><code>sudo ifconfig lo0 alias 10.254.254.254</code></li>
+</ol>
+<p>(optional) For permanent setting up save.plist file
+<code>sudo curl -o /Library/LaunchDaemons/com.yuklia.docker_localhost_alias.plist</code>
+<script type="application/javascript" src="https://gist.github.com/yuklia/378a7350f8a2456e9513154b962c7cb0.js"></script>
+</p>
+<ol start="2">
+<li>build docker containers &hellip;</li>
+<li>add server to IDE
+
+  <figure class="left" >
+    <img src="/php/storm1.png"   />
+    
+  </figure>
+
+</li>
+<li>configure Debug’s port in my case it’s <code>9002</code>. xDebug client will knock to this port.
+
+  <figure class="left" >
+    <img src="/php/storm2.png"   />
+    
+  </figure>
+
+</li>
+<li>configure DBGp Proxy
+
+  <figure class="left" >
+    <img src="/php/storm3.png"   />
+    
+  </figure>
+
+</li>
+</ol>
+<h2 id="bonus-">Bonus 🍰<a href="#bonus-" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<p>If you need to get a shell of the VM that was created by HyperKit run:</p>
+<pre><code>screen ~/Library/Containers/com.docker.docker/Data/com.docker.driver.amd64-linux/tty
+or
+screen ~/Library/Containers/com.docker.docker/Data/vms/0/tty
+For getting all screens run: screen -ls
+For exiting screen run : screen -X -S %screen_name% kill
+</code></pre><p>Once you get the tty running you can navigate to <code>/var/lib/docker</code>:
+
+  <figure class="left" >
+    <img src="/php/storm4.png"   />
+    
+  </figure>
+
+</p>
+<p>Here is my Dockerfile and docker-compose versions for <code>php:7-fpm with XDebug</code>
+<script type="application/javascript" src="https://gist.github.com/yuklia/e495b0dffee21f1d0f0dbcf250a6eb35.js"></script>
+
+<script type="application/javascript" src="https://gist.github.com/yuklia/bc8f49a06ab4892ca1373f6be7f97158.js"></script>
+</p>
+<p>So that’s all for now 😊. Hope it will save a bunch of time for someone! I will be glad to get comments and questions. Happy hacking=) 🦾</p>
+
+      </div></div>
+
+  
+  
+  
+
+  
+
+</div>
+
+  </div>
+
+  
+    <footer class="footer">
+  <div class="footer__inner">
+    
+      <div class="copyright">
+        <span>© 2020 Powered by <a href="http://gohugo.io">Hugo</a></span>
+    
+        <span>:: Theme made by <a href="https://twitter.com/panr">panr</a></span>
+      </div>
+  </div>
+</footer>
+
+<script src="https://yuklia.github.io/assets/main.js"></script>
+<script src="https://yuklia.github.io/assets/prism.js"></script>
+
+
+
+
+
+
+
+  
+</div>
+
+</body>
+</html>

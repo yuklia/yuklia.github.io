@@ -198,9 +198,9 @@ Traefik v2.x comes to us with <a href="https://doc.traefik.io/traefik/middleware
 <p>Lett&rsquo;s assume:</p>
 <ul>
 <li>traefik dasboard domain: traefik-board.com</li>
-<li>your app: my-app.com
-<em>0001.</em> Add labels to traefik. Important here <code>traefik.http.routers.traefik.middlewares=maintenance-page@docker</code>. If you try to look for <a href="https://service-does-not-exists.com">https://service-does-not-exists.com</a> you will get friendly error page.</li>
+<li>your app: my-app.com</li>
 </ul>
+<p><em>0001.</em> Add labels to traefik. Important here <code>traefik.http.routers.traefik.middlewares=maintenance-page@docker</code>. If you try to look for <a href="https://service-does-not-exists.com">https://service-does-not-exists.com</a> you will get friendly error page.</p>
 <pre><code>  traefik:
     deploy:
       labels:

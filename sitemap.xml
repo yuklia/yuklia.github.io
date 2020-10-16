@@ -3,38 +3,58 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://yuklia.github.io/tags/docker/</loc>
-    <lastmod>2020-10-14T18:56:57+03:00</lastmod>
+    <loc>https://yuklia.github.io/tags/cloud/</loc>
+    <lastmod>2020-10-16T18:02:25+03:00</lastmod>
   </url>
   
   <url>
-    <loc>https://yuklia.github.io/tags/php/</loc>
-    <lastmod>2020-10-14T18:56:57+03:00</lastmod>
+    <loc>https://yuklia.github.io/posts/cloud/traefik-error-page/</loc>
+    <lastmod>2020-10-16T18:02:25+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://yuklia.github.io/tags/docker/</loc>
+    <lastmod>2020-10-16T18:02:25+03:00</lastmod>
   </url>
   
   <url>
     <loc>https://yuklia.github.io/posts/</loc>
-    <lastmod>2020-10-14T18:56:57+03:00</lastmod>
+    <lastmod>2020-10-16T18:02:25+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://yuklia.github.io/tags/swarm/</loc>
+    <lastmod>2020-10-16T18:02:25+03:00</lastmod>
   </url>
   
   <url>
     <loc>https://yuklia.github.io/tags/</loc>
-    <lastmod>2020-10-14T18:56:57+03:00</lastmod>
+    <lastmod>2020-10-16T18:02:25+03:00</lastmod>
   </url>
   
   <url>
-    <loc>https://yuklia.github.io/tags/xdebug/</loc>
-    <lastmod>2020-10-14T18:56:57+03:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://yuklia.github.io/posts/php/xdebug-macos/</loc>
-    <lastmod>2020-10-14T18:56:57+03:00</lastmod>
+    <loc>https://yuklia.github.io/tags/traefik/</loc>
+    <lastmod>2020-10-16T18:02:25+03:00</lastmod>
   </url>
   
   <url>
     <loc>https://yuklia.github.io/</loc>
-    <lastmod>2020-10-14T18:56:57+03:00</lastmod>
+    <lastmod>2020-10-16T18:02:25+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://yuklia.github.io/tags/php/</loc>
+    <lastmod>2017-08-14T18:56:57+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://yuklia.github.io/tags/xdebug/</loc>
+    <lastmod>2017-08-14T18:56:57+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://yuklia.github.io/posts/php/xdebug-macos/</loc>
+    <lastmod>2017-08-14T18:56:57+03:00</lastmod>
   </url>
   
   <url>

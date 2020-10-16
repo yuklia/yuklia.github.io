@@ -7,20 +7,47 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Yulia Kostrikova © 2020</copyright>
-    <lastBuildDate>Wed, 14 Oct 2020 18:56:57 +0300</lastBuildDate><atom:link href="https://yuklia.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 16 Oct 2020 18:02:25 +0300</lastBuildDate><atom:link href="https://yuklia.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>cloud</title>
+      <link>https://yuklia.github.io/tags/cloud/</link>
+      <pubDate>Fri, 16 Oct 2020 18:02:25 +0300</pubDate>
+      
+      <guid>https://yuklia.github.io/tags/cloud/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>docker</title>
       <link>https://yuklia.github.io/tags/docker/</link>
-      <pubDate>Wed, 14 Oct 2020 18:56:57 +0300</pubDate>
+      <pubDate>Fri, 16 Oct 2020 18:02:25 +0300</pubDate>
       
       <guid>https://yuklia.github.io/tags/docker/</guid>
       <description></description>
     </item>
     
     <item>
+      <title>swarm</title>
+      <link>https://yuklia.github.io/tags/swarm/</link>
+      <pubDate>Fri, 16 Oct 2020 18:02:25 +0300</pubDate>
+      
+      <guid>https://yuklia.github.io/tags/swarm/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>traefik</title>
+      <link>https://yuklia.github.io/tags/traefik/</link>
+      <pubDate>Fri, 16 Oct 2020 18:02:25 +0300</pubDate>
+      
+      <guid>https://yuklia.github.io/tags/traefik/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>php</title>
       <link>https://yuklia.github.io/tags/php/</link>
-      <pubDate>Wed, 14 Oct 2020 18:56:57 +0300</pubDate>
+      <pubDate>Mon, 14 Aug 2017 18:56:57 +0300</pubDate>
       
       <guid>https://yuklia.github.io/tags/php/</guid>
       <description></description>
@@ -29,7 +56,7 @@
     <item>
       <title>xdebug</title>
       <link>https://yuklia.github.io/tags/xdebug/</link>
-      <pubDate>Wed, 14 Oct 2020 18:56:57 +0300</pubDate>
+      <pubDate>Mon, 14 Aug 2017 18:56:57 +0300</pubDate>
       
       <guid>https://yuklia.github.io/tags/xdebug/</guid>
       <description></description>

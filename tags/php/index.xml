@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Yulia Kostrikova © 2020</copyright>
-    <lastBuildDate>Wed, 14 Oct 2020 18:56:57 +0300</lastBuildDate><atom:link href="https://yuklia.github.io/tags/php/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 14 Aug 2017 18:56:57 +0300</lastBuildDate><atom:link href="https://yuklia.github.io/tags/php/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>XDebug for PHP docker container on macOS</title>
       <link>https://yuklia.github.io/posts/php/xdebug-macos/</link>
-      <pubDate>Wed, 14 Oct 2020 18:56:57 +0300</pubDate>
+      <pubDate>Mon, 14 Aug 2017 18:56:57 +0300</pubDate>
       
       <guid>https://yuklia.github.io/posts/php/xdebug-macos/</guid>
       <description>Into 💆 Pre-conditions: macOS Sierra Docker CE Version 17.06.2-ce-mac27 PHP 7.1.8 XDebug v2.5.0 PhpStorm 2017.2 If you want to set up remote debug from your container you have 2 options:

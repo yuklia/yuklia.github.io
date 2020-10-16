@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+    <title>Custom error page in Traefik v2.x. Finally 😻 :: Yulia Kostrikova - Tech blog</title>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="What you will learn today 🦦:  what is Traefik and why I decisively recommend to use it with Docker Swarm how to show custom error page if Traefik returns 404 (service not found)  How I met Traefik 😁 Traefik is a top modern reverse proxy and load balancer. I started to use it from major version 1. At that moment, I already had Docker Swarm cluster, which I began to prepare for production use, and only one thing in the coherent picture has been left: &amp;ldquo;External Load Balancer&amp;rdquo;." />
+<meta name="keywords" content="traefik, cloud, swarm, docker" />
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="https://yuklia.github.io/posts/cloud/traefik-error-page/" />
+
+
+
+
+<link rel="stylesheet" href="https://yuklia.github.io/assets/style.css">
+
+  <link rel="stylesheet" href="https://yuklia.github.io/assets/green.css">
+
+
+
+<link rel="stylesheet" href="https://yuklia.github.io/style.css">
+
+
+<link rel="apple-touch-icon" href="https://yuklia.github.io/img/apple-touch-icon-192x192.png">
+
+  <link rel="shortcut icon" href="https://yuklia.github.io/img/favicon/green.png">
+
+
+
+<meta name="twitter:card" content="summary" />
+
+
+
+<meta property="og:locale" content="en" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Custom error page in Traefik v2.x. Finally 😻">
+<meta property="og:description" content="What you will learn today 🦦:  what is Traefik and why I decisively recommend to use it with Docker Swarm how to show custom error page if Traefik returns 404 (service not found)  How I met Traefik 😁 Traefik is a top modern reverse proxy and load balancer. I started to use it from major version 1. At that moment, I already had Docker Swarm cluster, which I began to prepare for production use, and only one thing in the coherent picture has been left: &amp;ldquo;External Load Balancer&amp;rdquo;." />
+<meta property="og:url" content="https://yuklia.github.io/posts/cloud/traefik-error-page/" />
+<meta property="og:site_name" content="Yulia Kostrikova - Tech blog" />
+
+  <meta property="og:image" content="https://yuklia.github.io">
+
+<meta property="og:image:width" content="2048">
+<meta property="og:image:height" content="1024">
+
+
+  <meta property="article:published_time" content="2020-10-16 18:02:25 &#43;0300 EEST" />
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+<body class="green">
+
+
+<div class="container center headings--one-size">
+
+  <header class="header">
+  <div class="header__inner">
+    <div class="header__logo">
+      <a href="/">
+  <div class="logo">
+    Yulia Kostrikova | Tech blog
+  </div>
+</a>
+
+    </div>
+    <div class="menu-trigger">menu</div>
+  </div>
+  
+    <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="https://app.codesignal.com/profile/yulia_k2">CodeSignal</a></li>
+        
+      
+        
+          <li><a href="https://github.com/yuklia">Github</a></li>
+        
+      
+        
+          <li><a href="https://www.linkedin.com/in/yulia-kostrikova-67268585/">Linkedin</a></li>
+        
+      
+        
+          <li><a href="https://stackoverflow.com/users/2207007/yuklia">StackOverflow</a></li>
+        
+      
+      
+    
+
+    
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="https://app.codesignal.com/profile/yulia_k2">CodeSignal</a></li>
+      
+    
+      
+        <li><a href="https://github.com/yuklia">Github</a></li>
+      
+    
+      
+        <li><a href="https://www.linkedin.com/in/yulia-kostrikova-67268585/">Linkedin</a></li>
+      
+    
+      
+        <li><a href="https://stackoverflow.com/users/2207007/yuklia">StackOverflow</a></li>
+      
+    
+    
+  </ul>
+</nav>
+
+  
+</header>
+
+
+  <div class="content">
+    
+<div class="post">
+  <h1 class="post-title">
+    <a href="https://yuklia.github.io/posts/cloud/traefik-error-page/">Custom error page in Traefik v2.x. Finally 😻</a></h1>
+  <div class="post-meta">
+    <a>
+      <img class="iq" src="/me/me-me.jpg" width="29" height="28"/>
+    </a>
+    
+    
+    <span class="post-date">
+      Oct 16, 2020 
+    </span>
+    
+    <span class="post-min-read">
+      <span>·</span>
+      2 min 👁️
+    </span>
+  </div>
+
+  
+  <span class="post-tags">
+    
+    #<a href="https://yuklia.github.io/tags/traefik/">traefik</a>&nbsp;
+    
+    #<a href="https://yuklia.github.io/tags/cloud/">cloud</a>&nbsp;
+    
+    #<a href="https://yuklia.github.io/tags/swarm/">swarm</a>&nbsp;
+    
+    #<a href="https://yuklia.github.io/tags/docker/">docker</a>&nbsp;
+    
+  </span>
+  
+
+  
+
+  
+
+  <div class="post-content"><div>
+        <h2 id="what-you-will-learn-today-">What you will learn today 🦦:<a href="#what-you-will-learn-today-" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<ul>
+<li>what is Traefik and why I decisively recommend to use it with Docker Swarm</li>
+<li>how to show custom error page if Traefik returns 404 (service not found)</li>
+</ul>
+<h2 id="how-i-met-traefik-">How I met Traefik 😁<a href="#how-i-met-traefik-" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<p>Traefik is a top modern reverse proxy and load balancer. I started to use it from major version 1. At that moment, I already had Docker Swarm cluster, which I began to prepare for production use, and only one thing in the coherent picture has been left: &ldquo;External Load Balancer&rdquo;. Official docker <a href="https://docs.docker.com/engine/swarm/ingress/">doc had an example with HaProxy</a> so it was obvious to try it out first. As I remember it took a significant amount of time to get HaProxy works smoothly with Swarm. But I wasn&rsquo;t satisfied with the result:</p>
+<ul>
+<li>static config which is needed to re-deploy in case of changes</li>
+<li>*.cfg not supports variables substitution (out of the box)</li>
+<li>no native support of Lets&rsquo;s Encrypt</li>
+</ul>
+<p>The production deadline was getting close, but it was out of my religion to leave such an ugly solution. I was searching the Internet and bumped into Traefik. Integration was surprisingly fast and easy. I thought to myself: &ldquo;That is how modern DevOps should look like&rdquo;.
+It is been 3 years since I deal with Traefik, and today I wanna tell about one of the most much wished-for feature.</p>
+<h2 id="step-by-step-setup-----">Step by step setup 🐟 🐒 🦧 ⤴️ 👷🏼<a href="#step-by-step-setup-----" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<p>
+  <figure class="left" >
+    <img src="/cloud/error-midl.png"   />
+    
+  </figure>
+
+
+Traefik v2.x comes to us with <a href="https://doc.traefik.io/traefik/middlewares/overview/">middlewares</a> and <code>ErrorPage</code> one of them.</p>
+<p>Lett&rsquo;s assume:</p>
+<ul>
+<li>traefik dasboard domain: traefik-board.com</li>
+<li>your app: my-app.com
+<em>0001.</em> Add labels to traefik. Important here <code>traefik.http.routers.traefik.middlewares=maintenance-page@docker</code>. If you try to look for <a href="https://service-does-not-exists.com">https://service-does-not-exists.com</a> you will get friendly error page.</li>
+</ul>
+<pre><code>  traefik:
+    deploy:
+      labels:
+        - &quot;traefik.enable=true&quot;
+        - &quot;traefik.http.services.traefik.loadbalancer.server.port=8080&quot;
+        - &quot;traefik.http.routers.traefik.rule=Host(`${traefik-board.com}`)&quot;
+        - &quot;traefik.http.routers.traefik.entryPoints=websecure&quot;
+        - &quot;traefik.http.routers.traefik.tls=true&quot;
+        - &quot;traefik.http.routers.traefik.middlewares=maintenance-page@docker&quot;
+</code></pre><p><em>0010.</em> Create dedicated service for error page. Make sure service would be as highly available as Traefik! I recommend to set <code>deploy mode: global</code> and <code>placement: constraints: - node.role == manager</code>. If you don&rsquo;t, hello boring black page again.</p>
+<pre><code>maintenance-page:
+   deploy:
+      labels:
+        - &quot;traefik.enable=true&quot;
+        - &quot;traefik.http.services.maintenance-page.loadbalancer.server.port=80&quot;
+        - &quot;traefik.http.routers.maintenance-page.rule=HostRegexp(`{host:.+}`)&quot;
+        - &quot;traefik.http.routers.maintenance-page.priority=1&quot;
+        - &quot;traefik.http.routers.maintenance-page.middlewares=maintenance-page@docker&quot;
+        - &quot;traefik.http.routers.maintenance-page.entrypoints=websecure&quot;
+        - &quot;traefik.http.routers.maintenance-page.tls=true&quot;
+        - &quot;traefik.http.middlewares.maintenance-page.errors.status=400-599&quot;
+        - &quot;traefik.http.middlewares.maintenance-page.errors.service=maintenance-page&quot;
+        - &quot;traefik.http.middlewares.maintenance-page.errors.query=/&quot;
+</code></pre><p>These lines are essential. You tell the server to catch all requests and redirect them to maintenance-page service. <code>priority=1</code> means &ldquo;all-catcher&rdquo; is not alone in the system. There is someone higher who wants to handle requests firstly, for example, &ldquo;all-catcher&rdquo; for http-&gt;https redirect.</p>
+<pre><code>traefik.http.routers.maintenance-page.priority=1
+traefik.http.routers.maintenance-page.rule=HostRegexp(`{host:.+}`)
+</code></pre><p><em>0011.</em> Add <code>priority=100</code> to app service.</p>
+<pre><code>  app:
+    deploy:
+      labels:
+        - &quot;traefik.enable=true&quot;
+        - &quot;traefik.http.routers.frontend.rule=Host(`${my-app.com}`)&quot;
+        - &quot;traefik.http.services.frontend.loadbalancer.server.port=80&quot;
+        - &quot;traefik.http.routers.frontend.entrypoints=websecure&quot;
+        - &quot;traefik.http.routers.frontend.tls=true&quot;
+        - &quot;traefik.http.routers.frontend.priority=100&quot;
+</code></pre><h3 id="testing-">Testing 🤹🏽‍♀️<a href="#testing-" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h3>
+<ul>
+<li>case 1: app service goes down or updating <code>replicas: 0:1</code> -&gt; see maitenance page</li>
+<li>case 2: user searched for <a href="https://service-does-not-exists.com">https://service-does-not-exists.com</a> -&gt; see maitenance page</li>
+</ul>
+<h2 id="further-reading-">Further reading 👩🏽‍💻<a href="#further-reading-" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<ul>
+<li>hot thread about <a href="https://github.com/tarampampam/error-pages">this topic</a> on the Containous Community Forum</li>
+</ul>
+<ul>
+<li><a href="https://github.com/tarampampam/error-pages">nginx based error pages</a></li>
+</ul>
+<blockquote>
+<p>So, that’s all for now 😊.
+👩‍🚀 was happy to share my experience, and I&rsquo;m sure this solution will save a bunch of time for someone.
+Happy hacking=) 🦾</p>
+</blockquote>
+
+      </div></div>
+
+  
+  
+<div class="pagination">
+    <div class="pagination__title">
+        <span class="pagination__title-h">Read other posts</span>
+        <hr />
+    </div>
+    <div class="pagination__buttons">
+        
+        
+        <span class="button next">
+            <a href="https://yuklia.github.io/posts/php/xdebug-macos/">
+                <span class="button__text">XDebug for PHP docker container on macOS</span>
+                <span class="button__icon">→</span>
+            </a>
+        </span>
+        
+    </div>
+</div>
+
+  
+
+  
+
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "yuklia-github-io" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</div>
+
+  </div>
+
+  
+    <footer class="footer">
+  <div class="footer__inner">
+    
+      <div class="copyright copyright--user">
+        <span>Made with ❤️ by Yulia Kostrikova © 2020</span>
+    
+        <span>:: Theme made by <a href="https://twitter.com/panr">panr</a></span>
+      </div>
+  </div>
+</footer>
+
+<script src="https://yuklia.github.io/assets/main.js"></script>
+<script src="https://yuklia.github.io/assets/prism.js"></script>
+
+
+
+
+
+
+
+  
+</div>
+
+</body>
+</html>

@@ -12,16 +12,14 @@
 <link rel="canonical" href="https://yuklia.github.io/posts/cloud/traefik-error-page/" />
 
 
-<script type="application/javascript">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-58M1TNK17W"></script>
+<script>
 var doNotTrack = false;
 if (!doNotTrack) {
-	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-	ga('create', 'G-58M1TNK17W', 'auto');
-	
-	ga('send', 'pageview');
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-58M1TNK17W', { 'anonymize_ip': false });
 }
 </script>
 
@@ -230,7 +228,7 @@ Traefik v2.x comes to us with <a href="https://doc.traefik.io/traefik/middleware
 <li>your app: my-app.com</li>
 </ul>
 <p><em>0001.</em> Add labels to traefik. Important here <code>traefik.http.routers.traefik.middlewares=maintenance-page@docker</code>. If you try to look for <a href="https://service-does-not-exists.com">https://service-does-not-exists.com</a> you will get friendly error page.</p>
-<pre><code>  traefik:
+<pre tabindex="0"><code>  traefik:
     deploy:
       labels:
         - &quot;traefik.enable=true&quot;
@@ -240,7 +238,7 @@ Traefik v2.x comes to us with <a href="https://doc.traefik.io/traefik/middleware
         - &quot;traefik.http.routers.traefik.tls=true&quot;
         - &quot;traefik.http.routers.traefik.middlewares=maintenance-page@docker&quot;
 </code></pre><p><em>0010.</em> Create dedicated service for error page. Make sure service would be as highly available as Traefik! I recommend to set <code>deploy mode: global</code> and <code>placement: constraints: - node.role == manager</code>. If you don&rsquo;t, hello boring black page again.</p>
-<pre><code>maintenance-page:
+<pre tabindex="0"><code>maintenance-page:
    deploy:
       labels:
         - &quot;traefik.enable=true&quot;
@@ -254,10 +252,10 @@ Traefik v2.x comes to us with <a href="https://doc.traefik.io/traefik/middleware
         - &quot;traefik.http.middlewares.maintenance-page.errors.service=maintenance-page&quot;
         - &quot;traefik.http.middlewares.maintenance-page.errors.query=/&quot;
 </code></pre><p>These lines are essential. You tell the server to catch all requests and redirect them to maintenance-page service. <code>priority=1</code> means &ldquo;all-catcher&rdquo; is not alone in the system. There is someone higher who wants to handle requests firstly, for example, &ldquo;all-catcher&rdquo; for http-&gt;https redirect.</p>
-<pre><code>traefik.http.routers.maintenance-page.priority=1
+<pre tabindex="0"><code>traefik.http.routers.maintenance-page.priority=1
 traefik.http.routers.maintenance-page.rule=HostRegexp(`{host:.+}`)
 </code></pre><p><em>0011.</em> Add <code>priority=100</code> to app service.</p>
-<pre><code>  app:
+<pre tabindex="0"><code>  app:
     deploy:
       labels:
         - &quot;traefik.enable=true&quot;
@@ -340,7 +338,7 @@ Happy hacking=) 🦾</p>
   <div class="footer__inner">
     
       <div class="copyright copyright--user">
-        <span>Made with ❤️ by Yulia Kostrikova © 2020</span>
+        <span>Made with ❤️ by Yulia Kostrikova © 2022</span>
     
         <span>:: Theme made by <a href="https://twitter.com/panr">panr</a></span>
       </div>

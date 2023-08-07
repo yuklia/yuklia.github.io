@@ -1,20 +1,49 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Posts on Yulia Kostrikova - Tech blog</title>
+    <title>Posts on Yuliia Kostrikova</title>
     <link>https://yuklia.github.io/posts/</link>
-    <description>Recent content in Posts on Yulia Kostrikova - Tech blog</description>
+    <description>Recent content in Posts on Yuliia Kostrikova</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <copyright>Yulia Kostrikova © 2022</copyright>
-    <lastBuildDate>Fri, 16 Oct 2020 18:02:25 +0300</lastBuildDate><atom:link href="https://yuklia.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-US</language>
+    <lastBuildDate>Tue, 18 Apr 2023 15:35:26 +0200</lastBuildDate><atom:link href="https://yuklia.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Evening 1 // SAA-C03 :: AWS Fundamentals</title>
+      <link>https://yuklia.github.io/posts/saa-c03/aws-fundamentals/</link>
+      <pubDate>Tue, 18 Apr 2023 15:35:26 +0200</pubDate>
+      
+      <guid>https://yuklia.github.io/posts/saa-c03/aws-fundamentals/</guid>
+      <description>AWS Global Infrastructure At the time of writing this note, The AWS Cloud spans ⬇️
+99 Availability Zones within 31 geographic regions around the world 💡 with announced plans for 15 more Availability Zones and 5 more AWS Regions in Canada, Israel, Malaysia, New Zealand, and Thailand.
+Availability Zones Data Centers Regions Edge Locations AWS Management Console </description>
+    </item>
+    
     <item>
       <title>Custom error page in Traefik v2.x. Finally 😻</title>
       <link>https://yuklia.github.io/posts/cloud/traefik-error-page/</link>
       <pubDate>Fri, 16 Oct 2020 18:02:25 +0300</pubDate>
       
       <guid>https://yuklia.github.io/posts/cloud/traefik-error-page/</guid>
-      <description>What you will learn today 🦦:  what is Traefik and why I decisively recommend to use it with Docker Swarm how to show custom error page if Traefik returns 404 (service not found)  How I met Traefik 😁 Traefik is a top modern reverse proxy and load balancer. I started to use it from major version 1. At that moment, I already had Docker Swarm cluster, which I began to prepare for production use, and only one thing in the coherent picture has been left: &amp;ldquo;External Load Balancer&amp;rdquo;.</description>
+      <description>What you will learn today 🦦: what is Traefik and why I decisively recommend to use it with Docker Swarm how to show custom error page if Traefik returns 404 (service not found) How I met Traefik 😁 Traefik is a top modern reverse proxy and load balancer. I started to use it from major version 1. At that moment, I already had Docker Swarm cluster, which I began to prepare for production use, and only one thing in the coherent picture has been left: &amp;ldquo;External Load Balancer&amp;rdquo;.</description>
+    </item>
+    
+    <item>
+      <title>Solution for CodeSignal: addTwoHugeNumbers (Linked List part 👯)</title>
+      <link>https://yuklia.github.io/posts/algorithms/addtwohugenumbers/</link>
+      <pubDate>Thu, 10 Sep 2020 15:35:26 +0200</pubDate>
+      
+      <guid>https://yuklia.github.io/posts/algorithms/addtwohugenumbers/</guid>
+      <description>Task description on Codesignal
+I’ve spend decent amount of time in order to figure out that I don’t need any string manipulation in this task 😅. My first try was adding missing zeros to the beginning of number slot, convert int to str and back, then the resulting string split by 4 but no luck … It turned out that is simple math 😀 I wanna share my solution with detailed comments ⬇️ (Time complexity O(n) )</description>
+    </item>
+    
+    <item>
+      <title>How to analyse “high CPU” in php on production. Part 1</title>
+      <link>https://yuklia.github.io/posts/php/high-cpu/</link>
+      <pubDate>Fri, 10 Jul 2020 18:56:57 +0300</pubDate>
+      
+      <guid>https://yuklia.github.io/posts/php/high-cpu/</guid>
+      <description>How to analyse “high CPU” in php on production. Part 1</description>
     </item>
     
     <item>
@@ -23,8 +52,7 @@
       <pubDate>Mon, 14 Aug 2017 18:56:57 +0300</pubDate>
       
       <guid>https://yuklia.github.io/posts/php/xdebug-macos/</guid>
-      <description>Into 💆 Pre-conditions: macOS Sierra Docker CE Version 17.06.2-ce-mac27 PHP 7.1.8 XDebug v2.5.0 PhpStorm 2017.2 If you want to set up remote debug from your container you have 2 options:
- xdebug.remote_host = %host_ip% %host_ip% — The IP of the machine running your IDE. It’s assumed on the same host as Docker. xdebug.remote_connect_back = on checks $_SERVER[‘HTTP_X_FORWARDED_FOR’] and $_SERVER[‘REMOTE_ADDR’] variables to find out which IP address to use.  You cannot use xdebug.</description>
+      <description>How to guide: Configure remote debugging with XDebug for php docker container on macOS</description>
     </item>
     
   </channel>

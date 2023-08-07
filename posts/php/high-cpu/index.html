@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>How to analyse “high CPU” in php on production. Part 1 | Yuliia Kostrikova</title>
+<meta name="keywords" content=", ">
+<meta name="description" content="How to analyse “high CPU” in php on production. Part 1">
+<meta name="author" content="">
+<link rel="canonical" href="https://yuklia.github.io/posts/php/high-cpu/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.7140587df96a2b1a49eb723fa7063dc0c641a6cb638f3140e8d3beb4deae4f5c.css" integrity="sha256-cUBYfflqKxpJ63I/pwY9wMZBpstjjzFA6NO&#43;tN6uT1w=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://yuklia.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://yuklia.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://yuklia.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://yuklia.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://yuklia.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-58M1TNK17W"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-58M1TNK17W', { 'anonymize_ip': false });
+}
+</script>
+<meta property="og:title" content="How to analyse “high CPU” in php on production. Part 1" />
+<meta property="og:description" content="How to analyse “high CPU” in php on production. Part 1" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://yuklia.github.io/posts/php/high-cpu/" />
+<meta property="og:image" content="https://miro.medium.com/v2/resize:fit:720/format:webp/1*bhgcAieou2M-zxD1Zd2s7w.jpeg" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-07-10T18:56:57+03:00" />
+<meta property="article:modified_time" content="2020-07-10T18:56:57+03:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://miro.medium.com/v2/resize:fit:720/format:webp/1*bhgcAieou2M-zxD1Zd2s7w.jpeg" />
+<meta name="twitter:title" content="How to analyse “high CPU” in php on production. Part 1"/>
+<meta name="twitter:description" content="How to analyse “high CPU” in php on production. Part 1"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://yuklia.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "How to analyse “high CPU” in php on production. Part 1",
+      "item": "https://yuklia.github.io/posts/php/high-cpu/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "How to analyse “high CPU” in php on production. Part 1",
+  "name": "How to analyse “high CPU” in php on production. Part 1",
+  "description": "How to analyse “high CPU” in php on production. Part 1",
+  "keywords": [
+    "", ""
+  ],
+  "articleBody": "1 Add tools specifically to php monitoring in order to answer the questions ⬇️ what kind of php scripts were called most of the time? what kind of php scripts took the most CPU? We choose open-source tool Pinba.\nphp pinba extension sends data over UDP in protobuf format. pinba server accumulates and processes data and send it to data storage in your choice. (In our case it is Clickhouse DB)\nIt is not a secret that the most popular script in php frameworks is index.php but this information is barely helpful. So we need some “CPU statistics per route”.\n“CPU statistics per route” means that: we have to implement one more chart in Grafana that shows CPU consumption in the matter of requested route, for example, V2\\Community\\Model.php And only after that we can give this info to developers for investigation what kind of code took the most CPU in the route: V2\\Community\\Model.php When the developer got the list of routes it is time to look inside those routes and investigate what cause high CPU. On this stage Blackfire can help. Blackfire will show you CPU Wall Time. To keep things simple, Wall Time is usually split in two main parts: the CPU Time and the I/O Time.\nThe CPU time is the amount of time the CPU was used for processing instructions. The I/O time is the time the CPU waited for input/output (I/O) operations.\nI/O time could be divided into two parts: the network and the disk.\nNetwork activity includes calls to databases like:\nMySQL, PostgreSQL, or MongoDB; HTTP calls to web services and APIs; Calls to cache systems like Redis and Memcached; Communications with services like queues, email daemons, remote filesystems; etc. Disk activity occurs when a program reads files from the filesystem, including loading code or files.\nWe need to distinguish these types of times in order to make further decisions related optimization.\nA CPU-bound program’s speed depends mostly on the CPU. In other words, CPU utilization is high for long periods of time. The faster the CPU, the faster the code runs. On the contrary, an I/O bound program’s speed is determined by the time spent waiting for I/O. Faster disks or a faster network improve the overall performance of I/O bound code.\n2 After that, depending on findings ⬇️ IF the reason of high CPU is I/O bound related to DB (too much time waiting for I/O ) then we should consider migrate to RDS and set up storage General Purpose (SSD) or Provisioned IOPS (SSD).\nIF the reason of high CPU : CPU-bound (which is rare case for web applications) then we should consider to optimize algorithms in code.\nto be continued… 👀\n",
+  "wordCount" : "450",
+  "inLanguage": "en",
+  "image":"https://miro.medium.com/v2/resize:fit:720/format:webp/1*bhgcAieou2M-zxD1Zd2s7w.jpeg","datePublished": "2020-07-10T18:56:57+03:00",
+  "dateModified": "2020-07-10T18:56:57+03:00",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://yuklia.github.io/posts/php/high-cpu/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Yuliia Kostrikova",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://yuklia.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://yuklia.github.io" accesskey="h" title="Yuliia Kostrikova (Alt + H)">Yuliia Kostrikova</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://yuklia.github.io/archives/" title="Archive">
+                    <span>Archive</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://yuklia.github.io/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://yuklia.github.io/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://yuklia.github.io">Home</a>&nbsp;»&nbsp;<a href="https://yuklia.github.io/posts/">Posts</a></div>
+    <h1 class="post-title">
+      How to analyse “high CPU” in php on production. Part 1
+    </h1>
+    <div class="post-description">
+      How to analyse “high CPU” in php on production. Part 1
+    </div>
+    <div class="post-meta"><span title='2020-07-10 18:56:57 +0300 +0300'>July 10, 2020</span>&nbsp;·&nbsp;3 min
+
+</div>
+  </header> 
+<figure class="entry-cover"><img loading="lazy" src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*bhgcAieou2M-zxD1Zd2s7w.jpeg" alt="cover_img_processor">
+        
+</figure><div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#1-add-tools-specifically-to-php-monitoring-in-order-to-answer-the-questions--" aria-label="1 Add tools specifically to php monitoring in order to answer the questions  ⬇️">1 Add tools specifically to php monitoring in order to answer the questions  ⬇️</a></li>
+                <li>
+                    <a href="#2-after-that-depending-on-findings-" aria-label="2 After that, depending on findings ⬇️">2 After that, depending on findings ⬇️</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h3 id="1-add-tools-specifically-to-php-monitoring-in-order-to-answer-the-questions--">1 Add tools specifically to php monitoring in order to answer the questions  ⬇️<a hidden class="anchor" aria-hidden="true" href="#1-add-tools-specifically-to-php-monitoring-in-order-to-answer-the-questions--">#</a></h3>
+<ul>
+<li>what kind of php scripts were called most of the time?</li>
+<li>what kind of php scripts took the most CPU?</li>
+</ul>
+<p>We choose open-source tool <a href="https://github.com/badoo/pinba2">Pinba</a>.</p>
+<blockquote>
+<p><strong>php pinba extension</strong> sends data over UDP in protobuf format.
+<strong>pinba server</strong> accumulates and processes data and send it to data storage in your choice. (In our case it is Clickhouse DB)</p>
+</blockquote>
+<p>It is not a secret that the most popular script in php frameworks is index.php but this information is barely helpful. So we need some “CPU statistics per route”.</p>
+<p><img loading="lazy" src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*_i9AivHXfCBBBziX-UgcUw.png" alt="Example image"  />
+</p>
+<p>“CPU statistics per route” means that: we have to implement one more chart in Grafana that shows CPU consumption in the matter of requested route, for example, V2\Community\Model.php And only after that we can give this info to developers for investigation what kind of code took the most CPU in the route: V2\Community\Model.php
+When the developer got the list of routes it is time to look inside those routes and investigate what cause high CPU.
+On this stage Blackfire can help. Blackfire will show you CPU Wall Time. To keep things simple, Wall Time is usually split in two main parts: the CPU Time and the I/O Time.</p>
+<blockquote>
+<p>The CPU time is the amount of time the CPU was used for processing instructions. The I/O time is the time the CPU waited for input/output (I/O) operations.</p>
+</blockquote>
+<p>I/O time could be divided into two parts: the network and the disk.</p>
+<p>Network activity includes calls to databases like:</p>
+<ul>
+<li>MySQL, PostgreSQL, or MongoDB;</li>
+<li>HTTP calls to web services and APIs;</li>
+<li>Calls to cache systems like Redis and Memcached;</li>
+<li>Communications with services like queues, email daemons, remote filesystems; etc.</li>
+</ul>
+<p>Disk activity occurs when a program reads files from the filesystem, including loading code or files.</p>
+<p>We need to distinguish these types of times in order to make further decisions related optimization.</p>
+<p>A CPU-bound program’s speed depends mostly on the CPU. In other words, CPU utilization is high for long periods of time. The faster the CPU, the faster the code runs. On the contrary, an I/O bound program’s speed is determined by the time spent waiting for I/O. Faster disks or a faster network improve the overall performance of I/O bound code.</p>
+<h3 id="2-after-that-depending-on-findings-">2 After that, depending on findings ⬇️<a hidden class="anchor" aria-hidden="true" href="#2-after-that-depending-on-findings-">#</a></h3>
+<p><strong>IF</strong> the reason of high CPU is I/O bound related to DB (too much time waiting for I/O ) then we should consider migrate to RDS and set up storage General Purpose (SSD) or Provisioned IOPS (SSD).</p>
+<p><strong>IF</strong> the reason of high CPU : CPU-bound (which is rare case for web applications) then we should consider to optimize algorithms in code.</p>
+<p>to be continued… 👀</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://yuklia.github.io/tags/php/">php</a></li>
+      <li><a href="https://yuklia.github.io/tags/xdebug/">xdebug</a></li>
+      <li><a href="https://yuklia.github.io/tags/docker/">docker</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="prev" href="https://yuklia.github.io/posts/algorithms/addtwohugenumbers/">
+    <span class="title">« Prev</span>
+    <br>
+    <span>Solution for CodeSignal: addTwoHugeNumbers (Linked List part 👯)</span>
+  </a>
+  <a class="next" href="https://yuklia.github.io/posts/php/xdebug-macos/">
+    <span class="title">Next »</span>
+    <br>
+    <span>XDebug for PHP docker container on macOS</span>
+  </a>
+</nav>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2023 <a href="https://yuklia.github.io">Yuliia Kostrikova</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

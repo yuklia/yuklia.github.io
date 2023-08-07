@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>SAA-C03 on Yuliia Kostrikova</title>
+    <link>https://yuklia.github.io/tags/saa-c03/</link>
+    <description>Recent content in SAA-C03 on Yuliia Kostrikova</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Tue, 18 Apr 2023 15:35:26 +0200</lastBuildDate><atom:link href="https://yuklia.github.io/tags/saa-c03/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Evening 1 // SAA-C03 :: AWS Fundamentals</title>
+      <link>https://yuklia.github.io/posts/saa-c03/aws-fundamentals/</link>
+      <pubDate>Tue, 18 Apr 2023 15:35:26 +0200</pubDate>
+      
+      <guid>https://yuklia.github.io/posts/saa-c03/aws-fundamentals/</guid>
+      <description>AWS Global Infrastructure At the time of writing this note, The AWS Cloud spans ⬇️
+99 Availability Zones within 31 geographic regions around the world 💡 with announced plans for 15 more Availability Zones and 5 more AWS Regions in Canada, Israel, Malaysia, New Zealand, and Thailand.
+Availability Zones Data Centers Regions Edge Locations AWS Management Console </description>
+    </item>
+    
+  </channel>
+</rss>

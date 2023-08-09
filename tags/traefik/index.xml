@@ -6,7 +6,17 @@
     <description>Recent content in traefik on Yuliia Kostrikova</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Fri, 16 Oct 2020 18:02:25 +0300</lastBuildDate><atom:link href="https://juliakostrikova.com/tags/traefik/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 17 Oct 2020 18:02:25 +0300</lastBuildDate><atom:link href="https://juliakostrikova.com/tags/traefik/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Traefik behind AWS ELB. X-Forwarded-For header</title>
+      <link>https://juliakostrikova.com/posts/cloud/traefik-x-forwarded-for/</link>
+      <pubDate>Sat, 17 Oct 2020 18:02:25 +0300</pubDate>
+      
+      <guid>https://juliakostrikova.com/posts/cloud/traefik-x-forwarded-for/</guid>
+      <description>Traefik v1.7 is running inside Docker Swarm and scheduled as a global service. (This means that for every Host in our Docker Swarm cluster, one instance of Traefik will be deployed). I decided not to use Swarm&amp;rsquo;s routing mesh and set port mode: host (port is attached to host&amp;rsquo;s network)
+traefik: image: ${REGISTRY}/traefik:1.6 build: ./traefik volumes: - /var/run/docker.sock:/var/run/docker.sock networks: - traefik environment: - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} - AWS_REGION=${AWS_REGION} - AWS_HOSTED_ZONE_ID=${AWS_HOSTED_ZONE_ID} ports: - target: 80 published: 80 protocol: tcp mode: host - target: 443 published: 443 mode: host protocol: tcp - target: 8080 published: 8080 mode: host protocol: tcp deploy: mode: global restart_policy: condition: on-failure Docker Swarm deployed to AWS and lives behind internal/external load balancers (Classic type).</description>
+    </item>
+    
     <item>
       <title>Custom error page in Traefik v2.x. Finally 😻</title>
       <link>https://juliakostrikova.com/posts/cloud/traefik-error-page/</link>

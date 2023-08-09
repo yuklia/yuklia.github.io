@@ -11,14 +11,14 @@
 <meta name="keywords" content=", ">
 <meta name="description" content="How to guide: Configure remote debugging with XDebug for php docker container on macOS">
 <meta name="author" content="">
-<link rel="canonical" href="http://juliakostrikova.com/posts/php/xdebug-macos/">
+<link rel="canonical" href="https://juliakostrikova.com/posts/php/xdebug-macos/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.7140587df96a2b1a49eb723fa7063dc0c641a6cb638f3140e8d3beb4deae4f5c.css" integrity="sha256-cUBYfflqKxpJ63I/pwY9wMZBpstjjzFA6NO&#43;tN6uT1w=" rel="preload stylesheet" as="style">
-<link rel="icon" href="http://juliakostrikova.com/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="http://juliakostrikova.com/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="http://juliakostrikova.com/favicon-32x32.png">
-<link rel="manifest" href="http://juliakostrikova.com/site.webmanifest">
-<link rel="apple-touch-icon" href="http://juliakostrikova.com/apple-touch-icon.png">
-<link rel="icon" type="image/svg+xml"  href="http://juliakostrikova.com/safari-pinned-tab.svg">
+<link rel="icon" href="https://juliakostrikova.com/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://juliakostrikova.com/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://juliakostrikova.com/favicon-32x32.png">
+<link rel="manifest" href="https://juliakostrikova.com/site.webmanifest">
+<link rel="apple-touch-icon" href="https://juliakostrikova.com/apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml"  href="https://juliakostrikova.com/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
 <noscript>
@@ -60,13 +60,13 @@
 </noscript><meta property="og:title" content="XDebug for PHP docker container on macOS" />
 <meta property="og:description" content="How to guide: Configure remote debugging with XDebug for php docker container on macOS" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://juliakostrikova.com/posts/php/xdebug-macos/" />
-<meta property="og:image" content="http://juliakostrikova.com/php/xdebug.gif" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="https://juliakostrikova.com/posts/php/xdebug-macos/" />
+<meta property="og:image" content="https://juliakostrikova.com/php/xdebug.gif" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2017-08-14T18:56:57+03:00" />
 <meta property="article:modified_time" content="2017-08-14T18:56:57+03:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="http://juliakostrikova.com/php/xdebug.gif" />
+<meta name="twitter:image" content="https://juliakostrikova.com/php/xdebug.gif" />
 <meta name="twitter:title" content="XDebug for PHP docker container on macOS"/>
 <meta name="twitter:description" content="How to guide: Configure remote debugging with XDebug for php docker container on macOS"/>
 
@@ -80,13 +80,13 @@
       "@type": "ListItem",
       "position":  2 ,
       "name": "Posts",
-      "item": "http://juliakostrikova.com/posts/"
+      "item": "https://juliakostrikova.com/posts/"
     }, 
     {
       "@type": "ListItem",
       "position":  3 ,
       "name": "XDebug for PHP docker container on macOS",
-      "item": "http://juliakostrikova.com/posts/php/xdebug-macos/"
+      "item": "https://juliakostrikova.com/posts/php/xdebug-macos/"
     }
   ]
 }
@@ -104,18 +104,18 @@
   "articleBody": "Into 💆 Pre-conditions: macOS Sierra Docker CE Version 17.06.2-ce-mac27 PHP 7.1.8 XDebug v2.5.0 PhpStorm 2017.2 If you want to set up remote debug from your container you have 2 options:\nxdebug.remote_host = %host_ip% %host_ip% — The IP of the machine running your IDE. It’s assumed on the same host as Docker. xdebug.remote_connect_back = on checks $_SERVER[‘HTTP_X_FORWARDED_FOR’] and $_SERVER[‘REMOTE_ADDR’] variables to find out which IP address to use. You cannot use xdebug.remote_connect_back because it takes containers’s internal IP. So xdebug.remote_host is the only option we have. It’s pretty simple to get host IP on Linux OS just look at : ifconfig \u003e docker0. Moreover you can create a fixed set of IPs for both host and containers using docker network. For instance:\ndocker network create -d bridge \\ — subnet 192.168.0.0/24 \\ — gateway 192.168.0.1 \\ dockernet Now each container can connect to the host under the fixed IP 192.168.0.1 But the docker0 interface is not available for Docker in macOS. This interface is actually within HyperKit. So unfortunately there is no a reliable way of looping back to host for macOS. The only solution is to create your local IP’s alias to something else : sudo ifconfig lo0 alias 10.254.254.254\nHowTo guide 👩‍💻 sudo ifconfig lo0 alias 10.254.254.254 (optional) For permanent setting up save.plist file sudo curl -o /Library/LaunchDaemons/com.yuklia.docker_localhost_alias.plist build docker containers … add server to IDE storm1 configure Debug’s port in my case it’s 9002. xDebug client will knock to this port. storm2 configure DBGp Proxy storm3 Bonus 🍰 If you need to get a shell of the VM that was created by HyperKit run:\nscreen ~/Library/Containers/com.docker.docker/Data/com.docker.driver.amd64-linux/tty or screen ~/Library/Containers/com.docker.docker/Data/vms/0/tty For getting all screens run: screen -ls For exiting screen run : screen -X -S %screen_name% kill Once you get the tty running you can navigate to /var/lib/docker: storm4 Here is my Dockerfile and docker-compose versions for php:7-fpm with XDebug So that’s all for now 😊. Hope it will save a bunch of time for someone! I will be glad to get comments and questions. Happy hacking=) 🦾\n",
   "wordCount" : "339",
   "inLanguage": "en",
-  "image":"http://juliakostrikova.com/php/xdebug.gif","datePublished": "2017-08-14T18:56:57+03:00",
+  "image":"https://juliakostrikova.com/php/xdebug.gif","datePublished": "2017-08-14T18:56:57+03:00",
   "dateModified": "2017-08-14T18:56:57+03:00",
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "http://juliakostrikova.com/posts/php/xdebug-macos/"
+    "@id": "https://juliakostrikova.com/posts/php/xdebug-macos/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "Yuliia Kostrikova",
     "logo": {
       "@type": "ImageObject",
-      "url": "http://juliakostrikova.com/favicon.ico"
+      "url": "https://juliakostrikova.com/favicon.ico"
     }
   }
 }
@@ -137,7 +137,7 @@
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="http://juliakostrikova.com" accesskey="h" title="Yuliia Kostrikova (Alt + H)">Yuliia Kostrikova</a>
+            <a href="https://juliakostrikova.com" accesskey="h" title="Yuliia Kostrikova (Alt + H)">Yuliia Kostrikova</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -163,17 +163,17 @@
         </div>
         <ul id="menu">
             <li>
-                <a href="http://juliakostrikova.com/archives/" title="Archive">
+                <a href="https://juliakostrikova.com/archives/" title="Archive">
                     <span>Archive</span>
                 </a>
             </li>
             <li>
-                <a href="http://juliakostrikova.com/tags/" title="Tags">
+                <a href="https://juliakostrikova.com/tags/" title="Tags">
                     <span>Tags</span>
                 </a>
             </li>
             <li>
-                <a href="http://juliakostrikova.com/search/" title="Search (Alt &#43; /)" accesskey=/>
+                <a href="https://juliakostrikova.com/search/" title="Search (Alt &#43; /)" accesskey=/>
                     <span>Search</span>
                 </a>
             </li>
@@ -184,7 +184,7 @@
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="http://juliakostrikova.com">Home</a>&nbsp;»&nbsp;<a href="http://juliakostrikova.com/posts/">Posts</a></div>
+    <div class="breadcrumbs"><a href="https://juliakostrikova.com">Home</a>&nbsp;»&nbsp;<a href="https://juliakostrikova.com/posts/">Posts</a></div>
     <h1 class="post-title">
       XDebug for PHP docker container on macOS
     </h1>
@@ -195,7 +195,7 @@
 
 </div>
   </header> 
-<figure class="entry-cover"><img loading="lazy" src="http://juliakostrikova.com/php/xdebug.gif" alt="xdebug.gif">
+<figure class="entry-cover"><img loading="lazy" src="https://juliakostrikova.com/php/xdebug.gif" alt="xdebug.gif">
         
 </figure><div class="toc">
     <details >
@@ -295,12 +295,12 @@ For exiting screen run : screen -X -S %screen_name% kill
 
   <footer class="post-footer">
     <ul class="post-tags">
-      <li><a href="http://juliakostrikova.com/tags/php/">php</a></li>
-      <li><a href="http://juliakostrikova.com/tags/xdebug/">xdebug</a></li>
-      <li><a href="http://juliakostrikova.com/tags/docker/">docker</a></li>
+      <li><a href="https://juliakostrikova.com/tags/php/">php</a></li>
+      <li><a href="https://juliakostrikova.com/tags/xdebug/">xdebug</a></li>
+      <li><a href="https://juliakostrikova.com/tags/docker/">docker</a></li>
     </ul>
 <nav class="paginav">
-  <a class="prev" href="http://juliakostrikova.com/posts/php/high-cpu/">
+  <a class="prev" href="https://juliakostrikova.com/posts/php/high-cpu/">
     <span class="title">« Prev</span>
     <br>
     <span>How to analyse “high CPU” in php on production. Part 1</span>
@@ -342,7 +342,7 @@ For exiting screen run : screen -X -S %screen_name% kill
     </main>
     
 <footer class="footer">
-    <span>&copy; 2023 <a href="http://juliakostrikova.com">Yuliia Kostrikova</a></span>
+    <span>&copy; 2023 <a href="https://juliakostrikova.com">Yuliia Kostrikova</a></span>
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

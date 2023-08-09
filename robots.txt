@@ -1,3 +1,3 @@
 User-agent: *
 Disallow:
-Sitemap: http://juliakostrikova.com/sitemap.xml
+Sitemap: https://juliakostrikova.com/sitemap.xml

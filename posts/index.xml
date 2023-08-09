@@ -2,45 +2,45 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Posts on Yuliia Kostrikova</title>
-    <link>http://juliakostrikova.com/posts/</link>
+    <link>https://juliakostrikova.com/posts/</link>
     <description>Recent content in Posts on Yuliia Kostrikova</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Fri, 16 Oct 2020 18:02:25 +0300</lastBuildDate><atom:link href="http://juliakostrikova.com/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 16 Oct 2020 18:02:25 +0300</lastBuildDate><atom:link href="https://juliakostrikova.com/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Custom error page in Traefik v2.x. Finally 😻</title>
-      <link>http://juliakostrikova.com/posts/cloud/traefik-error-page/</link>
+      <link>https://juliakostrikova.com/posts/cloud/traefik-error-page/</link>
       <pubDate>Fri, 16 Oct 2020 18:02:25 +0300</pubDate>
       
-      <guid>http://juliakostrikova.com/posts/cloud/traefik-error-page/</guid>
+      <guid>https://juliakostrikova.com/posts/cloud/traefik-error-page/</guid>
       <description>What you will learn today 🦦: what is Traefik and why I decisively recommend to use it with Docker Swarm how to show custom error page if Traefik returns 404 (service not found) How I met Traefik 😁 Traefik is a top modern reverse proxy and load balancer. I started to use it from major version 1. At that moment, I already had Docker Swarm cluster, which I began to prepare for production use, and only one thing in the coherent picture has been left: &amp;ldquo;External Load Balancer&amp;rdquo;.</description>
     </item>
     
     <item>
       <title>Solution for CodeSignal: addTwoHugeNumbers (Linked List part 👯)</title>
-      <link>http://juliakostrikova.com/posts/algorithms/addtwohugenumbers/</link>
+      <link>https://juliakostrikova.com/posts/algorithms/addtwohugenumbers/</link>
       <pubDate>Thu, 10 Sep 2020 15:35:26 +0200</pubDate>
       
-      <guid>http://juliakostrikova.com/posts/algorithms/addtwohugenumbers/</guid>
+      <guid>https://juliakostrikova.com/posts/algorithms/addtwohugenumbers/</guid>
       <description>Task description on Codesignal
 I’ve spend decent amount of time in order to figure out that I don’t need any string manipulation in this task 😅. My first try was adding missing zeros to the beginning of number slot, convert int to str and back, then the resulting string split by 4 but no luck … It turned out that is simple math 😀 I wanna share my solution with detailed comments ⬇️ (Time complexity O(n) )</description>
     </item>
     
     <item>
       <title>How to analyse “high CPU” in php on production. Part 1</title>
-      <link>http://juliakostrikova.com/posts/php/high-cpu/</link>
+      <link>https://juliakostrikova.com/posts/php/high-cpu/</link>
       <pubDate>Fri, 10 Jul 2020 18:56:57 +0300</pubDate>
       
-      <guid>http://juliakostrikova.com/posts/php/high-cpu/</guid>
+      <guid>https://juliakostrikova.com/posts/php/high-cpu/</guid>
       <description>How to analyse “high CPU” in php on production. Part 1</description>
     </item>
     
     <item>
       <title>XDebug for PHP docker container on macOS</title>
-      <link>http://juliakostrikova.com/posts/php/xdebug-macos/</link>
+      <link>https://juliakostrikova.com/posts/php/xdebug-macos/</link>
       <pubDate>Mon, 14 Aug 2017 18:56:57 +0300</pubDate>
       
-      <guid>http://juliakostrikova.com/posts/php/xdebug-macos/</guid>
+      <guid>https://juliakostrikova.com/posts/php/xdebug-macos/</guid>
       <description>How to guide: Configure remote debugging with XDebug for php docker container on macOS</description>
     </item>
     

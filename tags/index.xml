@@ -2,89 +2,89 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Tags on Yuliia Kostrikova</title>
-    <link>https://yuklia.github.io/tags/</link>
+    <link>http://juliakostrikova.com/tags/</link>
     <description>Recent content in Tags on Yuliia Kostrikova</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Fri, 16 Oct 2020 18:02:25 +0300</lastBuildDate><atom:link href="https://yuklia.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 16 Oct 2020 18:02:25 +0300</lastBuildDate><atom:link href="http://juliakostrikova.com/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>cloud</title>
-      <link>https://yuklia.github.io/tags/cloud/</link>
+      <link>http://juliakostrikova.com/tags/cloud/</link>
       <pubDate>Fri, 16 Oct 2020 18:02:25 +0300</pubDate>
       
-      <guid>https://yuklia.github.io/tags/cloud/</guid>
+      <guid>http://juliakostrikova.com/tags/cloud/</guid>
       <description></description>
     </item>
     
     <item>
       <title>docker</title>
-      <link>https://yuklia.github.io/tags/docker/</link>
+      <link>http://juliakostrikova.com/tags/docker/</link>
       <pubDate>Fri, 16 Oct 2020 18:02:25 +0300</pubDate>
       
-      <guid>https://yuklia.github.io/tags/docker/</guid>
+      <guid>http://juliakostrikova.com/tags/docker/</guid>
       <description></description>
     </item>
     
     <item>
       <title>swarm</title>
-      <link>https://yuklia.github.io/tags/swarm/</link>
+      <link>http://juliakostrikova.com/tags/swarm/</link>
       <pubDate>Fri, 16 Oct 2020 18:02:25 +0300</pubDate>
       
-      <guid>https://yuklia.github.io/tags/swarm/</guid>
+      <guid>http://juliakostrikova.com/tags/swarm/</guid>
       <description></description>
     </item>
     
     <item>
       <title>traefik</title>
-      <link>https://yuklia.github.io/tags/traefik/</link>
+      <link>http://juliakostrikova.com/tags/traefik/</link>
       <pubDate>Fri, 16 Oct 2020 18:02:25 +0300</pubDate>
       
-      <guid>https://yuklia.github.io/tags/traefik/</guid>
+      <guid>http://juliakostrikova.com/tags/traefik/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Algorithms</title>
-      <link>https://yuklia.github.io/tags/algorithms/</link>
+      <link>http://juliakostrikova.com/tags/algorithms/</link>
       <pubDate>Thu, 10 Sep 2020 15:35:26 +0200</pubDate>
       
-      <guid>https://yuklia.github.io/tags/algorithms/</guid>
+      <guid>http://juliakostrikova.com/tags/algorithms/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Math</title>
-      <link>https://yuklia.github.io/tags/math/</link>
+      <link>http://juliakostrikova.com/tags/math/</link>
       <pubDate>Thu, 10 Sep 2020 15:35:26 +0200</pubDate>
       
-      <guid>https://yuklia.github.io/tags/math/</guid>
+      <guid>http://juliakostrikova.com/tags/math/</guid>
       <description></description>
     </item>
     
     <item>
       <title>python</title>
-      <link>https://yuklia.github.io/tags/python/</link>
+      <link>http://juliakostrikova.com/tags/python/</link>
       <pubDate>Thu, 10 Sep 2020 15:35:26 +0200</pubDate>
       
-      <guid>https://yuklia.github.io/tags/python/</guid>
+      <guid>http://juliakostrikova.com/tags/python/</guid>
       <description></description>
     </item>
     
     <item>
       <title>php</title>
-      <link>https://yuklia.github.io/tags/php/</link>
+      <link>http://juliakostrikova.com/tags/php/</link>
       <pubDate>Fri, 10 Jul 2020 18:56:57 +0300</pubDate>
       
-      <guid>https://yuklia.github.io/tags/php/</guid>
+      <guid>http://juliakostrikova.com/tags/php/</guid>
       <description></description>
     </item>
     
     <item>
       <title>xdebug</title>
-      <link>https://yuklia.github.io/tags/xdebug/</link>
+      <link>http://juliakostrikova.com/tags/xdebug/</link>
       <pubDate>Fri, 10 Jul 2020 18:56:57 +0300</pubDate>
       
-      <guid>https://yuklia.github.io/tags/xdebug/</guid>
+      <guid>http://juliakostrikova.com/tags/xdebug/</guid>
       <description></description>
     </item>
     

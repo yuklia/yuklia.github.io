@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>SAA-C03:: Simple Storage Service (S3) | Yuliia Kostrikova</title>
+
+
+<meta name="keywords" content="aws, SAA-C03, cloud, certification, study plan, notes, Cloud architecture, AWS learning path">
+<meta name="description" content="Study Notes">
+<meta name="author" content="">
+<link rel="canonical" href="https://juliakostrikova.com/posts/saa-c03/s3/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.7140587df96a2b1a49eb723fa7063dc0c641a6cb638f3140e8d3beb4deae4f5c.css" integrity="sha256-cUBYfflqKxpJ63I/pwY9wMZBpstjjzFA6NO&#43;tN6uT1w=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://juliakostrikova.com/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://juliakostrikova.com/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://juliakostrikova.com/favicon-32x32.png">
+<link rel="manifest" href="https://juliakostrikova.com/site.webmanifest">
+<link rel="apple-touch-icon" href="https://juliakostrikova.com/apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml"  href="https://juliakostrikova.com/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="SAA-C03:: Simple Storage Service (S3)" />
+<meta property="og:description" content="Study Notes" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://juliakostrikova.com/posts/saa-c03/s3/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-01-16T15:35:26+02:00" />
+<meta property="article:modified_time" content="2023-01-16T15:35:26+02:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="SAA-C03:: Simple Storage Service (S3)"/>
+<meta name="twitter:description" content="Study Notes"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://juliakostrikova.com/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "SAA-C03:: Simple Storage Service (S3)",
+      "item": "https://juliakostrikova.com/posts/saa-c03/s3/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "SAA-C03:: Simple Storage Service (S3)",
+  "name": "SAA-C03:: Simple Storage Service (S3)",
+  "description": "Study Notes",
+  "keywords": [
+    "aws", "SAA-C03", "cloud", "certification", "study plan", "notes", "Cloud architecture", "AWS learning path"
+  ],
+  "articleBody": "S3 is Object-Based Storage Manages data as objects rather then in file systmes or data blocks.\nUpload any file type you can think of to S3. Examples include photos, videos, code, documents, and text files. Cannot be used to run an OS or DB. S3 Basics Unlimited storage. The total amount of data and the number of objects you can store is unlimited. Objects up to 5 TB in Size. S3 objects can range in size from a minimum of 0 bytes to a maximum of 5 TB. S3 Buckets. Store files in buckets (similar to folders). Tired Storage. Offers a range of storage classes designed for different use cases. Lifecycle Management. Defines automatically transition objects to a cheaper tier or delete objects that are no longer required after a set of period of time. Versioning. All versions of an object are stored and can be retrived, including deleted objects. Once enabled, versioning cannot be disabled - only suspended. Supports MFA, so you need to procced with 2-factor in order to delete an object. If you enabled public access to versioned objects, old versions will not be accessible. Working with S3 Buckets Universal Namespace. All AWS accounts share the S3 namespace. Each S3 bucket name is globally unique.\nExample S3 URLs\nhttps://bucket-name.s3.Region.amazonaws.com/key-name Key-Value Store Key the name of object (e.g., Toba.jpg) Value the data itself, which is made up of a sequence of bytes Version ID important for storing multiple versions of the same object Metadata data about the data you are storing (e.g., content-type, last-modified, etc.)\nHight Available and Highly Durable build for 99.95 - 99.99% service availability, depending on the S3 tier. designed for 99.999999999 (9 decimal places) durability for data stored in S3. data stored redundantly across multiple devices in multiple facilities Securing your data 🔒 Buckets are private by default. You have to apply public access on both the bucket and its objects in order to make the bucket public.\nEncryption 🔑 1.1 Encryption in Transit\nSSl/TLS HTTPS 1.2 Encryption at Rest: Server-Side Encryption\nSSE-S3 : S3-managed keys, using AES 256-bit encryption SSE-KMS : AWS Key Management Service-managed keys SSE-C : Customer-provided keys 1.3 Encryption at Rest: Client-Side Encryption\nencrypt you files yourself before uploading to S3 Access Control List (ACLs) Define which AWS accounts or groups are granted access and the type of access. You can attach S3 ACLs to individial objects within a bucket. Bucket Policies. S3 bucket policies specify what actions are allowed or denied (e.g., allow user Alice to PUT but not DELETE objects in the bucket.) Bucket policies work on an entire bucket level. Enforcing Server-Side Encryption 1️⃣ Console. Select encryption settings in S3 Bucket.\n2️⃣ Bucket Policy.\nx-amz-server-side-encryption: AES256 - (SSE-S3 - S3 managed keys)\nx-amz-server-side-encryption: aws:kms - (SSE-KMS - KMS managed keys)\n💡 You can create abucket policy that denies any S3 PUT request that doesn’t include the x-amz-server-side-encryption parameter in request header.\nPUT request\nPUT /my-image.jpg HTTP/1.1 Host: myBucket.s3..amazonaws.com Date: Wed, 12 Oct 2009 17:50:00 GMT Authorization: authorization string Content-Type: text/plain Content-Length: 11434 x-amz-meta-author: Janet Expect: 100-continue x-amz-server-side-encryption: AES256 [11434 bytes of object data] Static Websites on S3 S3 scales automatically to meet demand Many enterprises will put static websites on S3 when they think there is going to be a large number or requests.\nS3 Storage Classes S3 Standard data is stored redunduntly across multiple devices in multiple facilities (\u003e= 3 AZs) designed for frequent access suitable for most workloads: the default storage class; use cases include websites, content distribution, mobile and gaming applications, and big data analatics. 99.99% availability 99.999999999 (11 9’s) durability S3 Standard-Infrequent Access (S3 Standard-IA) Use Case: great for long-term storage, backups and as data store for disaster recovery files\nrapid access used for data that is accessed less frequently but requires rapid access when needed. you pay to access data there is low per-GB storage price and a per-GB retrieved fee. 99.9% availability 99.999999999 (11 9’s) durability S3 One Zone Infrequent Access Use Case: good for long-lived, infrequently accessed, non-critical data\nLike S3 Standard-IA, but data is stored redunduntly within single AZ.\ncost 20% less then regular S3 Standard-IA 99.5% availability 99.999999999 (11 9’s) durability S3 Intelligent-Tiering Use Case: If you don;t know whether you’ll be accessing data frequently or infrequently\n💵 optimization: montly fee of $0.0025 per 1,000 objects\nautomatically moves your data to the most cost-effective tier based on how frequently you access each object. 99.99% availability 99.999999999 (11 9’s) durability 3 Glacier Options you pay each time you access data use only for archieving data glacier is cheap storage optimized for data that is very infrequently accessed 99.99% availability 99.999999999 (11 9’s) durability Option 1: Glacier Instant Retrieval provides long-term data archiving with instant retrieval time for your data.\nOption 2: Glacier Flexible Retrieval ideal storage class for archive data that does not require immediate access but needs the flexibility to retrieve large sets of data at no cost, such as backup or disaster recovery use cases. can be minites or up to 12 hours.\nOption 3: Glasier Deep Archive cheapest storage class and designed for customers that retain data sests for 7-10 years or longer to meet customer needs and regulatory compliance requirements. the standard retrieval time is 12 hours and the bulk retrieval time is 48 hours.\nPerformance across the S3 Storage Classes S3 Standard S3 Intelligent-Tiering S3 Standard-IA S3 One Zone-IA+ S3 Glacier Instant Retrieval S3 Glacier Flexible Retrieval S3 Glacier Deep Archive Designed for Durability 99.999999999% (11 9’s) 99.999999999% (11 9’s) 99.999999999% (11 9’s) 99.999999999% (11 9’s) 99.999999999% (11 9’s) 99.999999999% (11 9’s) 99.999999999% (11 9’s) Designed for Availability 99.99% 99.90% 99.90% 99.50% 99.99% 99.99% 99.99% Availability SLA 99.90% 99% 99% 99% 99.90% 99.90% 99.90% AZs \u003e=3 \u003e=3 \u003e=3 1 \u003e=3 \u003e=3 \u003e=3 Min Capacity charge per Object n/a n/a 128KB 128KB 128KB 40KB 40KB Min Storage duration charge n/a 30 days 30 days 30 days 90 days 90 days 180 days Retrieval Fee n/a n/a Per GB retrieved Per GB retrieved Per GB retrieved Per GB retrieved Per GB retrieved Storage Type Object Object Object Object Object Object Object Lifecycle Transitions Yes Yes Yes Yes Yes Yes Yes Storage Classes - Costs 💵 S3 Standard general-purpose for any type of data, typically used for frequent access\nFirst 50 TB / Month 0.023$ per GB Next 450 TB / Month 0.022$ per GB Over 500 TB / Month 0.021$ per GB S3 Intelligent-Tiering cost saving strategies applied for data with unknown or changing access patterns\nno min storage duration\nFirst 50 TB / Month 0.023$ per GB Next 450 TB / Month 0.022$ per GB Over 500 TB / Month 0.021$ per GB All Storage / Month 0.0025$ per GB Monitoring and Automation, All Storage / Month 0.0025$ per 1000 Objects S3 Standard Infrequent Access long-lived but infrequently accessed data (once a month) that needs milliseconds access 30 days min storage duration\nAll Storage / Month 0.0125$ per GB S3 One Zone-Infrequent Access re-creatable infrequently accessed data that needs milliseconds access 30 days min storage duration\nAll Storage / Month 0.01$ per GB S3 Glacier long-lived archived data accssed once a quarter with instant retrieval in milliseconds\nAll Storage / Month 0.004$ per GB S3 Glacier Flexible Retrieval archived data that does not require immediate access but needs the flexibility to retrieve large sets of data at no cost. retrieval time: can be minutes or up to 12 hours 90 days min storage duration\nAll Storage / Month 0.0036$ per GB S3 Glacier Deep Archive designed to retain data sets for 7-10 years or longer. retrieval time: 12 hours and the bulk is 48 hours 180 days min storage duration\nAll Storage / Month 0.00099$ per GB Lifecycle Management automate moving object between the different storage tiers, thereby maximazing cost effectiveness. can be used in conjuction with versioning can be applied to current and noncurrent versions Example: S3 Standard: keep for 30 days -\u003e S3 IA: after 30 days -\u003e Glacier: After 90 days\nS3 Object Lock 🔒 you can use S3 Object Lock to store objects using a write once, read many model. It can help to prevent objects from being delete or modified for a fixed amount of time or indefinitely. object lock can be on individual objects or applied across the bucket as a whole object lock comes in two modes: Governance Mode, Complience Mode S3 Object Lock Modes Governance Mode\nUsers can’t overwrite or delete an object version or alter its lock settings unless they have special permissions.\nComplience Mode\nA protected object version can’t be overwritten or deleted by any user, including the root in your AWS Account. Retention mode of object can’t be changed and its retenton period can’t be shortened. Compiance mode ensures an object version can’t be overriten or deleted for the duration of the retention period.\nRetention Periods 🕥 Retention period protects an object version for a fixed amount of time. Ehen ypu place a retention period on an object version, Amazon S3 stores a timestamp in the object version’s metadata to indicate when the retention period expires.\n💡 After retention period expires, the object version can be overriten or deleted unless you also placed a legal hold on object version.\nLegal Holds Like retention period, a legal hold prevents an object version from being overriten or deleted.\nHowever, a legal holds doesn’t have an assosiated retention period and remains in effect untill removed.\nA Legal Hold can be placed and removed by any user who has s3:PutObjectLegalHold permission.\nGlacier Vault Lock Allows to deploy and enforce compiance controls for individual S3 Glacier vaults with a vault lock policy.\nyou can specify controls such as WORM, in a vault lock policy.\n🔴 once locked, the policy can’t be changed\nOptimizing S3 Performance S3 Prefixes this is folders inside you bucket. it doesn’t include object name\nbucketname/folder1/subfolder1/file.md -\u003e prefix: /folder1/subfolder1/ bucketname/folder2/subfolder1/file.md -\u003e prefix: /folder2/subfolder1/ bucketname/folder3/file.md -\u003e prefix: /folder3 S3 Performance S3 has low latency. You can get the first byte out of S3 within 100-200 milliseconds.\nYou can achive a hight number of requests:\n3,500 PUT/COPY/POST/DELETE 5,500 GET/HEAD requests per second, pre prefix.\n💡 the more prefixes you have on the bucket, the higher performance you can get. for example, 2 prefixes gives you 11,000 rps; 4 prefixes = 22,000; etc.\nLimitations with KMS 🟠 SSE-KMS; with file upload, you will call GenerateDataKey in the KMS API. -\u003e KMS quota (can’t be increased)\n🟠 SSE-KMS; with file download you will call Decrypt in the KMS API. -\u003e KMS quota (can’t be increased)\nbetter to use native S3 encryption (SSE-S3) rather then KMS\nUploads 🟢 Multipart Uploads\nrecommended for files over 100 MB required for files over 5 GB parallelize uploads (increase efficiency) Downloads 🟢 S3 Byte-Range Fetches\nparallelize downloads by specifying byte ranges. if there is a failure in the download, it it’s only for a specific byte range. Backup Data with S3 Replication you can replicate objects from one bucket to another.versioning must be enabled for both sides objects in an existing bucket are not replicated automatically delete markers are not replicated by default ",
+  "wordCount" : "1848",
+  "inLanguage": "en",
+  "datePublished": "2023-01-16T15:35:26+02:00",
+  "dateModified": "2023-01-16T15:35:26+02:00",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://juliakostrikova.com/posts/saa-c03/s3/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Yuliia Kostrikova",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://juliakostrikova.com/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://juliakostrikova.com" accesskey="h" title="Yuliia Kostrikova (Alt + H)">Yuliia Kostrikova</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://juliakostrikova.com/archives/" title="Archive">
+                    <span>Archive</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://juliakostrikova.com/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://juliakostrikova.com/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://juliakostrikova.com">Home</a>&nbsp;»&nbsp;<a href="https://juliakostrikova.com/posts/">Posts</a></div>
+    <h1 class="post-title">
+      SAA-C03:: Simple Storage Service (S3)
+    </h1>
+    <div class="post-description">
+      Study Notes
+    </div>
+    <div class="post-meta"><span title='2023-01-16 15:35:26 +0200 +0200'>January 16, 2023</span>&nbsp;·&nbsp;9 min
+
+</div>
+  </header> <div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#s3-is-object-based-storage" aria-label="S3 is Object-Based Storage">S3 is Object-Based Storage</a></li>
+                <li>
+                    <a href="#s3-basics" aria-label="S3 Basics">S3 Basics</a><ul>
+                        
+                <li>
+                    <a href="#working-with-s3-buckets" aria-label="Working with S3 Buckets">Working with S3 Buckets</a></li>
+                <li>
+                    <a href="#key-value-store" aria-label="Key-Value Store">Key-Value Store</a></li>
+                <li>
+                    <a href="#hight-available-and-highly-durable" aria-label="Hight Available and Highly Durable">Hight Available and Highly Durable</a></li>
+                <li>
+                    <a href="#securing-your-data-" aria-label="Securing your data 🔒">Securing your data 🔒</a></li>
+                <li>
+                    <a href="#enforcing-server-side-encryption" aria-label="Enforcing Server-Side Encryption">Enforcing Server-Side Encryption</a></li></ul>
+                </li>
+                <li>
+                    <a href="#static-websites-on-s3" aria-label="Static Websites on S3">Static Websites on S3</a></li>
+                <li>
+                    <a href="#s3-storage-classes" aria-label="S3 Storage Classes">S3 Storage Classes</a><ul>
+                        
+                <li>
+                    <a href="#s3-standard" aria-label="S3 Standard">S3 Standard</a></li>
+                <li>
+                    <a href="#s3-standard-infrequent-access-s3-standard-ia" aria-label="S3 Standard-Infrequent Access (S3 Standard-IA)">S3 Standard-Infrequent Access (S3 Standard-IA)</a></li>
+                <li>
+                    <a href="#s3-one-zone-infrequent-access" aria-label="S3 One Zone Infrequent Access">S3 One Zone Infrequent Access</a></li>
+                <li>
+                    <a href="#s3-intelligent-tiering" aria-label="S3 Intelligent-Tiering">S3 Intelligent-Tiering</a></li>
+                <li>
+                    <a href="#3-glacier-options" aria-label="3 Glacier Options">3 Glacier Options</a><ul>
+                        
+                <li>
+                    <a href="#option-1-glacier-instant-retrieval" aria-label="Option 1: Glacier Instant Retrieval">Option 1: Glacier Instant Retrieval</a></li>
+                <li>
+                    <a href="#option-2-glacier-flexible-retrieval" aria-label="Option 2: Glacier Flexible Retrieval">Option 2: Glacier Flexible Retrieval</a></li>
+                <li>
+                    <a href="#option-3-glasier-deep-archive" aria-label="Option 3: Glasier Deep Archive">Option 3: Glasier Deep Archive</a></li></ul>
+                </li></ul>
+                </li>
+                <li>
+                    <a href="#performance-across-the-s3-storage-classes" aria-label="Performance across the S3 Storage Classes">Performance across the S3 Storage Classes</a><ul>
+                        
+                <li>
+                    <a href="#storage-classes---costs-" aria-label="Storage Classes - Costs 💵">Storage Classes - Costs 💵</a><ul>
+                        
+                <li>
+                    <a href="#s3-standard-1" aria-label="S3 Standard">S3 Standard</a></li>
+                <li>
+                    <a href="#s3-intelligent-tiering-1" aria-label="S3 Intelligent-Tiering">S3 Intelligent-Tiering</a></li>
+                <li>
+                    <a href="#s3-standard-infrequent-access" aria-label="S3 Standard Infrequent Access">S3 Standard Infrequent Access</a></li>
+                <li>
+                    <a href="#s3-one-zone-infrequent-access-1" aria-label="S3 One Zone-Infrequent Access">S3 One Zone-Infrequent Access</a></li>
+                <li>
+                    <a href="#s3-glacier" aria-label="S3 Glacier">S3 Glacier</a></li>
+                <li>
+                    <a href="#s3-glacier-flexible-retrieval" aria-label="S3 Glacier Flexible Retrieval">S3 Glacier Flexible Retrieval</a></li>
+                <li>
+                    <a href="#s3-glacier-deep-archive" aria-label="S3 Glacier Deep Archive">S3 Glacier Deep Archive</a></li></ul>
+                </li></ul>
+                </li>
+                <li>
+                    <a href="#lifecycle-management" aria-label="Lifecycle Management">Lifecycle Management</a></li>
+                <li>
+                    <a href="#s3-object-lock-" aria-label="S3 Object Lock 🔒">S3 Object Lock 🔒</a><ul>
+                        
+                <li>
+                    <a href="#s3-object-lock-modes" aria-label="S3 Object Lock Modes">S3 Object Lock Modes</a></li></ul>
+                </li>
+                <li>
+                    <a href="#retention-periods-" aria-label="Retention Periods 🕥">Retention Periods 🕥</a></li>
+                <li>
+                    <a href="#legal-holds" aria-label="Legal Holds">Legal Holds</a></li>
+                <li>
+                    <a href="#glacier-vault-lock" aria-label="Glacier Vault Lock">Glacier Vault Lock</a></li>
+                <li>
+                    <a href="#optimizing-s3-performance" aria-label="Optimizing S3 Performance">Optimizing S3 Performance</a><ul>
+                        
+                <li>
+                    <a href="#s3-prefixes" aria-label="S3 Prefixes">S3 Prefixes</a></li>
+                <li>
+                    <a href="#s3-performance" aria-label="S3 Performance">S3 Performance</a></li>
+                <li>
+                    <a href="#limitations-with-kms" aria-label="Limitations with KMS">Limitations with KMS</a></li>
+                <li>
+                    <a href="#uploads" aria-label="Uploads">Uploads</a></li>
+                <li>
+                    <a href="#downloads" aria-label="Downloads">Downloads</a></li></ul>
+                </li>
+                <li>
+                    <a href="#backup-data-with-s3-replication" aria-label="Backup Data with S3 Replication">Backup Data with S3 Replication</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h2 id="s3-is-object-based-storage">S3 is Object-Based Storage<a hidden class="anchor" aria-hidden="true" href="#s3-is-object-based-storage">#</a></h2>
+<p>Manages data as objects rather then in file systmes or data blocks.</p>
+<ul>
+<li>Upload any file type you can think of to S3.</li>
+<li>Examples include photos, videos, code, documents, and text files.</li>
+<li>Cannot be used to run an OS or DB.</li>
+</ul>
+<h2 id="s3-basics">S3 Basics<a hidden class="anchor" aria-hidden="true" href="#s3-basics">#</a></h2>
+<ul>
+<li>Unlimited storage. The total amount of data and the number of objects you can store is unlimited.</li>
+<li>Objects <u>up to 5 TB in Size</u>. S3 objects can range in size from a minimum of 0 bytes to a maximum of 5 TB.</li>
+<li>S3 Buckets. Store files in buckets (similar to folders).</li>
+<li>Tired Storage. Offers a range of storage classes designed for different use cases.</li>
+<li>Lifecycle Management. Defines automatically transition objects to a cheaper tier or delete objects that are no longer required after a set of period of time.</li>
+<li>Versioning. All versions of an object are stored and can be retrived, <strong>including deleted objects.</strong> Once enabled, versioning cannot be disabled - only suspended. Supports MFA, so you need to procced with 2-factor in order to delete an object. If you enabled public access to versioned objects, <strong>old versions will not be accessible.</strong></li>
+</ul>
+<h3 id="working-with-s3-buckets">Working with S3 Buckets<a hidden class="anchor" aria-hidden="true" href="#working-with-s3-buckets">#</a></h3>
+<p><strong>Universal Namespace</strong>.  All AWS accounts share the S3 namespace. Each S3 bucket name is globally unique.</p>
+<p>Example S3 URLs</p>
+<pre tabindex="0"><code>https://bucket-name.s3.Region.amazonaws.com/key-name
+</code></pre><h3 id="key-value-store">Key-Value Store<a hidden class="anchor" aria-hidden="true" href="#key-value-store">#</a></h3>
+<p><strong>Key</strong> the name of object (e.g., Toba.jpg)
+<strong>Value</strong> the data itself, which is made up of a sequence of bytes
+<strong>Version ID</strong> important for storing multiple versions of the same object
+<strong>Metadata</strong> data about the data you are storing (e.g., <code>content-type</code>, <code>last-modified</code>, etc.)</p>
+<h3 id="hight-available-and-highly-durable">Hight Available and Highly Durable<a hidden class="anchor" aria-hidden="true" href="#hight-available-and-highly-durable">#</a></h3>
+<ul>
+<li>build for 99.95 - 99.99% <strong>service availability</strong>, depending on the S3 tier.</li>
+<li>designed for 99.999999999 (9 decimal places) durability for <strong>data stored</strong> in S3.</li>
+<li>data stored redundantly across multiple devices in multiple facilities</li>
+</ul>
+<h3 id="securing-your-data-">Securing your data 🔒<a hidden class="anchor" aria-hidden="true" href="#securing-your-data-">#</a></h3>
+<blockquote>
+<p>Buckets are private by default. You have to apply public access on both the bucket and its objects in order to make the bucket public.</p>
+</blockquote>
+<ol>
+<li><strong>Encryption</strong> 🔑</li>
+</ol>
+<p>1.1 Encryption in Transit</p>
+<ul>
+<li>SSl/TLS</li>
+<li>HTTPS</li>
+</ul>
+<p>1.2 Encryption at Rest: Server-Side Encryption</p>
+<ul>
+<li>SSE-S3 : S3-managed keys, using AES 256-bit encryption</li>
+<li>SSE-KMS : AWS Key Management Service-managed keys</li>
+<li>SSE-C : Customer-provided keys</li>
+</ul>
+<p>1.3 Encryption at Rest: Client-Side Encryption</p>
+<ul>
+<li>encrypt you files yourself before uploading to S3</li>
+</ul>
+<ol start="2">
+<li><strong>Access Control List (ACLs)</strong> Define which AWS accounts or groups are granted access and the type of access. You can attach S3 ACLs to <strong>individial objects within a bucket</strong>.</li>
+<li><strong>Bucket Policies</strong>. S3 bucket policies specify what actions are allowed or denied (e.g., allow user Alice to PUT but not DELETE objects in the bucket.) Bucket policies work on an <strong>entire bucket</strong> level.</li>
+</ol>
+<h3 id="enforcing-server-side-encryption">Enforcing Server-Side Encryption<a hidden class="anchor" aria-hidden="true" href="#enforcing-server-side-encryption">#</a></h3>
+<p>1️⃣ Console. Select encryption settings in S3 Bucket.</p>
+<p>2️⃣ Bucket Policy.</p>
+<p><code>x-amz-server-side-encryption: AES256</code> - (SSE-S3 -  S3 managed keys)</p>
+<p><code>x-amz-server-side-encryption: aws:kms</code> - (SSE-KMS -  KMS managed keys)</p>
+<blockquote>
+<p>💡 You can create abucket policy that denies any S3 PUT request that doesn&rsquo;t include the <code>x-amz-server-side-encryption</code> parameter in request header.</p>
+</blockquote>
+<p>PUT request</p>
+<pre tabindex="0"><code>PUT /my-image.jpg HTTP/1.1
+Host: myBucket.s3.&lt;Region&gt;.amazonaws.com
+Date: Wed, 12 Oct 2009 17:50:00 GMT
+Authorization: authorization string
+Content-Type: text/plain
+Content-Length: 11434
+x-amz-meta-author: Janet
+Expect: 100-continue
+x-amz-server-side-encryption: AES256
+[11434 bytes of object data]
+</code></pre><h2 id="static-websites-on-s3">Static Websites on S3<a hidden class="anchor" aria-hidden="true" href="#static-websites-on-s3">#</a></h2>
+<p><strong>S3 scales automatically to meet demand</strong> Many enterprises will put static websites on S3 when they think there is going to be a large number or requests.</p>
+<hr>
+<h2 id="s3-storage-classes">S3 Storage Classes<a hidden class="anchor" aria-hidden="true" href="#s3-storage-classes">#</a></h2>
+<h3 id="s3-standard">S3 Standard<a hidden class="anchor" aria-hidden="true" href="#s3-standard">#</a></h3>
+<ul>
+<li>data is stored redunduntly across multiple devices in multiple facilities (&gt;= 3 AZs)</li>
+<li>designed for frequent access</li>
+<li>suitable for most workloads: the default storage class; use cases include websites, content distribution, mobile and gaming applications, and big data analatics.</li>
+<li>99.99% availability</li>
+<li>99.999999999 (11 9&rsquo;s) durability</li>
+</ul>
+<h3 id="s3-standard-infrequent-access-s3-standard-ia">S3 Standard-Infrequent Access (S3 Standard-IA)<a hidden class="anchor" aria-hidden="true" href="#s3-standard-infrequent-access-s3-standard-ia">#</a></h3>
+<blockquote>
+<p>Use Case: great for <strong>long-term storage, backups and as data store for disaster recovery files</strong></p>
+</blockquote>
+<ul>
+<li><strong>rapid access</strong> used for data that is accessed less frequently but requires rapid access when needed.</li>
+<li><strong>you pay to access data</strong> there is low per-GB storage price and a per-GB retrieved fee.</li>
+<li>99.9% availability</li>
+<li>99.999999999 (11 9&rsquo;s) durability</li>
+</ul>
+<h3 id="s3-one-zone-infrequent-access">S3 One Zone Infrequent Access<a hidden class="anchor" aria-hidden="true" href="#s3-one-zone-infrequent-access">#</a></h3>
+<blockquote>
+<p>Use Case: good for long-lived, infrequently accessed, non-critical data</p>
+</blockquote>
+<p>Like S3 Standard-IA, but data is stored redunduntly within single AZ.</p>
+<ul>
+<li>cost 20% less then regular S3 Standard-IA</li>
+<li>99.5% availability</li>
+<li>99.999999999 (11 9&rsquo;s) durability</li>
+</ul>
+<h3 id="s3-intelligent-tiering">S3 Intelligent-Tiering<a hidden class="anchor" aria-hidden="true" href="#s3-intelligent-tiering">#</a></h3>
+<blockquote>
+<p>Use Case: If you don;t know whether you&rsquo;ll be accessing data <strong>frequently</strong> or <strong>infrequently</strong></p>
+</blockquote>
+<blockquote>
+<p>💵 optimization: montly fee of $0.0025 per 1,000 objects</p>
+</blockquote>
+<ul>
+<li>automatically moves your data to the most cost-effective tier based on how frequently you access each object.</li>
+<li>99.99% availability</li>
+<li>99.999999999 (11 9&rsquo;s) durability</li>
+</ul>
+<h3 id="3-glacier-options">3 Glacier Options<a hidden class="anchor" aria-hidden="true" href="#3-glacier-options">#</a></h3>
+<ul>
+<li>you pay each time you access data</li>
+<li>use only for archieving data</li>
+<li>glacier is cheap storage</li>
+<li>optimized for data that is very infrequently accessed</li>
+<li>99.99% availability</li>
+<li>99.999999999 (11 9&rsquo;s) durability</li>
+</ul>
+<h4 id="option-1-glacier-instant-retrieval">Option 1: Glacier Instant Retrieval<a hidden class="anchor" aria-hidden="true" href="#option-1-glacier-instant-retrieval">#</a></h4>
+<p>provides <strong>long-term data archiving</strong> with instant retrieval time for your data.</p>
+<h4 id="option-2-glacier-flexible-retrieval">Option 2: Glacier Flexible Retrieval<a hidden class="anchor" aria-hidden="true" href="#option-2-glacier-flexible-retrieval">#</a></h4>
+<p>ideal storage class for archive data that does not require immediate access but needs the flexibility to retrieve large sets of data at no cost, such as backup or disaster recovery use cases. can be minites or up to 12 hours.</p>
+<h4 id="option-3-glasier-deep-archive">Option 3: Glasier Deep Archive<a hidden class="anchor" aria-hidden="true" href="#option-3-glasier-deep-archive">#</a></h4>
+<p>cheapest storage class and designed for customers that retain data sests for 7-10 years or longer to meet customer needs and regulatory compliance requirements. the standard retrieval time is 12 hours and the bulk retrieval time is 48 hours.</p>
+<h2 id="performance-across-the-s3-storage-classes">Performance across the S3 Storage Classes<a hidden class="anchor" aria-hidden="true" href="#performance-across-the-s3-storage-classes">#</a></h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>S3 Standard</th>
+<th>S3 Intelligent-Tiering</th>
+<th>S3 Standard-IA</th>
+<th>S3 One Zone-IA+</th>
+<th>S3 Glacier Instant Retrieval</th>
+<th>S3 Glacier Flexible Retrieval</th>
+<th>S3 Glacier Deep Archive</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Designed for Durability</td>
+<td>99.999999999% (11 9&rsquo;s)</td>
+<td>99.999999999% (11 9&rsquo;s)</td>
+<td>99.999999999% (11 9&rsquo;s)</td>
+<td>99.999999999% (11 9&rsquo;s)</td>
+<td>99.999999999% (11 9&rsquo;s)</td>
+<td>99.999999999% (11 9&rsquo;s)</td>
+<td>99.999999999% (11 9&rsquo;s)</td>
+</tr>
+<tr>
+<td>Designed for Availability</td>
+<td>99.99%</td>
+<td>99.90%</td>
+<td>99.90%</td>
+<td>99.50%</td>
+<td>99.99%</td>
+<td>99.99%</td>
+<td>99.99%</td>
+</tr>
+<tr>
+<td>Availability SLA</td>
+<td>99.90%</td>
+<td>99%</td>
+<td>99%</td>
+<td>99%</td>
+<td>99.90%</td>
+<td>99.90%</td>
+<td>99.90%</td>
+</tr>
+<tr>
+<td>AZs</td>
+<td>&gt;=3</td>
+<td>&gt;=3</td>
+<td>&gt;=3</td>
+<td>1</td>
+<td>&gt;=3</td>
+<td>&gt;=3</td>
+<td>&gt;=3</td>
+</tr>
+<tr>
+<td>Min Capacity charge per Object</td>
+<td>n/a</td>
+<td>n/a</td>
+<td>128KB</td>
+<td>128KB</td>
+<td>128KB</td>
+<td>40KB</td>
+<td>40KB</td>
+</tr>
+<tr>
+<td>Min Storage duration charge</td>
+<td>n/a</td>
+<td>30 days</td>
+<td>30 days</td>
+<td>30 days</td>
+<td>90 days</td>
+<td>90 days</td>
+<td>180 days</td>
+</tr>
+<tr>
+<td>Retrieval Fee</td>
+<td>n/a</td>
+<td>n/a</td>
+<td>Per GB retrieved</td>
+<td>Per GB retrieved</td>
+<td>Per GB retrieved</td>
+<td>Per GB retrieved</td>
+<td>Per GB retrieved</td>
+</tr>
+<tr>
+<td>Storage Type</td>
+<td>Object</td>
+<td>Object</td>
+<td>Object</td>
+<td>Object</td>
+<td>Object</td>
+<td>Object</td>
+<td>Object</td>
+</tr>
+<tr>
+<td>Lifecycle Transitions</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="storage-classes---costs-">Storage Classes - Costs 💵<a hidden class="anchor" aria-hidden="true" href="#storage-classes---costs-">#</a></h3>
+<h4 id="s3-standard-1">S3 Standard<a hidden class="anchor" aria-hidden="true" href="#s3-standard-1">#</a></h4>
+<p><em>general-purpose for any type of data, typically used for frequent access</em></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>First 50 TB / Month</td>
+<td>0.023$ per GB</td>
+</tr>
+<tr>
+<td>Next 450 TB / Month</td>
+<td>0.022$ per GB</td>
+</tr>
+<tr>
+<td>Over 500 TB / Month</td>
+<td>0.021$ per GB</td>
+</tr>
+</tbody>
+</table>
+<h4 id="s3-intelligent-tiering-1">S3 Intelligent-Tiering<a hidden class="anchor" aria-hidden="true" href="#s3-intelligent-tiering-1">#</a></h4>
+<p><em>cost saving strategies applied for data with unknown or changing access patterns</em></p>
+<p>no min storage duration</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>First 50 TB / Month</td>
+<td>0.023$ per GB</td>
+</tr>
+<tr>
+<td>Next 450 TB / Month</td>
+<td>0.022$ per GB</td>
+</tr>
+<tr>
+<td>Over 500 TB / Month</td>
+<td>0.021$ per GB</td>
+</tr>
+<tr>
+<td>All Storage / Month</td>
+<td>0.0025$ per GB</td>
+</tr>
+<tr>
+<td>Monitoring and Automation, All Storage / Month</td>
+<td>0.0025$ per 1000 Objects</td>
+</tr>
+</tbody>
+</table>
+<h4 id="s3-standard-infrequent-access">S3 Standard Infrequent Access<a hidden class="anchor" aria-hidden="true" href="#s3-standard-infrequent-access">#</a></h4>
+<p><em>long-lived but infrequently accessed data (once a month) that needs milliseconds access</em>
+30 days min storage duration</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>All Storage / Month</td>
+<td>0.0125$ per GB</td>
+</tr>
+</tbody>
+</table>
+<h4 id="s3-one-zone-infrequent-access-1">S3 One Zone-Infrequent Access<a hidden class="anchor" aria-hidden="true" href="#s3-one-zone-infrequent-access-1">#</a></h4>
+<p><em>re-creatable infrequently accessed data that needs milliseconds access</em>
+30 days min storage duration</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>All Storage / Month</td>
+<td>0.01$ per GB</td>
+</tr>
+</tbody>
+</table>
+<h4 id="s3-glacier">S3 Glacier<a hidden class="anchor" aria-hidden="true" href="#s3-glacier">#</a></h4>
+<p><em>long-lived archived data accssed once a quarter with instant retrieval in milliseconds</em></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>All Storage / Month</td>
+<td>0.004$ per GB</td>
+</tr>
+</tbody>
+</table>
+<h4 id="s3-glacier-flexible-retrieval">S3 Glacier Flexible Retrieval<a hidden class="anchor" aria-hidden="true" href="#s3-glacier-flexible-retrieval">#</a></h4>
+<p><em>archived data that does not require immediate access but needs the flexibility to retrieve large sets of data at no cost. retrieval time: can be minutes or up to 12 hours</em>
+90 days min storage duration</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>All Storage / Month</td>
+<td>0.0036$ per GB</td>
+</tr>
+</tbody>
+</table>
+<h4 id="s3-glacier-deep-archive">S3 Glacier Deep Archive<a hidden class="anchor" aria-hidden="true" href="#s3-glacier-deep-archive">#</a></h4>
+<p><em>designed to retain data sets for 7-10 years or longer. retrieval time: 12 hours and the bulk is 48 hours</em>
+180 days min storage duration</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>All Storage / Month</td>
+<td>0.00099$ per GB</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="lifecycle-management">Lifecycle Management<a hidden class="anchor" aria-hidden="true" href="#lifecycle-management">#</a></h2>
+<ul>
+<li>automate moving object between the different storage tiers, thereby maximazing cost effectiveness.</li>
+<li>can be used in conjuction with versioning</li>
+<li>can be applied to current and noncurrent versions</li>
+</ul>
+<p>Example: S3 Standard: keep for 30 days -&gt; S3 IA: after 30 days -&gt; Glacier: After 90 days</p>
+<h2 id="s3-object-lock-">S3 Object Lock 🔒<a hidden class="anchor" aria-hidden="true" href="#s3-object-lock-">#</a></h2>
+<ul>
+<li>you can use S3 Object Lock to store objects using a <strong>write once, read many</strong> model. It can help to prevent objects from being delete or modified for a fixed amount of time or indefinitely.</li>
+<li>object lock can be on <strong>individual objects</strong> or applied <strong>across the bucket</strong> as a whole</li>
+<li>object lock comes in two modes: <strong>Governance Mode</strong>, <strong>Complience Mode</strong></li>
+</ul>
+<h3 id="s3-object-lock-modes">S3 Object Lock Modes<a hidden class="anchor" aria-hidden="true" href="#s3-object-lock-modes">#</a></h3>
+<p><strong>Governance Mode</strong></p>
+<blockquote>
+<p>Users can&rsquo;t overwrite or delete an object version or alter its lock settings unless they have special permissions.</p>
+</blockquote>
+<p><strong>Complience Mode</strong></p>
+<blockquote>
+<p>A protected object version can&rsquo;t be overwritten or deleted by any user, including the root in your AWS Account.
+Retention mode of object can&rsquo;t be changed and its retenton period can&rsquo;t be shortened. Compiance mode ensures an object version can&rsquo;t be overriten or deleted for the duration of the retention period.</p>
+</blockquote>
+<h2 id="retention-periods-">Retention Periods 🕥<a hidden class="anchor" aria-hidden="true" href="#retention-periods-">#</a></h2>
+<blockquote>
+<p>Retention period <strong>protects an object version for  a fixed amount of time</strong>. Ehen ypu place a retention period on an object version, Amazon S3 stores a timestamp in the object version&rsquo;s metadata to indicate when the retention period expires.</p>
+</blockquote>
+<blockquote>
+<p>💡 After retention period expires, the object version can be <strong>overriten or deleted</strong> unless you also placed <strong>a legal hold</strong> on object version.</p>
+</blockquote>
+<h2 id="legal-holds">Legal Holds<a hidden class="anchor" aria-hidden="true" href="#legal-holds">#</a></h2>
+<p>Like retention period, a <u>legal hold</u> prevents an object version from being overriten or deleted.</p>
+<p>However, a legal holds doesn&rsquo;t have an assosiated retention period and remains in effect untill removed.</p>
+<p>A <u>Legal Hold</u> can be placed and removed by any user who has <code>s3:PutObjectLegalHold</code> permission.</p>
+<h2 id="glacier-vault-lock">Glacier Vault Lock<a hidden class="anchor" aria-hidden="true" href="#glacier-vault-lock">#</a></h2>
+<blockquote>
+<p>Allows to deploy and enforce compiance controls for individual S3 Glacier vaults with a <u>vault lock policy.</u></p>
+</blockquote>
+<blockquote>
+<p>you can specify controls such as WORM, in a vault lock policy.</p>
+</blockquote>
+<blockquote>
+<p>🔴 once locked, the policy can&rsquo;t be changed</p>
+</blockquote>
+<hr>
+<h2 id="optimizing-s3-performance">Optimizing S3 Performance<a hidden class="anchor" aria-hidden="true" href="#optimizing-s3-performance">#</a></h2>
+<h3 id="s3-prefixes">S3 Prefixes<a hidden class="anchor" aria-hidden="true" href="#s3-prefixes">#</a></h3>
+<p>this is folders inside you bucket. it doesn&rsquo;t include object name</p>
+<pre tabindex="0"><code class="language-example" data-lang="example">bucketname/folder1/subfolder1/file.md -&gt; prefix: /folder1/subfolder1/
+bucketname/folder2/subfolder1/file.md -&gt; prefix: /folder2/subfolder1/
+bucketname/folder3/file.md -&gt; prefix: /folder3
+</code></pre><h3 id="s3-performance">S3 Performance<a hidden class="anchor" aria-hidden="true" href="#s3-performance">#</a></h3>
+<p>S3 has low latency. You can get <u>the first byte out of S3 within 100-200 milliseconds.</u></p>
+<p>You can achive a hight number of requests:</p>
+<ul>
+<li>3,500 PUT/COPY/POST/DELETE</li>
+<li>5,500 GET/HEAD</li>
+</ul>
+<p>requests per second, pre prefix.</p>
+<blockquote>
+<p>💡 <u>the more prefixes you have on the bucket, the higher performance you can get.</u>
+for example, 2 prefixes gives you 11,000 rps; 4 prefixes = 22,000; etc.</p>
+</blockquote>
+<h3 id="limitations-with-kms">Limitations with KMS<a hidden class="anchor" aria-hidden="true" href="#limitations-with-kms">#</a></h3>
+<p>🟠 SSE-KMS; with file upload, you will call <code>GenerateDataKey</code> in the KMS API. -&gt; KMS quota (can&rsquo;t be increased)</p>
+<p>🟠 SSE-KMS; with file download you will call <code>Decrypt</code> in the KMS API. -&gt; KMS quota (can&rsquo;t be increased)</p>
+<p>better to use native S3 encryption (SSE-S3) rather then KMS</p>
+<h3 id="uploads">Uploads<a hidden class="anchor" aria-hidden="true" href="#uploads">#</a></h3>
+<p>🟢 Multipart Uploads</p>
+<ul>
+<li>recommended for files <strong>over 100 MB</strong></li>
+<li>required for files <strong>over 5 GB</strong></li>
+<li>parallelize uploads (increase efficiency)</li>
+</ul>
+<h3 id="downloads">Downloads<a hidden class="anchor" aria-hidden="true" href="#downloads">#</a></h3>
+<p>🟢 S3 Byte-Range Fetches</p>
+<ul>
+<li>parallelize downloads by specifying byte ranges.</li>
+<li>if there is a failure in the download, it it&rsquo;s only for a specific byte range.</li>
+</ul>
+<hr>
+<h2 id="backup-data-with-s3-replication">Backup Data with S3 Replication<a hidden class="anchor" aria-hidden="true" href="#backup-data-with-s3-replication">#</a></h2>
+<ul>
+<li>you can replicate objects from one bucket to another.<u>versioning must be enabled for both sides</u></li>
+<li>objects in an existing bucket are not replicated automatically</li>
+<li><u>delete markers are not replicated by default</u></li>
+</ul>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://juliakostrikova.com/tags/aws/">aws</a></li>
+      <li><a href="https://juliakostrikova.com/tags/saa-c03/">SAA-C03</a></li>
+      <li><a href="https://juliakostrikova.com/tags/cloud/">cloud</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="next" href="https://juliakostrikova.com/posts/saa-c03/aws-fundamentals/">
+    <span class="title">Next »</span>
+    <br>
+    <span>SAA-C03:: Introduction to Cloud Computing and AWS</span>
+  </a>
+</nav>
+
+  </footer><script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
+<script>
+  kofiWidgetOverlay.draw('yuklia', {
+    'type': 'floating-chat',
+    'floating-chat.donateButton.text': '',
+    'floating-chat.donateButton.background-color': '#ffffff',
+    'floating-chat.donateButton.text-color': '#323842'
+  });
+</script>
+
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "yuklia-dev" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2023 <a href="https://juliakostrikova.com">Yuliia Kostrikova</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

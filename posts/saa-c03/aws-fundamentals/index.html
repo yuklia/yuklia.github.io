@@ -5,19 +5,20 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
-<title>Evening 1 // SAA-C03 :: AWS Fundamentals | Yuliia Kostrikova</title>
-<meta name="keywords" content="aws, SAA-C03">
-<meta name="description" content="AWS Global Infrastructure At the time of writing this note, The AWS Cloud spans ⬇️
-99 Availability Zones within 31 geographic regions around the world 💡 with announced plans for 15 more Availability Zones and 5 more AWS Regions in Canada, Israel, Malaysia, New Zealand, and Thailand.
-Availability Zones Data Centers Regions Edge Locations AWS Management Console ">
+<title>SAA-C03:: Introduction to Cloud Computing and AWS | Yuliia Kostrikova</title>
+
+
+<meta name="keywords" content="aws, SAA-C03, cloud, certification, study plan, notes, Cloud architecture, AWS learning path">
+<meta name="description" content="Study Notes">
 <meta name="author" content="">
-<link rel="canonical" href="https://yuklia.github.io/posts/saa-c03/aws-fundamentals/">
+<link rel="canonical" href="https://juliakostrikova.com/posts/saa-c03/aws-fundamentals/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.7140587df96a2b1a49eb723fa7063dc0c641a6cb638f3140e8d3beb4deae4f5c.css" integrity="sha256-cUBYfflqKxpJ63I/pwY9wMZBpstjjzFA6NO&#43;tN6uT1w=" rel="preload stylesheet" as="style">
-<link rel="icon" href="https://yuklia.github.io/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="https://yuklia.github.io/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://yuklia.github.io/favicon-32x32.png">
-<link rel="apple-touch-icon" href="https://yuklia.github.io/apple-touch-icon.png">
-<link rel="mask-icon" href="https://yuklia.github.io/safari-pinned-tab.svg">
+<link rel="icon" href="https://juliakostrikova.com/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://juliakostrikova.com/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://juliakostrikova.com/favicon-32x32.png">
+<link rel="manifest" href="https://juliakostrikova.com/site.webmanifest">
+<link rel="apple-touch-icon" href="https://juliakostrikova.com/apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml"  href="https://juliakostrikova.com/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
 <noscript>
@@ -56,31 +57,16 @@ Availability Zones Data Centers Regions Edge Locations AWS Management Console ">
         }
 
     </style>
-</noscript>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-58M1TNK17W"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-58M1TNK17W', { 'anonymize_ip': false });
-}
-</script>
-<meta property="og:title" content="Evening 1 // SAA-C03 :: AWS Fundamentals" />
-<meta property="og:description" content="AWS Global Infrastructure At the time of writing this note, The AWS Cloud spans ⬇️
-99 Availability Zones within 31 geographic regions around the world 💡 with announced plans for 15 more Availability Zones and 5 more AWS Regions in Canada, Israel, Malaysia, New Zealand, and Thailand.
-Availability Zones Data Centers Regions Edge Locations AWS Management Console " />
+</noscript><meta property="og:title" content="SAA-C03:: Introduction to Cloud Computing and AWS" />
+<meta property="og:description" content="Study Notes" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://yuklia.github.io/posts/saa-c03/aws-fundamentals/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2023-04-18T15:35:26+02:00" />
-<meta property="article:modified_time" content="2023-04-18T15:35:26+02:00" />
+<meta property="og:url" content="https://juliakostrikova.com/posts/saa-c03/aws-fundamentals/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-01-03T19:35:26+02:00" />
+<meta property="article:modified_time" content="2023-01-03T19:35:26+02:00" />
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Evening 1 // SAA-C03 :: AWS Fundamentals"/>
-<meta name="twitter:description" content="AWS Global Infrastructure At the time of writing this note, The AWS Cloud spans ⬇️
-99 Availability Zones within 31 geographic regions around the world 💡 with announced plans for 15 more Availability Zones and 5 more AWS Regions in Canada, Israel, Malaysia, New Zealand, and Thailand.
-Availability Zones Data Centers Regions Edge Locations AWS Management Console "/>
+<meta name="twitter:title" content="SAA-C03:: Introduction to Cloud Computing and AWS"/>
+<meta name="twitter:description" content="Study Notes"/>
 
 
 <script type="application/ld+json">
@@ -92,13 +78,13 @@ Availability Zones Data Centers Regions Edge Locations AWS Management Console "/
       "@type": "ListItem",
       "position":  2 ,
       "name": "Posts",
-      "item": "https://yuklia.github.io/posts/"
+      "item": "https://juliakostrikova.com/posts/"
     }, 
     {
       "@type": "ListItem",
       "position":  3 ,
-      "name": "Evening 1 // SAA-C03 :: AWS Fundamentals",
-      "item": "https://yuklia.github.io/posts/saa-c03/aws-fundamentals/"
+      "name": "SAA-C03:: Introduction to Cloud Computing and AWS",
+      "item": "https://juliakostrikova.com/posts/saa-c03/aws-fundamentals/"
     }
   ]
 }
@@ -107,27 +93,27 @@ Availability Zones Data Centers Regions Edge Locations AWS Management Console "/
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "Evening 1 // SAA-C03 :: AWS Fundamentals",
-  "name": "Evening 1 \/\/ SAA-C03 :: AWS Fundamentals",
-  "description": "AWS Global Infrastructure At the time of writing this note, The AWS Cloud spans ⬇️\n99 Availability Zones within 31 geographic regions around the world 💡 with announced plans for 15 more Availability Zones and 5 more AWS Regions in Canada, Israel, Malaysia, New Zealand, and Thailand.\nAvailability Zones Data Centers Regions Edge Locations AWS Management Console ",
+  "headline": "SAA-C03:: Introduction to Cloud Computing and AWS",
+  "name": "SAA-C03:: Introduction to Cloud Computing and AWS",
+  "description": "Study Notes",
   "keywords": [
-    "aws", "SAA-C03"
+    "aws", "SAA-C03", "cloud", "certification", "study plan", "notes", "Cloud architecture", "AWS learning path"
   ],
-  "articleBody": "AWS Global Infrastructure At the time of writing this note, The AWS Cloud spans ⬇️\n99 Availability Zones within 31 geographic regions around the world 💡 with announced plans for 15 more Availability Zones and 5 more AWS Regions in Canada, Israel, Malaysia, New Zealand, and Thailand.\nAvailability Zones Data Centers Regions Edge Locations AWS Management Console ",
-  "wordCount" : "57",
+  "articleBody": "Virtualization The technology that lies at the core of all cloud operations is virtualization. Virtualization lets you divide the hardware resources of a single physical server into smaller units. That physical server could therefore host multiple virtual machines (VMs) running their own complete operating systems, each with its own memory, storage, and network access.\na virtual machine host Cloud Computing Major cloud providers like AWS have enormous server farms where hundreds of thousands of servers and disk drives are maintained along with the network cabling necessary to connect them. A well-built virtualized environment could provide a virtual server using storage, memory, compute cycles, and network bandwidth collected from the most efficient mix of available sources it can find. A cloud computing platform offers on-demand, self-service access to pooled compute resources where your usage is metered and billed according to the volume you consume. Cloud computing systems allow for precise billing models, sometimes involving fractions of a penny for an hour of consumption.\nAWS Global Infrastructure At the time of writing this note, The AWS Cloud spans ⬇️\n102 Availability Zones within 32 geographic regions around the world 400+ Edge Locations and 13 Regional Edge Caches 💡 with announced plans for 15 more Availability Zones and 5 more AWS Regions in Canada, Israel, Malaysia, New Zealand, and Thailand.\nAvailability Zones / Data Centers An Availability Zone (AZ) is a data center. AZ is one or more discrete data centers with redundant power, networking, and connectivity in an AWS Region.\nAll AZs in an AWS Region are interconnected with high-bandwidth, low-latency networking, over fully redundant, dedicated metro fiber providing high-throughput, low-latency networking between AZs. All traffic between AZs is encrypted.\nIf an application is partitioned across AZs, companies are better isolated and protected from issues such as\npower outages, lightning strikes, tornadoes, earthquakes, and more. AZs are physically separated by a meaningful distance, many kilometers, from any other AZ, although all are within 100 km (60 miles) of each other.\nRegions A region is a geographical area. Each Region consists of 2 (or more) Availability Zones.\nEdge Networking Edge networking in AWS refers to the concept of distributing content, applications, and services closer to end-users or devices. This approach aims to reduce latency and improve performance by minimizing the distance data needs to travel. AWS offers several services and features that support edge networking, such as\nAmazon CloudFront, AWS Global Accelerator, Amazon Route 53. These services reside at AWS’ global edge locations connected by dedicated 100Gbps redundant fiber .\nAmazon CloudFront This is a content delivery network (CDN) service that caches and delivers content, including\nweb pages, images, videos, other assets from multiple edge locations around the world. It helps ensure that users can access content with minimal delay, regardless of their geographical location.\nAWS Global Accelerator This service allows you to direct traffic over the AWS global network infrastructure, dynamically routing requests to the nearest and most optimal AWS endpoint. It improves the availability and performance of applications by leveraging Anycast routing.\nIn Anycast routing, multiple servers or network nodes are configured with the same IP address. When a user sends a request to that IP address, the network routes the request to the nearest available node using routing protocols and metrics such as network topology, latency, and other factors.\nAmazon Route 53 AWS’s domain name system (DNS) service, Route 53, can be used to route traffic based on geographic location, latency, health, or other routing policies. This helps optimize the distribution of traffic and ensures efficient access to resources.\nIn fact, it focuses on four distinct areas:\nDomain registration DNS management Availability monitoring (health checks) Traffic management (routing policies) Route 53 now also provides an Application Recovery Controller through which you can configure recovery groups, readiness checks, and routing control.\nSecurity and Identity Identity and Access Management (IAM) You use IAM to administer user and programmatic access and authentication to your AWS account. Through the use of users, groups, roles, and policies, you can control exactly who and what can access and/or work with any of your AWS resources.\nKey Management Service (KMS) KMS is a managed service that allows you to administrate the creation and use of encryption keys to secure data used by and for any of your AWS resources.\nDirectory Service For AWS environments that need to manage identities and relationships, Directory Service can integrate AWS resources with identity providers like Amazon Cognito and Microsoft AD domains.\nCompute EC2 The central focus within a conventional datacenter or server room revolves around its invaluable servers. However, to harness the utility of these servers, one must incorporate elements such as racks, power supplies, cabling, switches, firewalls, and cooling systems. Amazon Web Services’ (AWS) Elastic Compute Cloud (EC2) is meticulously crafted to faithfully emulate the experience of a datacenter or server room. At its core lies the EC2 virtual server, referred to as an “instance.” Yet, akin to the scenario of a local server room described earlier, AWS offers an array of services meticulously designed to bolster and refine the operations of your workloads. These encompass tools for overseeing and managing resources, alongside purpose-built platforms catering to the coordination of containers.\nLambda At its core, AWS Lambda allows developers to encapsulate discrete pieces of functionality into self-contained units known as functions. These functions can be triggered by a multitude of events, ranging from HTTP requests and changes to data stored in Amazon S3, to updates in databases and modifications in the AWS Management Console. Each function executes in a completely isolated environment, with its own compute resources and dependencies, ensuring optimal performance and scalability.\nElastic Beanstalk Beanstalk is a managed service that abstracts the provi- sioning of AWS compute and networking infrastructure. You are required to do nothing more than push your application code, and Beanstalk automatically launches and manages all the necessary services in the background.\nAuto Scaling Copies of running EC2 instances can be defined as image templates and automatically launched (or scaled up) when client demand can’t be met by existing instances. As demand drops, unused instances can be terminated (or scaled down).\nElastic Load Balancing Incoming network traffic can be directed between multiple web servers to ensure that a single web server isn’t overwhelmed while other servers are underused or that traffic isn’t directed to failed servers.\nElastic Container Service Compute workloads using container technologies like Docker and Kubernetes can be provisioned, automated, deployed, and administered using full integration with your other AWS account resources. Kubernetes workloads have their own environment: Amazon Elastic Kubernetes Service (EKS).\nStorage S3 S3 offers highly versatile, reliable, and inexpensive object storage that’s great for data storage and backups. It’s also commonly used as part of larger AWS production processes, including through the storage of script, template, and log files.\nS3 Glacier A good choice for when you need large data archives stored cheaply over the long term and can live with retrieval delays measuring in the hours. Glacier’s life cycle management is closely integrated with S3.\nEBS EBS provides the persistent virtual storage drives that host the operating systems and working data of an EC2 instance. They’re meant to mimic the function of the storage drives and partitions attached to physical servers.\nEBS-Provisioned IOPS SSD If your applications will require intense rates of I/O operations, then you should consider provisioned IOPS. There are currently three flavors of provisioned IOPS volumes: io1, io2, and io2 Block Express. io1 can deliver up to 50 IOPS/GB to a limit of 64,000 IOPS (when attached to an AWS Nitro–compliant EC2 instance) with a maximum throughput of 1,000 MB/s per volume. io2 can provide up to 500 IOPS/GB. And io2 Block Express can give you 4,000 MB/s throughput and 256,000 IOPS/volume.\nEBS General-Purpose SSD For most regular server workloads that, ideally, deliver low-latency performance, general- purpose SSDs will work well. You’ll get a maximum of 3,000 IOPS/volume. For refer- ence, assuming 3,000 IOPS per volume and a single daily snapshot, a general-purpose SSD used as a typical 8 GB boot drive for a Linux instance would, at current rates, cost you $3.29/month.\nHDD Volumes For large data stores where quick access isn’t important, you can find cost savings using older spinning hard drive technologies. The sc1 volume type provides the lowest price of any EBS storage ($0.015/GB-month). Throughput optimized hard drive volumes (st1) are available for larger stores where infrequent bursts of access at a rate of 250 MB/s per TB are sufficient. st1 volumes cost $0.045/GB per month. The EBS Create Volume dialog box cur- rently offers a Magnetic (Standard) volume type.\nEFS The Elastic File System (EFS) provides automatically scalable and shareable file storage to be accessed from Linux instances. EFS-based files are designed to be accessed from within a virtual private cloud (VPC) via Network File System (NFS) mounts on EC2 Linux instances or from your on-premises servers through AWS Direct Connect connections. The goal is to make it easy to enable secure, low-latency, and durable file sharing among multiple instances.\nFSx Amazon FSx comes in four flavors: FSx for Lustre, FSx for Windows File Server, FSx for OpenZFS, and FSx for NetApp ONTAP. Lustre is an open source distributed filesystem built to give Linux clusters access to high-performance filesystems for use in compute-intensive operations. As with Lustre, Amazon’s FSx service brings OpenZFS and NetApp filesystem capabilities to your AWS infrastructure. FSx for Windows File Server, as you can tell from the name, offers the kind of file-sharing service EFS provides but for Windows servers rather than Linux. FSx for Windows File Server integrates operations with Server Message Block (SMB), NTFS, and Microsoft Active Directory.\nStorage Gateway Storage Gateway is a hybrid storage system that exposes AWS cloud storage as a local, on-premises appliance. Storage Gateway can be a great tool for migration and data backup and as part of disaster recovery operations.\nAWS Snow Family Migrating large data sets to the cloud over a normal Internet connection can sometimes require far too much time and bandwidth to be practical. If you’re looking to move terabyte- or even petabyte-scaled data for backup or active use within AWS, ordering a Snow device might be the best option. When requested, AWS will ship you a physical, appropriately sized device to which you transfer your data. When you’re ready, you can then send the device back to Amazon. Amazon will then transfer your data to buckets on S3.\nAWS DataSync DataSync specializes in moving on-premises data stores into your AWS account with a minimum of fuss. It works over your regular Internet connection, so it’s not as useful as Snowball for really large data sets. But it is much more flexible, since you’re not limited to S3 (or RDS as you are with AWS Database Migration Service). Using DataSync, you can drop your data into any service within your AWS account. That means you can do the following: Quickly and securely move old data out of your expensive datacenter into cheaper S3 or Glacier storage. Transfer data sets directly into S3, EFS, or FSx, where it can be processed and analyzed by your EC2 instances. Apply the power of any AWS service to any class of data as part of an easy-to-configure automated system. A single DataSync task can handle external transfer rates of up to 10 Gbps (assuming your connection has that capacity) and offers both encryption and data validation.\nDatabases RDS Amazon Relational Database Service (RDS) is a managed database service that lets you run relational database systems in the cloud. RDS takes care of setting up the database system, performing backups, ensuring high availability, and patching the database software and the underlying operating system. RDS also makes it easy to recover from database failures, restore data, and scale your databases to achieve the level of performance and availability that your application requires.\nDynamoDB DynamoDB is a managed nonrelational database service that can handle thousands of reads and writes per second. It achieves this level of performance by spreading your data across multiple partitions. A partition is a 10 GB allocation of storage for a table, and it’s backed by solid-state drives in multiple availability zones.\nRedshift Redshift is Amazon’s managed data ware- house service. Although it’s based on PostgreSQL, it’s not part of RDS. Redshift uses columnar storage, meaning that it stores the values for a column close together. This improves storage speed and efficiency and makes it faster to query data from individual col- umns.\nNetworking VPCs Like a traditional network, a VPC consists of at least one range of contiguous IP addresses. This address range is represented as a Classless Inter-Domain Routing (CIDR) block. The CIDR block determines which IP addresses may be assigned to instances and other resources within the VPC. You must assign a primary CIDR block when creating a VPC. After creating a VPC, you divide the primary VPC CIDR block into subnets that hold your AWS resources.\nDirect Connect The AWS Direct Connect service uses PrivateLink to offer private, low-latency connec- tivity to your AWS resources. One advantage of Direct Connect is that it lets you bypass the Internet altogether when accessing AWS resources, letting you avoid the unpredictable and high latency of a broadband Internet connection. This approach is useful when you need to transfer large data sets or real-time data, or you need to meet regulatory requirements that preclude transferring data over the Internet.\nApplication Integration API Gateway If you need to build an application that consumes data or other resources existing within the AWS platform, you can make reliable and safe connections using either RESTful or WebSocket APIs. API Gateway lets you publish data coming out of just about any AWS ser- vice for use in your IoT device fleets, web or mobile applications, or monitoring dashboards.\nSimple Notification Service (SNS) SNS is a notification tool that can automate the publishing of alert topics to other services (to an SQS Queue or to trigger a Lambda function, for instance), to mobile devices, or to recipients using email or SMS.\nSimple Workflow (SWF) SWF lets you coordinate a series of tasks that must be per-formed using a range of AWS services or even nondigital (meaning human) events.\nSimple Queue Service (SQS) SQS allows for event-driven messaging within distributed systems that can decouple while coordinating the discrete steps of a larger process.The data contained in your SQS messages will be reliably delivered, adding to the fault- tolerant qualities of an application.\nApplication management CloudWatch CloudWatch can be set to monitor process performance and resource utilization and, when preset thresholds are met, either send you a message or trigger an automated response.\nCloudFormation This service enables you to use template files to define full and complex AWS deployments. The ability to script your use of any AWS resources makes it easier to automate, stan- dardizing and speeding up the application launch process.\nCloudTrail CloudTrail collects records of all your account’s API events. This history is useful for account auditing and troubleshooting purposes.\nConfig The Config service is designed to help you with change management and compliance for your AWS account. You first define a desired configuration state, and Config evalu- ates any future states against that ideal. When a configura- tion change pushes too far from the ideal baseline, you’ll be notified.\nAWS Well-Architected Framework 1. Operational excellence Perform operations as code Make frequent, small, reversible changes Refine operations procedures frequently Anticipate failure Learn from all operational failures 2. Security Implement a strong identity foundation (least privilege principle) Maintain traceability Apply security at all layers Automate security best practices Implementation of controls that are defined and managed as code in version-controlled templates\nProtect data in transit and at rest Keep people away from data Prepare for security events Run incident response simulations and use tools with automation to increase your speed for detection, investigation, and recovery\n3. Reliability Automatically recover from failure Test recovery procedures Scale horizontally to increase aggregate workload availability Replace one large resource with multiple small resources to reduce the impact of a single failure on the overall workload. Distribute requests across multiple, smaller resources to verify that they don’t share a common point of failure.\nStop guessing capacity In on-premises scenarios, resource saturation leading to workload failure is often caused by exceeding capacity, while in the cloud, monitoring and automated adjustments of resources enable efficient demand satisfaction without over- or under-provisioning, within certain limits and managed quotas.\nManage change in automation 4. Performance efficiency Democratize advanced technologies Make advanced technology implementation smoother for your team by delegating complex tasks to your cloud vendor\nGo global in minutes Use serverless architectures Experiment more often Consider mechanical sympathy Understand how cloud services are consumed and always use the technology approach that aligns with your workload goals. For example, consider data access patterns when you select database or storage approaches.\n5. Cost optimization Implement Cloud Financial Management Adopt a consumption model Measure overall efficiency Stop spending money on undifferentiated heavy lifting Analyze and attribute expenditure You can use cost allocation tags to categorize and track your AWS usage and costs. When you apply tags to your AWS resources (such as EC2 instances or S3 buckets), AWS generates a cost and usage report with your usage and your tags.\n6. Sustainability Understand your impact Establish sustainability goals Maximize utilization Anticipate and adopt new, more efficient hardware and software offerings Use managed services Reduce the downstream impact of your cloud workload References\nhttps://www.wellarchitectedlabs.com\n",
+  "wordCount" : "2906",
   "inLanguage": "en",
-  "datePublished": "2023-04-18T15:35:26+02:00",
-  "dateModified": "2023-04-18T15:35:26+02:00",
+  "datePublished": "2023-01-03T19:35:26+02:00",
+  "dateModified": "2023-01-03T19:35:26+02:00",
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://yuklia.github.io/posts/saa-c03/aws-fundamentals/"
+    "@id": "https://juliakostrikova.com/posts/saa-c03/aws-fundamentals/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "Yuliia Kostrikova",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://yuklia.github.io/favicon.ico"
+      "url": "https://juliakostrikova.com/favicon.ico"
     }
   }
 }
@@ -149,7 +135,7 @@ Availability Zones Data Centers Regions Edge Locations AWS Management Console "/
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://yuklia.github.io" accesskey="h" title="Yuliia Kostrikova (Alt + H)">Yuliia Kostrikova</a>
+            <a href="https://juliakostrikova.com" accesskey="h" title="Yuliia Kostrikova (Alt + H)">Yuliia Kostrikova</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -175,17 +161,17 @@ Availability Zones Data Centers Regions Edge Locations AWS Management Console "/
         </div>
         <ul id="menu">
             <li>
-                <a href="https://yuklia.github.io/archives/" title="Archive">
+                <a href="https://juliakostrikova.com/archives/" title="Archive">
                     <span>Archive</span>
                 </a>
             </li>
             <li>
-                <a href="https://yuklia.github.io/tags/" title="Tags">
+                <a href="https://juliakostrikova.com/tags/" title="Tags">
                     <span>Tags</span>
                 </a>
             </li>
             <li>
-                <a href="https://yuklia.github.io/search/" title="Search (Alt &#43; /)" accesskey=/>
+                <a href="https://juliakostrikova.com/search/" title="Search (Alt &#43; /)" accesskey=/>
                     <span>Search</span>
                 </a>
             </li>
@@ -196,11 +182,14 @@ Availability Zones Data Centers Regions Edge Locations AWS Management Console "/
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="https://yuklia.github.io">Home</a>&nbsp;»&nbsp;<a href="https://yuklia.github.io/posts/">Posts</a></div>
+    <div class="breadcrumbs"><a href="https://juliakostrikova.com">Home</a>&nbsp;»&nbsp;<a href="https://juliakostrikova.com/posts/">Posts</a></div>
     <h1 class="post-title">
-      Evening 1 // SAA-C03 :: AWS Fundamentals
+      SAA-C03:: Introduction to Cloud Computing and AWS
     </h1>
-    <div class="post-meta"><span title='2023-04-18 15:35:26 +0200 CEST'>April 18, 2023</span>&nbsp;·&nbsp;1 min
+    <div class="post-description">
+      Study Notes
+    </div>
+    <div class="post-meta"><span title='2023-01-03 19:35:26 +0200 +0200'>January 3, 2023</span>&nbsp;·&nbsp;14 min
 
 </div>
   </header> <div class="toc">
@@ -209,62 +198,459 @@ Availability Zones Data Centers Regions Edge Locations AWS Management Console "/
             <span class="details">Table of Contents</span>
         </summary>
 
-        <div class="inner"><ul>
+        <div class="inner"><ul><ul>
+                <li>
+                    <a href="#virtualization" aria-label="Virtualization">Virtualization</a></li>
+                <li>
+                    <a href="#cloud-computing" aria-label="Cloud Computing">Cloud Computing</a></li>
                 <li>
                     <a href="#aws-global-infrastructure" aria-label="AWS Global Infrastructure">AWS Global Infrastructure</a></li>
                 <li>
-                    <a href="#availability-zones" aria-label="Availability Zones">Availability Zones</a></li>
-                <li>
-                    <a href="#data-centers" aria-label="Data Centers">Data Centers</a></li>
+                    <a href="#availability-zones--data-centers" aria-label="Availability Zones / Data Centers">Availability Zones / Data Centers</a></li>
                 <li>
                     <a href="#regions" aria-label="Regions">Regions</a></li>
                 <li>
-                    <a href="#edge-locations" aria-label="Edge Locations">Edge Locations</a></li>
+                    <a href="#edge-networking" aria-label="Edge Networking">Edge Networking</a><ul>
+                        
                 <li>
-                    <a href="#aws-management-console" aria-label="AWS Management Console">AWS Management Console</a>
+                    <a href="#amazon-cloudfront" aria-label="Amazon CloudFront">Amazon CloudFront</a></li>
+                <li>
+                    <a href="#aws-global-accelerator" aria-label="AWS Global Accelerator">AWS Global Accelerator</a></li>
+                <li>
+                    <a href="#amazon-route-53" aria-label="Amazon Route 53">Amazon Route 53</a></li></ul>
+                </li></ul>
+                    
+                <li>
+                    <a href="#security-and-identity" aria-label="Security and Identity">Security and Identity</a><ul>
+                        
+                <li>
+                    <a href="#identity-and-access-management-iam" aria-label="Identity and Access Management (IAM)">Identity and Access Management (IAM)</a></li>
+                <li>
+                    <a href="#key-management-service-kms" aria-label="Key Management Service (KMS)">Key Management Service (KMS)</a></li>
+                <li>
+                    <a href="#directory-service" aria-label="Directory Service">Directory Service</a></li></ul>
                 </li>
+                <li>
+                    <a href="#compute" aria-label="Compute">Compute</a><ul>
+                        
+                <li>
+                    <a href="#ec2" aria-label="EC2">EC2</a></li>
+                <li>
+                    <a href="#lambda" aria-label="Lambda">Lambda</a></li>
+                <li>
+                    <a href="#elastic-beanstalk" aria-label="Elastic Beanstalk">Elastic Beanstalk</a></li>
+                <li>
+                    <a href="#auto-scaling" aria-label="Auto Scaling">Auto Scaling</a></li>
+                <li>
+                    <a href="#elastic-load-balancing" aria-label="Elastic Load Balancing">Elastic Load Balancing</a></li>
+                <li>
+                    <a href="#elastic-container-service" aria-label="Elastic Container Service">Elastic Container Service</a></li></ul>
+                </li>
+                <li>
+                    <a href="#storage" aria-label="Storage">Storage</a><ul>
+                        
+                <li>
+                    <a href="#s3" aria-label="S3">S3</a></li>
+                <li>
+                    <a href="#s3-glacier" aria-label="S3 Glacier">S3 Glacier</a></li>
+                <li>
+                    <a href="#ebs" aria-label="EBS">EBS</a></li>
+                <li>
+                    <a href="#ebs-provisioned-iops-ssd" aria-label="EBS-Provisioned IOPS SSD">EBS-Provisioned IOPS SSD</a></li>
+                <li>
+                    <a href="#ebs-general-purpose-ssd" aria-label="EBS General-Purpose SSD">EBS General-Purpose SSD</a></li>
+                <li>
+                    <a href="#hdd-volumes" aria-label="HDD Volumes">HDD Volumes</a></li>
+                <li>
+                    <a href="#efs" aria-label="EFS">EFS</a><ul>
+                        
+                <li>
+                    <a href="#fsx" aria-label="FSx">FSx</a></li></ul>
+                </li>
+                <li>
+                    <a href="#storage-gateway" aria-label="Storage Gateway">Storage Gateway</a></li>
+                <li>
+                    <a href="#aws-snow-family" aria-label="AWS Snow Family">AWS Snow Family</a></li>
+                <li>
+                    <a href="#aws-datasync" aria-label="AWS DataSync">AWS DataSync</a></li></ul>
+                </li>
+                <li>
+                    <a href="#databases" aria-label="Databases">Databases</a><ul>
+                        
+                <li>
+                    <a href="#rds" aria-label="RDS">RDS</a></li>
+                <li>
+                    <a href="#dynamodb" aria-label="DynamoDB">DynamoDB</a></li>
+                <li>
+                    <a href="#redshift" aria-label="Redshift">Redshift</a></li></ul>
+                </li>
+                <li>
+                    <a href="#networking" aria-label="Networking">Networking</a><ul>
+                        
+                <li>
+                    <a href="#vpcs" aria-label="VPCs">VPCs</a></li>
+                <li>
+                    <a href="#direct-connect" aria-label="Direct Connect">Direct Connect</a></li></ul>
+                </li>
+                <li>
+                    <a href="#application-integration" aria-label="Application Integration">Application Integration</a><ul>
+                        
+                <li>
+                    <a href="#api-gateway" aria-label="API Gateway">API Gateway</a></li>
+                <li>
+                    <a href="#simple-notification-service-sns" aria-label="Simple Notification Service (SNS)">Simple Notification Service (SNS)</a></li>
+                <li>
+                    <a href="#simple-workflow-swf" aria-label="Simple Workflow (SWF)">Simple Workflow (SWF)</a></li>
+                <li>
+                    <a href="#simple-queue-service-sqs" aria-label="Simple Queue Service (SQS)">Simple Queue Service (SQS)</a></li></ul>
+                </li>
+                <li>
+                    <a href="#application-management" aria-label="Application management">Application management</a><ul>
+                        
+                <li>
+                    <a href="#cloudwatch" aria-label="CloudWatch">CloudWatch</a></li>
+                <li>
+                    <a href="#cloudformation" aria-label="CloudFormation">CloudFormation</a></li>
+                <li>
+                    <a href="#cloudtrail" aria-label="CloudTrail">CloudTrail</a></li>
+                <li>
+                    <a href="#config" aria-label="Config">Config</a></li>
+                <li>
+                    <a href="#aws-well-architected-framework" aria-label="AWS Well-Architected Framework">AWS Well-Architected Framework</a><ul>
+                        
+                <li>
+                    <a href="#1-operational-excellence" aria-label="1. Operational excellence">1. Operational excellence</a></li>
+                <li>
+                    <a href="#2-security" aria-label="2. Security">2. Security</a></li>
+                <li>
+                    <a href="#3-reliability" aria-label="3. Reliability">3. Reliability</a></li>
+                <li>
+                    <a href="#4-performance-efficiency" aria-label="4. Performance efficiency">4. Performance efficiency</a></li>
+                <li>
+                    <a href="#5-cost-optimization" aria-label="5. Cost optimization">5. Cost optimization</a></li>
+                <li>
+                    <a href="#6-sustainability" aria-label="6. Sustainability">6. Sustainability</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+            </li>
             </ul>
         </div>
     </details>
 </div>
 
-  <div class="post-content"><h3 id="aws-global-infrastructure">AWS Global Infrastructure<a hidden class="anchor" aria-hidden="true" href="#aws-global-infrastructure">#</a></h3>
+  <div class="post-content"><h3 id="virtualization">Virtualization<a hidden class="anchor" aria-hidden="true" href="#virtualization">#</a></h3>
+<p>The technology that lies at the core of all cloud operations is <strong>virtualization.</strong> Virtualization lets you divide the hardware resources of a single physical server into smaller units. That physical server could therefore host multiple virtual machines (VMs) running their own complete operating systems, each with its own memory, storage, and network access.</p>
+<figure>
+    <img loading="lazy" src="/cloud/virtualization_2.png"/> <figcaption>
+            a virtual machine host
+        </figcaption>
+</figure>
+
+<h3 id="cloud-computing">Cloud Computing<a hidden class="anchor" aria-hidden="true" href="#cloud-computing">#</a></h3>
+<p>Major cloud providers like AWS have enormous server farms where hundreds of thousands of servers and disk drives are maintained along with the network cabling necessary to connect them. A well-built virtualized environment could provide a virtual server using storage, memory, compute cycles, and network bandwidth collected from the most efficient mix of available sources it can find.
+A cloud computing platform offers on-demand, self-service access to pooled compute resources where your usage is metered and billed according to the volume you consume. Cloud computing systems allow for precise billing models, sometimes involving fractions of a penny for an hour of consumption.</p>
+<h3 id="aws-global-infrastructure">AWS Global Infrastructure<a hidden class="anchor" aria-hidden="true" href="#aws-global-infrastructure">#</a></h3>
 <p>At the time of writing this note, The AWS Cloud spans ⬇️</p>
 <ul>
-<li><strong>99 Availability Zones</strong></li>
-<li>within <strong>31 geographic regions</strong> around the world</li>
+<li><strong>102 Availability Zones</strong></li>
+<li>within <strong>32 geographic regions</strong> around the world</li>
+<li><strong>400+ Edge Locations and 13 Regional Edge Caches</strong></li>
 </ul>
 <blockquote>
 <p>💡 <a href="https://aws.amazon.com/about-aws/global-infrastructure/">with announced plans for 15 more Availability Zones and 5 more AWS Regions in Canada, Israel, Malaysia, New Zealand, and Thailand.</a></p>
 </blockquote>
-<h3 id="availability-zones">Availability Zones<a hidden class="anchor" aria-hidden="true" href="#availability-zones">#</a></h3>
-<h3 id="data-centers">Data Centers<a hidden class="anchor" aria-hidden="true" href="#data-centers">#</a></h3>
+<h3 id="availability-zones--data-centers">Availability Zones / Data Centers<a hidden class="anchor" aria-hidden="true" href="#availability-zones--data-centers">#</a></h3>
+<p>An Availability Zone (AZ) is a data center. AZ is one or more discrete data centers with redundant power, networking, and connectivity in an AWS Region.</p>
+<p>All AZs in an AWS Region are interconnected with high-bandwidth, low-latency networking, over fully redundant, dedicated metro fiber providing high-throughput, low-latency networking between AZs. All traffic between AZs is encrypted.</p>
+<p>If an application is partitioned across AZs, companies are better isolated and protected from issues such as</p>
+<ul>
+<li>power outages,</li>
+<li>lightning strikes,</li>
+<li>tornadoes,</li>
+<li>earthquakes,</li>
+<li>and more.</li>
+</ul>
+<p>AZs are physically separated by a meaningful distance, many kilometers, from any other AZ, although all are <strong>within 100 km (60 miles)</strong> of each other.</p>
 <h3 id="regions">Regions<a hidden class="anchor" aria-hidden="true" href="#regions">#</a></h3>
-<h3 id="edge-locations">Edge Locations<a hidden class="anchor" aria-hidden="true" href="#edge-locations">#</a></h3>
-<h3 id="aws-management-console">AWS Management Console<a hidden class="anchor" aria-hidden="true" href="#aws-management-console">#</a></h3>
+<p>A region is a geographical area. Each Region consists of <strong>2 (or more) Availability Zones.</strong></p>
+<h3 id="edge-networking">Edge Networking<a hidden class="anchor" aria-hidden="true" href="#edge-networking">#</a></h3>
+<p><a href="https://aws.amazon.com/cloudfront/features/?whats-new-cloudfront.sort-by=item.additionalFields.postDateTime&amp;whats-new-cloudfront.sort-order=desc">Edge networking in AWS refers</a> to the concept of distributing content, applications, and services closer to end-users or devices. This approach aims to <strong>reduce latency and improve performance by minimizing the distance data needs to travel</strong>. AWS offers several services and features that support edge networking, such as</p>
+<ul>
+<li>Amazon CloudFront,</li>
+<li>AWS Global Accelerator,</li>
+<li>Amazon Route 53.</li>
+</ul>
+<p>These services reside at AWS’ global edge locations connected by dedicated 100Gbps redundant fiber .</p>
+<h4 id="amazon-cloudfront">Amazon CloudFront<a hidden class="anchor" aria-hidden="true" href="#amazon-cloudfront">#</a></h4>
+<p>This is a content delivery network (CDN) service that caches and delivers content, including</p>
+<ul>
+<li>web pages,</li>
+<li>images,</li>
+<li>videos,</li>
+<li>other assets</li>
+</ul>
+<p>from multiple edge locations around the world. It helps ensure that users can access content with minimal delay, regardless of their geographical location.</p>
+<h4 id="aws-global-accelerator">AWS Global Accelerator<a hidden class="anchor" aria-hidden="true" href="#aws-global-accelerator">#</a></h4>
+<p>This service allows you to direct traffic over the AWS global network infrastructure, dynamically routing requests to the nearest and most optimal AWS endpoint. It improves the availability and performance of applications by leveraging Anycast routing.</p>
+<blockquote>
+<blockquote>
+<p><em>In Anycast routing, multiple servers or network nodes are configured with the same IP address. When a user sends a request to that IP address, the network routes the request to the nearest available node using routing protocols and metrics such as network topology, latency, and other factors.</em></p>
+</blockquote>
+</blockquote>
+<h4 id="amazon-route-53">Amazon Route 53<a hidden class="anchor" aria-hidden="true" href="#amazon-route-53">#</a></h4>
+<p>AWS&rsquo;s domain name system (DNS) service, Route 53, can be used to route traffic based on geographic location, latency, health, or other routing policies. This helps optimize the distribution of traffic and ensures efficient access to resources.</p>
+<p>In fact, it focuses on four distinct areas:</p>
+<ul>
+<li>Domain registration DNS management</li>
+<li>Availability monitoring (health checks)</li>
+<li>Traffic management (routing policies)</li>
+</ul>
+<p>Route 53 now also provides an <u>Application Recovery Controller</u> through which you can configure recovery groups, readiness checks, and routing control.</p>
+<h2 id="security-and-identity">Security and Identity<a hidden class="anchor" aria-hidden="true" href="#security-and-identity">#</a></h2>
+<h3 id="identity-and-access-management-iam">Identity and Access Management (IAM)<a hidden class="anchor" aria-hidden="true" href="#identity-and-access-management-iam">#</a></h3>
+<p>You use IAM to administer user and programmatic access and authentication to your AWS account. Through the use
+of users, groups, roles, and policies, you can control exactly who and what can access and/or work with any of your AWS resources.</p>
+<h3 id="key-management-service-kms">Key Management Service (KMS)<a hidden class="anchor" aria-hidden="true" href="#key-management-service-kms">#</a></h3>
+<p>KMS is a managed service that allows you to administrate the creation and use of encryption keys to secure data used by and for any of your AWS resources.</p>
+<h3 id="directory-service">Directory Service<a hidden class="anchor" aria-hidden="true" href="#directory-service">#</a></h3>
+<p>For AWS environments that need to manage identities and relationships, Directory Service can integrate AWS resources with identity providers like Amazon Cognito and Microsoft AD domains.</p>
+<h2 id="compute">Compute<a hidden class="anchor" aria-hidden="true" href="#compute">#</a></h2>
+<h3 id="ec2">EC2<a hidden class="anchor" aria-hidden="true" href="#ec2">#</a></h3>
+<p>The central focus within a conventional datacenter or server room revolves around its invaluable servers. However, to harness the utility of these servers, one must incorporate elements such as racks, power supplies, cabling, switches, firewalls, and cooling systems.
+Amazon Web Services&rsquo; (AWS) Elastic Compute Cloud (EC2) is meticulously crafted to faithfully emulate the experience of a datacenter or server room. At its core lies the EC2 virtual server, referred to as an &ldquo;instance.&rdquo; Yet, akin to the scenario of a local server room described earlier, AWS offers an array of services meticulously designed to bolster and refine the operations of your workloads. These encompass tools for overseeing and managing resources, alongside purpose-built platforms catering to the coordination of containers.</p>
+<h3 id="lambda">Lambda<a hidden class="anchor" aria-hidden="true" href="#lambda">#</a></h3>
+<p>At its core, AWS Lambda allows developers to encapsulate discrete pieces of functionality into self-contained units known as functions. These functions can be triggered by a multitude of events, ranging from HTTP requests and changes to data stored in Amazon S3, to updates in databases and modifications in the AWS Management Console. Each function executes in a completely isolated environment, with its own compute resources and dependencies, ensuring optimal performance and scalability.</p>
+<h3 id="elastic-beanstalk">Elastic Beanstalk<a hidden class="anchor" aria-hidden="true" href="#elastic-beanstalk">#</a></h3>
+<p>Beanstalk is a managed service that abstracts the provi- sioning of AWS compute and networking infrastructure. You are required to do nothing more than push your application code, and Beanstalk automatically launches and manages all the necessary services in the background.</p>
+<h3 id="auto-scaling">Auto Scaling<a hidden class="anchor" aria-hidden="true" href="#auto-scaling">#</a></h3>
+<p>Copies of running EC2 instances can be defined as image templates and automatically launched (or scaled up) when client demand can’t be met by existing instances. As demand drops, unused instances can be terminated (or scaled down).</p>
+<h3 id="elastic-load-balancing">Elastic Load Balancing<a hidden class="anchor" aria-hidden="true" href="#elastic-load-balancing">#</a></h3>
+<p>Incoming network traffic can be directed between multiple web servers to ensure that a single web server isn’t overwhelmed while other servers are underused or that traffic isn’t directed to failed servers.</p>
+<h3 id="elastic-container-service">Elastic Container Service<a hidden class="anchor" aria-hidden="true" href="#elastic-container-service">#</a></h3>
+<p>Compute workloads using container technologies like Docker and Kubernetes can be provisioned, automated, deployed, and administered using full integration with your other AWS account resources. Kubernetes workloads have their own environment: Amazon Elastic Kubernetes Service (EKS).</p>
+<h2 id="storage">Storage<a hidden class="anchor" aria-hidden="true" href="#storage">#</a></h2>
+<h3 id="s3">S3<a hidden class="anchor" aria-hidden="true" href="#s3">#</a></h3>
+<p>S3 offers highly versatile, reliable, and inexpensive object storage that’s great for data storage and backups. It’s also commonly used as part of larger AWS production processes, including through the storage of script, template, and log files.</p>
+<h3 id="s3-glacier">S3 Glacier<a hidden class="anchor" aria-hidden="true" href="#s3-glacier">#</a></h3>
+<p>A good choice for when you need large data archives stored cheaply over the long term and can live with retrieval delays measuring in the hours. Glacier’s life cycle management is closely integrated with S3.</p>
+<h3 id="ebs">EBS<a hidden class="anchor" aria-hidden="true" href="#ebs">#</a></h3>
+<p>EBS provides the persistent virtual storage drives that host the operating systems and working data of an EC2 instance. They’re meant to mimic the function of the storage drives and partitions attached to physical servers.</p>
+<h3 id="ebs-provisioned-iops-ssd">EBS-Provisioned IOPS SSD<a hidden class="anchor" aria-hidden="true" href="#ebs-provisioned-iops-ssd">#</a></h3>
+<p>If your applications will require intense rates of I/O operations, then you should consider provisioned IOPS. There are currently three flavors of provisioned IOPS volumes: io1,
+io2, and io2 Block Express. io1 can deliver up to 50 IOPS/GB to a limit of 64,000 IOPS (when attached to an AWS Nitro–compliant EC2 instance) with a maximum throughput of 1,000 MB/s per volume. io2 can provide up to 500 IOPS/GB. And io2 Block Express can give you 4,000 MB/s throughput and 256,000 IOPS/volume.</p>
+<h3 id="ebs-general-purpose-ssd">EBS General-Purpose SSD<a hidden class="anchor" aria-hidden="true" href="#ebs-general-purpose-ssd">#</a></h3>
+<p>For most regular server workloads that, ideally, deliver low-latency performance, general- purpose SSDs will work well. You’ll get a maximum of 3,000 IOPS/volume. For refer- ence, assuming 3,000 IOPS per volume and a single daily snapshot, a general-purpose SSD used as a typical 8 GB boot drive for a Linux instance would, at current rates, cost you $3.29/month.</p>
+<h3 id="hdd-volumes">HDD Volumes<a hidden class="anchor" aria-hidden="true" href="#hdd-volumes">#</a></h3>
+<p>For large data stores where quick access isn’t important, you can find cost savings using older spinning hard drive technologies. The sc1 volume type provides the lowest price of any EBS storage ($0.015/GB-month). Throughput optimized hard drive volumes (st1) are available for larger stores where infrequent bursts of access at a rate of 250 MB/s per TB are sufficient. st1 volumes cost $0.045/GB per month. The EBS Create Volume dialog box cur- rently offers a Magnetic (Standard) volume type.</p>
+<h3 id="efs">EFS<a hidden class="anchor" aria-hidden="true" href="#efs">#</a></h3>
+<p>The Elastic File System (EFS) provides automatically scalable and shareable file storage to be accessed from Linux instances. EFS-based files are designed to be accessed from within a virtual private cloud (VPC) via Network File System (NFS) mounts on EC2 Linux instances or from your on-premises servers through AWS Direct Connect connections. The goal is to make it easy to enable secure, low-latency, and durable file sharing among multiple instances.</p>
+<h4 id="fsx">FSx<a hidden class="anchor" aria-hidden="true" href="#fsx">#</a></h4>
+<p>Amazon FSx comes in four flavors: FSx for Lustre, FSx for Windows File Server, FSx for OpenZFS, and FSx for NetApp ONTAP. Lustre is an open source distributed filesystem built to give Linux clusters access to high-performance filesystems for use in compute-intensive operations. As with Lustre, Amazon’s FSx service brings OpenZFS and NetApp filesystem capabilities to your AWS infrastructure.
+FSx for Windows File Server, as you can tell from the name, offers the kind of file-sharing service EFS provides but for Windows servers rather than Linux. FSx for Windows File Server integrates operations with Server Message Block (SMB), NTFS, and Microsoft Active Directory.</p>
+<h3 id="storage-gateway">Storage Gateway<a hidden class="anchor" aria-hidden="true" href="#storage-gateway">#</a></h3>
+<p>Storage Gateway is a hybrid storage system that exposes AWS cloud storage as a local, on-premises appliance. Storage Gateway can be a great tool for migration and data backup and as part of disaster recovery operations.</p>
+<h3 id="aws-snow-family">AWS Snow Family<a hidden class="anchor" aria-hidden="true" href="#aws-snow-family">#</a></h3>
+<p>Migrating large data sets to the cloud over a normal Internet connection can sometimes require far too much time and bandwidth to be practical. If you’re looking to move terabyte- or even petabyte-scaled data for backup or active use within AWS, ordering a Snow device might be the best option.
+When requested, AWS will ship you a physical, appropriately sized device to which you transfer your data. When you’re ready, you can then send the device back to Amazon. Amazon will then transfer your data to buckets on S3.</p>
+<h3 id="aws-datasync">AWS DataSync<a hidden class="anchor" aria-hidden="true" href="#aws-datasync">#</a></h3>
+<p>DataSync specializes in moving on-premises data stores into your AWS account with a minimum of fuss. It works over your regular Internet connection, so it’s not as useful as Snowball for really large data sets. But it is much more flexible, since you’re not limited
+to S3 (or RDS as you are with AWS Database Migration Service). Using DataSync, you can drop your data into any service within your AWS account. That means you can do the following:
+Quickly and securely move old data out of your expensive datacenter into cheaper S3 or Glacier storage.
+Transfer data sets directly into S3, EFS, or FSx, where it can be processed and analyzed by your EC2 instances.
+Apply the power of any AWS service to any class of data as part of an easy-to-configure automated system.
+A single DataSync task can handle external transfer rates of up to 10 Gbps (assuming your connection has that capacity) and offers both encryption and data validation.</p>
+<h2 id="databases">Databases<a hidden class="anchor" aria-hidden="true" href="#databases">#</a></h2>
+<h3 id="rds">RDS<a hidden class="anchor" aria-hidden="true" href="#rds">#</a></h3>
+<p>Amazon Relational Database Service (RDS) is a managed database service that lets you run relational database systems in the cloud. RDS takes care of setting up the database system, performing backups, ensuring high availability, and patching the database software and
+the underlying operating system. RDS also makes it easy to recover from database failures, restore data, and scale your databases to achieve the level of performance and availability that your application requires.</p>
+<h3 id="dynamodb">DynamoDB<a hidden class="anchor" aria-hidden="true" href="#dynamodb">#</a></h3>
+<p>DynamoDB is a managed nonrelational database service that can handle thousands of reads and writes per second. It achieves this level of performance by spreading your data across multiple partitions. A partition is a 10 GB allocation of storage for a table, and it’s backed by solid-state drives in multiple availability zones.</p>
+<h3 id="redshift">Redshift<a hidden class="anchor" aria-hidden="true" href="#redshift">#</a></h3>
+<p>Redshift is Amazon’s managed data ware- house service. Although it’s based on PostgreSQL, it’s not part of RDS. Redshift uses columnar storage, meaning that it stores the values for a column close together. This improves storage speed and efficiency and makes it faster to query data from individual col- umns.</p>
+<h2 id="networking">Networking<a hidden class="anchor" aria-hidden="true" href="#networking">#</a></h2>
+<h3 id="vpcs">VPCs<a hidden class="anchor" aria-hidden="true" href="#vpcs">#</a></h3>
+<p>Like a traditional network, a VPC consists of at least one range of contiguous IP addresses. This address range is represented as a Classless Inter-Domain Routing (CIDR) block. The CIDR block determines which IP addresses may be assigned to instances and other resources within the VPC. You must assign a primary CIDR block when creating a VPC. After creating a VPC, you divide the primary VPC CIDR block into subnets that hold your AWS resources.</p>
+<h3 id="direct-connect">Direct Connect<a hidden class="anchor" aria-hidden="true" href="#direct-connect">#</a></h3>
+<p>The AWS Direct Connect service uses PrivateLink to offer private, low-latency connec-
+tivity to your AWS resources. One advantage of Direct Connect is that it lets you bypass the Internet altogether when accessing AWS resources, letting you avoid the unpredictable and high latency of a broadband Internet connection. This approach is useful when you need to transfer large data sets or real-time data, or you need to meet regulatory requirements that preclude transferring data over the Internet.</p>
+<h2 id="application-integration">Application Integration<a hidden class="anchor" aria-hidden="true" href="#application-integration">#</a></h2>
+<h3 id="api-gateway">API Gateway<a hidden class="anchor" aria-hidden="true" href="#api-gateway">#</a></h3>
+<p>If you need to build an application that consumes data or other resources existing within the AWS platform, you can make reliable and safe connections using either RESTful or WebSocket APIs. API Gateway lets you publish data coming out of just about any AWS ser- vice for use in your IoT device fleets, web or mobile applications, or monitoring dashboards.</p>
+<h3 id="simple-notification-service-sns">Simple Notification Service (SNS)<a hidden class="anchor" aria-hidden="true" href="#simple-notification-service-sns">#</a></h3>
+<p>SNS is a notification tool that can automate the publishing of alert topics to other services (to an SQS Queue or to trigger a Lambda function, for instance), to mobile devices, or to recipients using email or SMS.</p>
+<h3 id="simple-workflow-swf">Simple Workflow (SWF)<a hidden class="anchor" aria-hidden="true" href="#simple-workflow-swf">#</a></h3>
+<p>SWF lets you coordinate a series of tasks that must be per-formed using a range of AWS services or even nondigital (meaning human) events.</p>
+<h3 id="simple-queue-service-sqs">Simple Queue Service (SQS)<a hidden class="anchor" aria-hidden="true" href="#simple-queue-service-sqs">#</a></h3>
+<p>SQS allows for event-driven messaging within distributed systems that can decouple while coordinating the discrete steps of a larger process.The data contained in your SQS messages will be reliably delivered, adding to the fault- tolerant qualities of an application.</p>
+<h2 id="application-management">Application management<a hidden class="anchor" aria-hidden="true" href="#application-management">#</a></h2>
+<h3 id="cloudwatch">CloudWatch<a hidden class="anchor" aria-hidden="true" href="#cloudwatch">#</a></h3>
+<p>CloudWatch can be set to monitor process performance and resource utilization and, when preset thresholds are met, either send you a message or trigger an automated response.</p>
+<h3 id="cloudformation">CloudFormation<a hidden class="anchor" aria-hidden="true" href="#cloudformation">#</a></h3>
+<p>This service enables you to use template files to define full and complex AWS deployments. The ability to script your use of any AWS resources makes it easier to automate, stan- dardizing and speeding up the application launch process.</p>
+<h3 id="cloudtrail">CloudTrail<a hidden class="anchor" aria-hidden="true" href="#cloudtrail">#</a></h3>
+<p>CloudTrail collects records of all your account’s API events. This history is useful for account auditing and troubleshooting purposes.</p>
+<h3 id="config">Config<a hidden class="anchor" aria-hidden="true" href="#config">#</a></h3>
+<p>The Config service is designed to help you with change management and compliance for your AWS account. You first define a desired configuration state, and Config evalu- ates any future states against that ideal. When a configura- tion change pushes too far from the ideal baseline, you’ll be notified.</p>
+<hr>
+<h3 id="aws-well-architected-framework">AWS Well-Architected Framework<a hidden class="anchor" aria-hidden="true" href="#aws-well-architected-framework">#</a></h3>
+<h4 id="1-operational-excellence">1. Operational excellence<a hidden class="anchor" aria-hidden="true" href="#1-operational-excellence">#</a></h4>
+<ul>
+<li>Perform operations as code</li>
+<li>Make frequent, small, reversible changes</li>
+<li>Refine operations procedures frequently</li>
+<li>Anticipate failure</li>
+<li>Learn from all operational failures</li>
+</ul>
+<h4 id="2-security">2. Security<a hidden class="anchor" aria-hidden="true" href="#2-security">#</a></h4>
+<ul>
+<li>Implement a strong identity foundation (least privilege principle)</li>
+<li>Maintain traceability</li>
+<li>Apply security at all layers</li>
+<li>Automate security best practices</li>
+</ul>
+<blockquote>
+<blockquote>
+<p>Implementation of controls that are defined and managed as code in version-controlled templates</p>
+</blockquote>
+</blockquote>
+<ul>
+<li>Protect data in transit and at rest</li>
+<li>Keep people away from data</li>
+<li>Prepare for security events</li>
+</ul>
+<blockquote>
+<blockquote>
+<p>Run incident response simulations and use tools with automation to increase your speed for detection, investigation, and recovery</p>
+</blockquote>
+</blockquote>
+<h4 id="3-reliability">3. Reliability<a hidden class="anchor" aria-hidden="true" href="#3-reliability">#</a></h4>
+<ul>
+<li>Automatically recover from failure</li>
+<li>Test recovery procedures</li>
+<li>Scale horizontally to increase aggregate workload availability</li>
+</ul>
+<blockquote>
+<blockquote>
+<p>Replace one large resource with multiple small resources to reduce the impact of a single failure on the overall workload. Distribute requests across multiple, smaller resources to verify that they don’t share a common point of failure.</p>
+</blockquote>
+</blockquote>
+<ul>
+<li>Stop guessing capacity</li>
+</ul>
+<blockquote>
+<blockquote>
+<p>In on-premises scenarios, resource saturation leading to workload failure is often caused by exceeding capacity, while in the cloud, monitoring and automated adjustments of resources enable efficient demand satisfaction without over- or under-provisioning, within certain limits and managed quotas.</p>
+</blockquote>
+</blockquote>
+<ul>
+<li>Manage change in automation</li>
+</ul>
+<h4 id="4-performance-efficiency">4. Performance efficiency<a hidden class="anchor" aria-hidden="true" href="#4-performance-efficiency">#</a></h4>
+<ul>
+<li>Democratize advanced technologies</li>
+</ul>
+<blockquote>
+<blockquote>
+<p>Make advanced technology implementation smoother for your team by delegating complex tasks to your cloud vendor</p>
+</blockquote>
+</blockquote>
+<ul>
+<li>Go global in minutes</li>
+<li>Use serverless architectures</li>
+<li>Experiment more often</li>
+<li>Consider mechanical sympathy</li>
+</ul>
+<blockquote>
+<blockquote>
+<p>Understand how cloud services are consumed and always use the technology approach that aligns with your workload goals. For example, consider data access patterns when you select database or storage approaches.</p>
+</blockquote>
+</blockquote>
+<h4 id="5-cost-optimization">5. Cost optimization<a hidden class="anchor" aria-hidden="true" href="#5-cost-optimization">#</a></h4>
+<ul>
+<li>Implement Cloud Financial Management</li>
+<li>Adopt a consumption model</li>
+<li>Measure overall efficiency</li>
+<li>Stop spending money on undifferentiated heavy lifting</li>
+<li>Analyze and attribute expenditure</li>
+</ul>
+<blockquote>
+<blockquote>
+<p>You can use <a href="https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html">cost allocation tags</a> to categorize and track your AWS usage and costs. When you apply tags to your AWS resources (such as EC2 instances or S3 buckets), AWS generates a cost and usage report with your usage and your tags.</p>
+</blockquote>
+</blockquote>
+<h4 id="6-sustainability">6. Sustainability<a hidden class="anchor" aria-hidden="true" href="#6-sustainability">#</a></h4>
+<ul>
+<li>Understand your impact</li>
+<li>Establish sustainability goals</li>
+<li>Maximize utilization</li>
+<li>Anticipate and adopt new, more efficient hardware and software offerings</li>
+<li>Use managed services</li>
+<li>Reduce the downstream impact of your cloud workload</li>
+</ul>
+<hr>
+<p>References</p>
+<p><a href="https://www.wellarchitectedlabs.com">https://www.wellarchitectedlabs.com</a></p>
 
 
   </div>
 
   <footer class="post-footer">
     <ul class="post-tags">
-      <li><a href="https://yuklia.github.io/tags/aws/">aws</a></li>
-      <li><a href="https://yuklia.github.io/tags/saa-c03/">SAA-C03</a></li>
+      <li><a href="https://juliakostrikova.com/tags/aws/">aws</a></li>
+      <li><a href="https://juliakostrikova.com/tags/saa-c03/">SAA-C03</a></li>
+      <li><a href="https://juliakostrikova.com/tags/cloud/">cloud</a></li>
     </ul>
 <nav class="paginav">
-  <a class="next" href="https://yuklia.github.io/posts/cloud/traefik-error-page/">
+  <a class="prev" href="https://juliakostrikova.com/posts/saa-c03/s3/">
+    <span class="title">« Prev</span>
+    <br>
+    <span>SAA-C03:: Simple Storage Service (S3)</span>
+  </a>
+  <a class="next" href="https://juliakostrikova.com/posts/cloud/traefik-x-forwarded-for/">
     <span class="title">Next »</span>
     <br>
-    <span>Custom error page in Traefik v2.x. Finally 😻</span>
+    <span>Traefik behind AWS ELB. X-Forwarded-For header</span>
   </a>
 </nav>
 
-  </footer>
+  </footer><script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
+<script>
+  kofiWidgetOverlay.draw('yuklia', {
+    'type': 'floating-chat',
+    'floating-chat.donateButton.text': '',
+    'floating-chat.donateButton.background-color': '#ffffff',
+    'floating-chat.donateButton.text-color': '#323842'
+  });
+</script>
+
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "yuklia-dev" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
 </article>
     </main>
     
 <footer class="footer">
-    <span>&copy; 2023 <a href="https://yuklia.github.io">Yuliia Kostrikova</a></span>
+    <span>&copy; 2023 <a href="https://juliakostrikova.com">Yuliia Kostrikova</a></span>
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

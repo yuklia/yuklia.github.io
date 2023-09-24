@@ -8,7 +8,7 @@
 <title>How to Mount Synology NAS to RaspberryPi via NFS | Yuliia Kostrikova</title>
 
 
-<meta name="keywords" content="howto, home automation, rasberryPI400">
+<meta name="keywords" content="howto, home automation, raspberryPI400">
 <meta name="description" content="My Use case To establish a seamless synchronization of project files between a MacBook (working station) and a Raspberry Pi (hosting server), allowing for automatic updates and accessibility of the project from both devices.
 device/tool version DS420&#43; DSM 7.2-64570 Raspberry PI 400 The user begins working on the project using the IDE on the MacBook, editing and updating project files within the synchronized folder. As changes are made, they are automatically reflected in the synchronized folder and accessible on the Raspberry Pi in read-only mode.">
 <meta name="author" content="">
@@ -100,9 +100,9 @@ device/tool version DS420&#43; DSM 7.2-64570 Raspberry PI 400 The user begins wo
   "name": "How to Mount Synology NAS to RaspberryPi via NFS",
   "description": "My Use case To establish a seamless synchronization of project files between a MacBook (working station) and a Raspberry Pi (hosting server), allowing for automatic updates and accessibility of the project from both devices.\ndevice/tool version DS420+ DSM 7.2-64570 Raspberry PI 400 The user begins working on the project using the IDE on the MacBook, editing and updating project files within the synchronized folder. As changes are made, they are automatically reflected in the synchronized folder and accessible on the Raspberry Pi in read-only mode.",
   "keywords": [
-    "howto", "home automation", "rasberryPI400"
+    "howto", "home automation", "raspberryPI400"
   ],
-  "articleBody": "My Use case To establish a seamless synchronization of project files between a MacBook (working station) and a Raspberry Pi (hosting server), allowing for automatic updates and accessibility of the project from both devices.\ndevice/tool version DS420+ DSM 7.2-64570 Raspberry PI 400 The user begins working on the project using the IDE on the MacBook, editing and updating project files within the synchronized folder. As changes are made, they are automatically reflected in the synchronized folder and accessible on the Raspberry Pi in read-only mode.\nnasnfs 1. Create folder on NAS 1.1 Set up NFS rules To start with, create a shared folder Control Panel -\u003e Create -\u003e Create Shared Folder Follow all steps though Shared Folder Creation Wizard panel. Once you are done, select your folder (in my case it is yuklia_projects) click on Edit, navigate to NFS permissions tab. Create NFS rule.\nrule value note Hostname or IP rasberrypi_local_ip 🔒 limit access only to trusted IP to reduce the surface attack. Priviledge Read only read-only since I don’t need my files to be changed on the RasberryPi side. Squash Map all users to guest Assigns access privileges to all users of NFS client equivalent to the guest access privileges on your system. Security AUTH_SYS Use the NFS client’s UID (user identifier) and GID (group identifier) to check access permissions. 2. SSH to RasberryPI 2.1 Connect to your PI ssh username@rasberrypi_local_ip 2.2 Create mount point sudo mkdir /mnt/nas_yuklia_projects 2.3 Mount folder sudo mount -t nfs {SYNOLOGY_IP}:{MOUNT_POINT} /mnt/nas_yuklia_projects MOUNT_POINT - open Control Panel -\u003e Shared Folder -\u003e Edit SharedFolder, navigate to NFS permissions tab, in the left bottom side you’ll see Mount path: /volume1/yuklia_projects (in my case)\nSYNOLOGY_IP - local IP address of you Synology device\n3. Validation ✅ Execute df -h to display the list of mounted points; your mounted point should be visible.\n✅ Attempt to modify any files on the Raspberry Pi; you should encounter the warning:\nError writing lock file /mnt/nas_yuklia_projects/.test3.md.swp: Read-only file system 4. Security Measures for NFS 🛡️ NFS (Network File System) is not inherently secure when used in its basic configuration. It was designed with a focus on ease of use and performance rather than security. However, there are ways to enhance the security of NFS:\n1️⃣ Use NFS Versions with Security Features:\nNFSv4 introduced significant security enhancements compared to older versions (NFSv2 and NFSv3). It includes features like strong authentication and encryption. It’s highly recommended to use NFSv4 or later versions for better security.\n2️⃣ Kerberos Authentication:\nImplement Kerberos-based authentication for NFSv4. Kerberos provides secure authentication, preventing unauthorized access to the NFS shares.\n3️⃣ Firewall Configuration:\nUse firewalls to control and restrict access to NFS services. Limit access only to trusted IP addresses or subnets to reduce the attack surface. Network Segmentation:\n4️⃣ Network Segmentation:\nPlace NFS servers on a separate network segment, isolating them from potentially insecure parts of the network. This can help contain security breaches.\n5️⃣ Access Controls:\nUtilize NFS access controls effectively. Set appropriate permissions and access rules on the NFS server to limit access to authorized users and hosts.\n6️⃣ Secure the Underlying Operating System: Ensure that the operating system on both the NFS server and client is securely configured. Regularly apply security patches and updates to address any known vulnerabilities.\n7️⃣ VPN or SSH Tunneling: Use a VPN (Virtual Private Network) or SSH (Secure Shell) tunneling when accessing NFS over untrusted networks. This adds an additional layer of encryption and security.\nSummary In this guide, I show you how to seamlessly sync project files between a MacBook and a Raspberry Pi using Synology NAS and NFS. The step-by-step process ensures updates from the MacBook are automatically reflected on the Raspberry Pi, granting read-only access. Happy syncing!\n",
+  "articleBody": "My Use case To establish a seamless synchronization of project files between a MacBook (working station) and a Raspberry Pi (hosting server), allowing for automatic updates and accessibility of the project from both devices.\ndevice/tool version DS420+ DSM 7.2-64570 Raspberry PI 400 The user begins working on the project using the IDE on the MacBook, editing and updating project files within the synchronized folder. As changes are made, they are automatically reflected in the synchronized folder and accessible on the Raspberry Pi in read-only mode.\nnasnfs 1. Create folder on NAS 1.1 Set up NFS rules To start with, create a shared folder Control Panel -\u003e Create -\u003e Create Shared Folder Follow all steps though Shared Folder Creation Wizard panel. Once you are done, select your folder (in my case it is yuklia_projects) click on Edit, navigate to NFS permissions tab. Create NFS rule.\nrule value note Hostname or IP raspberrypi_local_ip 🔒 limit access only to trusted IP to reduce the surface attack. Priviledge Read only read-only since I don’t need my files to be changed on the raspberryPi side. Squash Map all users to guest Assigns access privileges to all users of NFS client equivalent to the guest access privileges on your system. Security AUTH_SYS Use the NFS client’s UID (user identifier) and GID (group identifier) to check access permissions. 2. SSH to raspberryPI 2.1 Connect to your PI ssh username@raspberrypi_local_ip 2.2 Create mount point sudo mkdir /mnt/nas_yuklia_projects 2.3 Mount folder sudo mount -t nfs {SYNOLOGY_IP}:{MOUNT_POINT} /mnt/nas_yuklia_projects MOUNT_POINT - open Control Panel -\u003e Shared Folder -\u003e Edit SharedFolder, navigate to NFS permissions tab, in the left bottom side you’ll see Mount path: /volume1/yuklia_projects (in my case)\nSYNOLOGY_IP - local IP address of you Synology device\n3. Validation ✅ Execute df -h to display the list of mounted points; your mounted point should be visible.\n✅ Attempt to modify any files on the Raspberry Pi; you should encounter the warning:\nError writing lock file /mnt/nas_yuklia_projects/.test3.md.swp: Read-only file system 4. Security Measures for NFS 🛡️ NFS (Network File System) is not inherently secure when used in its basic configuration. It was designed with a focus on ease of use and performance rather than security. However, there are ways to enhance the security of NFS:\n1️⃣ Use NFS Versions with Security Features:\nNFSv4 introduced significant security enhancements compared to older versions (NFSv2 and NFSv3). It includes features like strong authentication and encryption. It’s highly recommended to use NFSv4 or later versions for better security.\n2️⃣ Kerberos Authentication:\nImplement Kerberos-based authentication for NFSv4. Kerberos provides secure authentication, preventing unauthorized access to the NFS shares.\n3️⃣ Firewall Configuration:\nUse firewalls to control and restrict access to NFS services. Limit access only to trusted IP addresses or subnets to reduce the attack surface. Network Segmentation:\n4️⃣ Network Segmentation:\nPlace NFS servers on a separate network segment, isolating them from potentially insecure parts of the network. This can help contain security breaches.\n5️⃣ Access Controls:\nUtilize NFS access controls effectively. Set appropriate permissions and access rules on the NFS server to limit access to authorized users and hosts.\n6️⃣ Secure the Underlying Operating System: Ensure that the operating system on both the NFS server and client is securely configured. Regularly apply security patches and updates to address any known vulnerabilities.\n7️⃣ VPN or SSH Tunneling: Use a VPN (Virtual Private Network) or SSH (Secure Shell) tunneling when accessing NFS over untrusted networks. This adds an additional layer of encryption and security.\nSummary In this guide, I show you how to seamlessly sync project files between a MacBook and a Raspberry Pi using Synology NAS and NFS. The step-by-step process ensures updates from the MacBook are automatically reflected on the Raspberry Pi, granting read-only access. Happy syncing!\n",
   "wordCount" : "620",
   "inLanguage": "en",
   "datePublished": "2023-09-23T11:28:58+02:00",
@@ -221,7 +221,7 @@ device/tool version DS420&#43; DSM 7.2-64570 Raspberry PI 400 The user begins wo
                     <a href="#11-set-up-nfs-rules" aria-label="1.1 Set up NFS rules">1.1 Set up NFS rules</a></li></ul>
                 </li>
                 <li>
-                    <a href="#2-ssh-to-rasberrypi" aria-label="2. SSH to RasberryPI">2. SSH to RasberryPI</a><ul>
+                    <a href="#2-ssh-to-raspberrypi" aria-label="2. SSH to raspberryPI">2. SSH to raspberryPI</a><ul>
                         
                 <li>
                     <a href="#21-connect-to-your-pi" aria-label="2.1 Connect to your PI">2.1 Connect to your PI</a></li>
@@ -284,13 +284,13 @@ Follow all steps though Shared Folder Creation Wizard panel. Once you are done, 
 <tbody>
 <tr>
 <td>Hostname or IP</td>
-<td><code>rasberrypi_local_ip</code></td>
+<td><code>raspberrypi_local_ip</code></td>
 <td>🔒 limit access only to trusted IP to reduce the surface attack.</td>
 </tr>
 <tr>
 <td>Priviledge</td>
 <td>Read only</td>
-<td>read-only since I don’t need my files to be changed on the RasberryPi side.</td>
+<td>read-only since I don’t need my files to be changed on the raspberryPi side.</td>
 </tr>
 <tr>
 <td>Squash</td>
@@ -309,9 +309,9 @@ Follow all steps though Shared Folder Creation Wizard panel. Once you are done, 
 </tr>
 </tbody>
 </table>
-<h3 id="2-ssh-to-rasberrypi">2. SSH to RasberryPI<a hidden class="anchor" aria-hidden="true" href="#2-ssh-to-rasberrypi">#</a></h3>
+<h3 id="2-ssh-to-raspberrypi">2. SSH to raspberryPI<a hidden class="anchor" aria-hidden="true" href="#2-ssh-to-raspberrypi">#</a></h3>
 <h4 id="21-connect-to-your-pi">2.1 Connect to your PI<a hidden class="anchor" aria-hidden="true" href="#21-connect-to-your-pi">#</a></h4>
-<pre tabindex="0"><code>ssh username@rasberrypi_local_ip
+<pre tabindex="0"><code>ssh username@raspberrypi_local_ip
 </code></pre><h4 id="22-create-mount-point">2.2 Create mount point<a hidden class="anchor" aria-hidden="true" href="#22-create-mount-point">#</a></h4>
 <pre tabindex="0"><code>sudo mkdir /mnt/nas_yuklia_projects
 </code></pre><h4 id="23-mount-folder">2.3 Mount folder<a hidden class="anchor" aria-hidden="true" href="#23-mount-folder">#</a></h4>
@@ -351,7 +351,7 @@ Happy syncing!</p>
     <ul class="post-tags">
       <li><a href="https://juliakostrikova.com/tags/howto/">howto</a></li>
       <li><a href="https://juliakostrikova.com/tags/home-automation/">home automation</a></li>
-      <li><a href="https://juliakostrikova.com/tags/rasberrypi400/">rasberryPI400</a></li>
+      <li><a href="https://juliakostrikova.com/tags/raspberrypi400/">raspberryPI400</a></li>
     </ul>
 <nav class="paginav">
   <a class="next" href="https://juliakostrikova.com/posts/saa-c03/s3/">

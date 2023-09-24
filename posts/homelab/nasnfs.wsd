@@ -1,0 +1,17 @@
+@startuml nasnfs
+
+node Synology_NAS {
+    collections shared_folders
+}
+component MacOS {
+    collections projects_shared_folder
+}
+actor User
+component RasberryPI {
+    collections mounted_points
+}
+User -[#blue,dotted,thickness=3]-> MacOS : RW permissions
+Synology_NAS ~~ MacOS : SynologyDrive (Two-way-synh)
+RasberryPI --> Synology_NAS : NFS mount
+@enduml
+'

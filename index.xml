@@ -6,7 +6,17 @@
     <description>Recent content on Yuliia Kostrikova</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Mon, 16 Jan 2023 15:35:26 +0200</lastBuildDate><atom:link href="https://juliakostrikova.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 23 Sep 2023 11:28:58 +0200</lastBuildDate><atom:link href="https://juliakostrikova.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>How to Mount Synology NAS to RaspberryPi via NFS</title>
+      <link>https://juliakostrikova.com/posts/homelab/ovderride-provider/</link>
+      <pubDate>Sat, 23 Sep 2023 11:28:58 +0200</pubDate>
+      
+      <guid>https://juliakostrikova.com/posts/homelab/ovderride-provider/</guid>
+      <description>My Use case To establish a seamless synchronization of project files between a MacBook (working station) and a Raspberry Pi (hosting server), allowing for automatic updates and accessibility of the project from both devices.
+The user begins working on the project using the IDE on the MacBook, editing and updating project files within the synchronized folder. As changes are made, they are automatically reflected in the synchronized folder and accessible on the Raspberry Pi in read-only mode.</description>
+    </item>
+    
     <item>
       <title>SAA-C03:: Simple Storage Service (S3)</title>
       <link>https://juliakostrikova.com/posts/saa-c03/s3/</link>

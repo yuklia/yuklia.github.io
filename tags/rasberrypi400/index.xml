@@ -14,7 +14,7 @@
       
       <guid>https://juliakostrikova.com/posts/homelab/ovderride-provider/</guid>
       <description>My Use case To establish a seamless synchronization of project files between a MacBook (working station) and a Raspberry Pi (hosting server), allowing for automatic updates and accessibility of the project from both devices.
-The user begins working on the project using the IDE on the MacBook, editing and updating project files within the synchronized folder. As changes are made, they are automatically reflected in the synchronized folder and accessible on the Raspberry Pi in read-only mode.</description>
+device/tool version DS420+ DSM 7.2-64570 Raspberry PI 400 The user begins working on the project using the IDE on the MacBook, editing and updating project files within the synchronized folder. As changes are made, they are automatically reflected in the synchronized folder and accessible on the Raspberry Pi in read-only mode.</description>
     </item>
     
   </channel>

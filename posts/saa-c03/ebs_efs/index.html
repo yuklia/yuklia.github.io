@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>SAA-C03:: AWS Storage. EBS &amp; EFS | Yuliia Kostrikova</title>
+
+
+<meta name="keywords" content="aws, SAA-C03, cloud, certification, study plan, notes, Cloud architecture, AWS learning path">
+<meta name="description" content="Study Notes">
+<meta name="author" content="">
+<link rel="canonical" href="https://juliakostrikova.com/posts/saa-c03/ebs_efs/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.7140587df96a2b1a49eb723fa7063dc0c641a6cb638f3140e8d3beb4deae4f5c.css" integrity="sha256-cUBYfflqKxpJ63I/pwY9wMZBpstjjzFA6NO&#43;tN6uT1w=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://juliakostrikova.com/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://juliakostrikova.com/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://juliakostrikova.com/favicon-32x32.png">
+<link rel="manifest" href="https://juliakostrikova.com/site.webmanifest">
+<link rel="apple-touch-icon" href="https://juliakostrikova.com/apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml"  href="https://juliakostrikova.com/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BR19XD52CV"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-BR19XD52CV', { 'anonymize_ip': false });
+}
+</script>
+<meta property="og:title" content="SAA-C03:: AWS Storage. EBS &amp; EFS" />
+<meta property="og:description" content="Study Notes" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://juliakostrikova.com/posts/saa-c03/ebs_efs/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-01-06T19:35:26+02:00" />
+<meta property="article:modified_time" content="2023-01-06T19:35:26+02:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="SAA-C03:: AWS Storage. EBS &amp; EFS"/>
+<meta name="twitter:description" content="Study Notes"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://juliakostrikova.com/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "SAA-C03:: AWS Storage. EBS \u0026 EFS",
+      "item": "https://juliakostrikova.com/posts/saa-c03/ebs_efs/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "SAA-C03:: AWS Storage. EBS \u0026 EFS",
+  "name": "SAA-C03:: AWS Storage. EBS \u0026 EFS",
+  "description": "Study Notes",
+  "keywords": [
+    "aws", "SAA-C03", "cloud", "certification", "study plan", "notes", "Cloud architecture", "AWS learning path"
+  ],
+  "articleBody": "EBS Volumes Storage volumes you can attach to your EC2 instances.\nMission Critical 🟢 production workloads. designed for mission critical workloads\n🟢 highly available. automatically replicated within a single AZ to protect against hardware failures.\n🟢 scalable. dynamically increase capacity and chnage the volume type with no downtime or performance impact to your live systems.\nEBS Volume Types: Solid State Disk General Purpose SSD (gp2) - legacy 3 IOPS per GiB, up to maximum of 16,000 IOPS per volume regardless of how large the volume is, the maximum number of input/output operations the storage system can handle for that volume is 16,000 per second. this is the upper limit on the performance you can expect from the volume.\ngp2 volumes smaller than 1TB can burst up to 3,000 IOPS\ngood for boot volumes or development and test applications that are not latency sensitive\nGeneral Purpose SSD (gp3) predictable 3,000 IOPS baseline performance and 125 MiB/s regardless of volume size\nideal for applications that require high performace but not high storage capacity, such as MySQL, Cassandra, and Hadoop clusters.\ncustomers looking for higher performance can scale up to 16,000 IOPS and 1,000 MiB/s for an additional fee.\nthe top performance of gp3 is 4 times faster then max throughput of gp2 volumes.\nProvisioned IOPS SSD (io1) - legacy high-performance option and the most expensive\nup to 64, 000 IOPS per volume. 50 IOPS per GiB\nuse if you need \u003e 16,000 IOPS\ndesigned for I/O-intensive applications, large databases, and latency-sensitive workloads.\nProvisioned IOPS SSD (io2) applications that need high levels of durability\nlatest generation. 500 IOPS per GiB up to 64,000 IOPS\n99,999% durability instead of up to 99,9%\nI/O intensive apps, large databases, and latency-sensitive workloads.\nEBS Volume Types: Hard Disk Drive (MB/s-intensive) Throughput Optimized HDD (st1) low-cost HDD volume\nbaseline throughput of 40 MB/s per TB\nability to burst up to 250 MB/s per TB\nmaximum throughput of 500 MB/s per volume\nfrequently accessed, throughput-intensive workloads\nbig data, data warehouses, ETL, and log processing\na cost-affective way to store mountains of data\n❕ cannot be a boot volume\nCold HDD (sc1) baseline throughput of 12 MB/s per TB\nability to burst up to 80 MB/s per TB\nmaximum throughput of 250 MB/s per volume\ngood choice for colder data requiring fewer scans per day\nbig data, data warehouses, ETL, and log processing\ngood for applications that need the lower cost and performance is not a factor\n❕ cannot be a boot volume\nIOPS vs Throughput IOPS Throughput measures the number of read and write operations per second measures the number of bits read or written per second (MB/s) important metric for qwick transations, low-latency apps, transactional workloads important metricfor large datasets, large I/O sizes, complex queries the ability to action reads and writes very qwickly the ability to deal with large datasets choose Provisioned SSD (io1 or io2) choose Throughput Optimized HDD (st1) Volumes and Snapshots What are Volumes? exists on EBS\nStorage drives (or volumes as they’re described in AWS documentation) are for the most part virtualized spaces carved out of larger physical drives. To the OS running on your instance, however, all AWS volumes will present themselves exactly as though they were normal physical drives.\nWhat are Snapshots? exists on S3\nthink of snapshot as a photograph of the virtual disk/volume snapshots are point in time when you take a snapshot, it is a point-in-time copy of a volume.\nsnapshots are incremental this means only the data that has been changed since your last snapshot are moved to S3. this saves on space and the time to take a snapshot.\nEncrypting Volumes data at rest is encrypted inside the volume\nall data in flight moving between the instance and vthe volume is encryped\nall snapshots are encrypted.\nall volumes created from the snapshot are encrypted\n4 Steps to Encrypt an Unecrypted Volume Create a snapshot of unencrypted root device volume Create a copy of the snapshot and select the encrypt option. Create an AMI from the encrypted snapshot. Use the AMI to launch new encrypted instances. EC2 Hibernation References Migrate your Amazon EBS volumes from gp2 to gp3 and save up to 20% on costs\n",
+  "wordCount" : "698",
+  "inLanguage": "en",
+  "datePublished": "2023-01-06T19:35:26+02:00",
+  "dateModified": "2023-01-06T19:35:26+02:00",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://juliakostrikova.com/posts/saa-c03/ebs_efs/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Yuliia Kostrikova",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://juliakostrikova.com/favicon.ico"
+    }
+  }
+}
+</script>
+    <script>
+        var _paq = window._paq = window._paq || [];
+         
+        _paq.push(['trackPageView']);
+        _paq.push(['enableLinkTracking']);
+        (function() {
+        var u="https://juliakostrikova.matomo.cloud/";
+        _paq.push(['setTrackerUrl', u+'matomo.php']);
+        _paq.push(['setSiteId', '1']);
+        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+        g.async=true; g.src='//cdn.matomo.cloud/juliakostrikova.matomo.cloud/matomo.js'; s.parentNode.insertBefore(g,s);
+        })();
+    </script>    
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://juliakostrikova.com" accesskey="h" title="Yuliia Kostrikova (Alt + H)">Yuliia Kostrikova</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://juliakostrikova.com/archives/" title="Archive">
+                    <span>Archive</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://juliakostrikova.com/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://juliakostrikova.com/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://juliakostrikova.com">Home</a>&nbsp;»&nbsp;<a href="https://juliakostrikova.com/posts/">Posts</a></div>
+    <h1 class="post-title">
+      SAA-C03:: AWS Storage. EBS &amp; EFS
+    </h1>
+    <div class="post-description">
+      Study Notes
+    </div>
+    <div class="post-meta"><span title='2023-01-06 19:35:26 +0200 +0200'>January 6, 2023</span>&nbsp;·&nbsp;4 min
+
+</div>
+  </header> <div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#ebs-volumes" aria-label="EBS Volumes">EBS Volumes</a><ul>
+                        
+                <li>
+                    <a href="#mission-critical" aria-label="Mission Critical">Mission Critical</a></li>
+                <li>
+                    <a href="#ebs-volume-types-solid-state-disk" aria-label="EBS Volume Types: Solid State Disk">EBS Volume Types: Solid State Disk</a><ul>
+                        
+                <li>
+                    <a href="#general-purpose-ssd-gp2---legacy" aria-label="General Purpose SSD (gp2) - legacy">General Purpose SSD (gp2) - <em>legacy</em></a></li>
+                <li>
+                    <a href="#general-purpose-ssd-gp3" aria-label="General Purpose SSD (gp3)">General Purpose SSD (gp3)</a></li>
+                <li>
+                    <a href="#provisioned-iops-ssd-io1---legacy" aria-label="Provisioned IOPS SSD (io1) - legacy">Provisioned IOPS SSD (io1) - <em>legacy</em></a></li>
+                <li>
+                    <a href="#provisioned-iops-ssd-io2" aria-label="Provisioned IOPS SSD (io2)">Provisioned IOPS SSD (io2)</a></li></ul>
+                </li>
+                <li>
+                    <a href="#ebs-volume-types-hard-disk-drive-mbs-intensive" aria-label="EBS Volume Types: Hard Disk Drive (MB/s-intensive)">EBS Volume Types: Hard Disk Drive (MB/s-intensive)</a><ul>
+                        
+                <li>
+                    <a href="#throughput-optimized-hdd-st1" aria-label="Throughput Optimized HDD (st1)">Throughput Optimized HDD (st1)</a></li>
+                <li>
+                    <a href="#cold-hdd-sc1" aria-label="Cold HDD (sc1)">Cold HDD (sc1)</a></li></ul>
+                </li>
+                <li>
+                    <a href="#iops-vs-throughput" aria-label="IOPS vs Throughput">IOPS vs Throughput</a></li></ul>
+                </li>
+                <li>
+                    <a href="#volumes-and-snapshots" aria-label="Volumes and Snapshots">Volumes and Snapshots</a><ul>
+                        
+                <li>
+                    <a href="#what-are-volumes" aria-label="What are Volumes?">What are Volumes?</a></li>
+                <li>
+                    <a href="#what-are-snapshots" aria-label="What are Snapshots?">What are Snapshots?</a></li>
+                <li>
+                    <a href="#encrypting-volumes" aria-label="Encrypting Volumes">Encrypting Volumes</a></li>
+                <li>
+                    <a href="#4-steps-to-encrypt-an-unecrypted-volume" aria-label="4 Steps to Encrypt an Unecrypted Volume">4 Steps to Encrypt an Unecrypted Volume</a></li>
+                <li>
+                    <a href="#ec2-hibernation" aria-label="EC2 Hibernation">EC2 Hibernation</a></li></ul>
+                </li>
+                <li>
+                    <a href="#references" aria-label="References">References</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h2 id="ebs-volumes">EBS Volumes<a hidden class="anchor" aria-hidden="true" href="#ebs-volumes">#</a></h2>
+<p>Storage volumes you can attach to your EC2 instances.</p>
+<h3 id="mission-critical">Mission Critical<a hidden class="anchor" aria-hidden="true" href="#mission-critical">#</a></h3>
+<p>🟢 production workloads. designed for mission critical workloads</p>
+<p>🟢 highly available. automatically replicated within a single AZ to protect against hardware failures.</p>
+<p>🟢 scalable. dynamically increase capacity and chnage the volume type with no downtime or performance impact to your live systems.</p>
+<h3 id="ebs-volume-types-solid-state-disk">EBS Volume Types: Solid State Disk<a hidden class="anchor" aria-hidden="true" href="#ebs-volume-types-solid-state-disk">#</a></h3>
+<h4 id="general-purpose-ssd-gp2---legacy">General Purpose SSD (gp2) - <em>legacy</em><a hidden class="anchor" aria-hidden="true" href="#general-purpose-ssd-gp2---legacy">#</a></h4>
+<ul>
+<li>3 IOPS per GiB, <strong>up to maximum of 16,000 IOPS per volume</strong></li>
+</ul>
+<p>regardless of how large the volume is, the maximum number of input/output operations the storage system can handle for that volume is 16,000 per second. this is the upper limit on the performance you can expect from the volume.</p>
+<ul>
+<li>
+<p><strong>gp2</strong> volumes <strong>smaller than 1TB</strong> can burst up to  3,000 IOPS</p>
+</li>
+<li>
+<p><strong>good for boot volumes</strong> or development and test applications that are not latency sensitive</p>
+</li>
+</ul>
+<h4 id="general-purpose-ssd-gp3">General Purpose SSD (gp3)<a hidden class="anchor" aria-hidden="true" href="#general-purpose-ssd-gp3">#</a></h4>
+<ul>
+<li>
+<p>predictable 3,000 IOPS baseline performance and 125 MiB/s regardless of volume size</p>
+</li>
+<li>
+<p>ideal for applications that require high performace but not high storage capacity, such as MySQL, Cassandra, and Hadoop clusters.</p>
+</li>
+<li>
+<p>customers looking for higher performance can scale up to 16,000 IOPS and 1,000 MiB/s for an additional fee.</p>
+</li>
+<li>
+<p>the top performance of gp3 is <strong>4 times faster then max</strong> throughput of <strong>gp2</strong> volumes.</p>
+</li>
+</ul>
+<h4 id="provisioned-iops-ssd-io1---legacy">Provisioned IOPS SSD (io1) - <em>legacy</em><a hidden class="anchor" aria-hidden="true" href="#provisioned-iops-ssd-io1---legacy">#</a></h4>
+<p><em>high-performance option and the most expensive</em></p>
+<ul>
+<li>
+<p>up to 64, 000 IOPS per volume. 50 IOPS per GiB</p>
+</li>
+<li>
+<p>use if you need &gt; 16,000 IOPS</p>
+</li>
+<li>
+<p>designed for I/O-intensive applications, large databases, and latency-sensitive workloads.</p>
+</li>
+</ul>
+<h4 id="provisioned-iops-ssd-io2">Provisioned IOPS SSD (io2)<a hidden class="anchor" aria-hidden="true" href="#provisioned-iops-ssd-io2">#</a></h4>
+<p><em>applications that need high levels of durability</em></p>
+<ul>
+<li>
+<p>latest generation. 500 IOPS per GiB up to 64,000 IOPS</p>
+</li>
+<li>
+<p>99,999% durability instead of up to 99,9%</p>
+</li>
+<li>
+<p>I/O intensive apps, large databases, and latency-sensitive workloads.</p>
+</li>
+</ul>
+<h3 id="ebs-volume-types-hard-disk-drive-mbs-intensive">EBS Volume Types: Hard Disk Drive (MB/s-intensive)<a hidden class="anchor" aria-hidden="true" href="#ebs-volume-types-hard-disk-drive-mbs-intensive">#</a></h3>
+<h4 id="throughput-optimized-hdd-st1">Throughput Optimized HDD (st1)<a hidden class="anchor" aria-hidden="true" href="#throughput-optimized-hdd-st1">#</a></h4>
+<p><em>low-cost HDD volume</em></p>
+<ul>
+<li>
+<p>baseline throughput of 40 MB/s per TB</p>
+</li>
+<li>
+<p>ability to burst up to 250 MB/s per TB</p>
+</li>
+<li>
+<p>maximum throughput of 500 MB/s per volume</p>
+</li>
+<li>
+<p>frequently accessed, throughput-intensive workloads</p>
+</li>
+<li>
+<p>big data, data warehouses, ETL, and log processing</p>
+</li>
+<li>
+<p>a cost-affective way to store mountains of data</p>
+</li>
+</ul>
+<p>❕ cannot be a boot volume</p>
+<h4 id="cold-hdd-sc1">Cold HDD (sc1)<a hidden class="anchor" aria-hidden="true" href="#cold-hdd-sc1">#</a></h4>
+<ul>
+<li>
+<p>baseline throughput of 12 MB/s per TB</p>
+</li>
+<li>
+<p>ability to burst up to 80 MB/s per TB</p>
+</li>
+<li>
+<p>maximum throughput of 250 MB/s per volume</p>
+</li>
+<li>
+<p>good choice for colder data requiring fewer scans per day</p>
+</li>
+<li>
+<p>big data, data warehouses, ETL, and log processing</p>
+</li>
+<li>
+<p>good for applications that need the lower cost and performance is not a factor</p>
+</li>
+</ul>
+<p>❕ cannot be a boot volume</p>
+<h3 id="iops-vs-throughput">IOPS vs Throughput<a hidden class="anchor" aria-hidden="true" href="#iops-vs-throughput">#</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>IOPS</strong></th>
+<th><strong>Throughput</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>measures the number of read and write operations per second</td>
+<td>measures the number of bits read or written per second (MB/s)</td>
+</tr>
+<tr>
+<td>important metric for qwick transations, low-latency apps, transactional workloads</td>
+<td>important metricfor large datasets, large I/O sizes, complex queries</td>
+</tr>
+<tr>
+<td>the ability to action reads and writes very qwickly</td>
+<td>the ability to deal with large datasets</td>
+</tr>
+<tr>
+<td>choose Provisioned SSD (io1 or io2)</td>
+<td>choose Throughput Optimized HDD (st1)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="volumes-and-snapshots">Volumes and Snapshots<a hidden class="anchor" aria-hidden="true" href="#volumes-and-snapshots">#</a></h2>
+<h3 id="what-are-volumes">What are Volumes?<a hidden class="anchor" aria-hidden="true" href="#what-are-volumes">#</a></h3>
+<p><em>exists on EBS</em></p>
+<p>Storage drives (or volumes as they’re described in AWS documentation) are for the most part <strong>virtualized spaces carved out of larger physical drives</strong>. To the OS running on your instance, however, all AWS volumes will present themselves exactly as though they were normal physical drives.</p>
+<h3 id="what-are-snapshots">What are Snapshots?<a hidden class="anchor" aria-hidden="true" href="#what-are-snapshots">#</a></h3>
+<p><em>exists on S3</em></p>
+<ul>
+<li>think of snapshot as a photograph of the virtual disk/volume</li>
+<li>snapshots are point in time</li>
+</ul>
+<p>when you take a snapshot, it is a point-in-time copy of a volume.</p>
+<ul>
+<li>snapshots are incremental</li>
+</ul>
+<p>this means only the data that has been changed since your last snapshot are moved to S3.  this saves on space and the time to take a snapshot.</p>
+<h3 id="encrypting-volumes">Encrypting Volumes<a hidden class="anchor" aria-hidden="true" href="#encrypting-volumes">#</a></h3>
+<ul>
+<li>
+<p>data at rest is encrypted inside the volume</p>
+</li>
+<li>
+<p>all data in flight moving between the instance and vthe volume is encryped</p>
+</li>
+<li>
+<p>all snapshots are encrypted.</p>
+</li>
+<li>
+<p>all volumes created from the snapshot are encrypted</p>
+</li>
+</ul>
+<h3 id="4-steps-to-encrypt-an-unecrypted-volume">4 Steps to Encrypt an Unecrypted Volume<a hidden class="anchor" aria-hidden="true" href="#4-steps-to-encrypt-an-unecrypted-volume">#</a></h3>
+<ol>
+<li>Create a snapshot of unencrypted root device volume</li>
+<li>Create a copy of the snapshot and select the encrypt option.</li>
+<li>Create an AMI from the encrypted snapshot.</li>
+<li>Use the AMI to launch new encrypted instances.</li>
+</ol>
+<h3 id="ec2-hibernation">EC2 Hibernation<a hidden class="anchor" aria-hidden="true" href="#ec2-hibernation">#</a></h3>
+<h2 id="references">References<a hidden class="anchor" aria-hidden="true" href="#references">#</a></h2>
+<p><a href="https://aws.amazon.com/blogs/storage/migrate-your-amazon-ebs-volumes-from-gp2-to-gp3-and-save-up-to-20-on-costs/">Migrate your Amazon EBS volumes from gp2 to gp3 and save up to 20% on costs</a></p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://juliakostrikova.com/tags/aws/">aws</a></li>
+      <li><a href="https://juliakostrikova.com/tags/saa-c03/">SAA-C03</a></li>
+      <li><a href="https://juliakostrikova.com/tags/cloud/">cloud</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="prev" href="https://juliakostrikova.com/posts/saa-c03/s3/">
+    <span class="title">« Prev</span>
+    <br>
+    <span>SAA-C03:: Simple Storage Service (S3)</span>
+  </a>
+  <a class="next" href="https://juliakostrikova.com/posts/saa-c03/aws-fundamentals/">
+    <span class="title">Next »</span>
+    <br>
+    <span>SAA-C03:: Introduction to Cloud Computing and AWS</span>
+  </a>
+</nav>
+
+  </footer><script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
+<script>
+  kofiWidgetOverlay.draw('yuklia', {
+    'type': 'floating-chat',
+    'floating-chat.donateButton.text': '',
+    'floating-chat.donateButton.background-color': '#ffffff',
+    'floating-chat.donateButton.text-color': '#323842'
+  });
+</script>
+
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "yuklia-dev" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2024 <a href="https://juliakostrikova.com">Yuliia Kostrikova</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

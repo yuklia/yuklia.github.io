@@ -58,7 +58,18 @@ traefik: image: ${REGISTRY}/traefik:1.6 build: ./traefik volumes: - /var/run/doc
         }
 
     </style>
-</noscript><meta property="og:title" content="Traefik behind AWS ELB. X-Forwarded-For header" />
+</noscript>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BR19XD52CV"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-BR19XD52CV', { 'anonymize_ip': false });
+}
+</script>
+<meta property="og:title" content="Traefik behind AWS ELB. X-Forwarded-For header" />
 <meta property="og:description" content="Traefik v1.7 is running within a Docker Swarm, functioning as a global service. Consequently, an instance of Traefik is deployed for each host within our Docker Swarm cluster. It is important to note that the Swarm&rsquo;s routing mesh is not employed in this setup. Instead, the port mode is configured as &ldquo;host,&rdquo; allowing the port to be attached to the host&rsquo;s network.
 traefik: image: ${REGISTRY}/traefik:1.6 build: ./traefik volumes: - /var/run/docker.sock:/var/run/docker.sock networks: - traefik environment: - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} - AWS_REGION=${AWS_REGION} - AWS_HOSTED_ZONE_ID=${AWS_HOSTED_ZONE_ID} ports: - target: 80 published: 80 protocol: tcp mode: host - target: 443 published: 443 mode: host protocol: tcp - target: 8080 published: 8080 mode: host protocol: tcp deploy: mode: global restart_policy: condition: on-failure Docker Swarm deployed to AWS and lives behind internal/external load balancers (Classic type)." />
 <meta property="og:type" content="article" />
@@ -385,7 +396,7 @@ X-Forwarded-Proto: https
     </main>
     
 <footer class="footer">
-    <span>&copy; 2023 <a href="https://juliakostrikova.com">Yuliia Kostrikova</a></span>
+    <span>&copy; 2024 <a href="https://juliakostrikova.com">Yuliia Kostrikova</a></span>
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

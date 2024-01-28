@@ -6,7 +6,16 @@
     <description>Recent content in howto on Yuliia Kostrikova</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Sat, 23 Sep 2023 11:28:58 +0200</lastBuildDate><atom:link href="https://juliakostrikova.com/tags/howto/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 28 Jan 2024 13:05:09 +0100</lastBuildDate><atom:link href="https://juliakostrikova.com/tags/howto/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Automating UML Diagrams with ChatGPT and PlantUML</title>
+      <link>https://juliakostrikova.com/posts/chatgpt/plantuml/</link>
+      <pubDate>Sun, 28 Jan 2024 13:05:09 +0100</pubDate>
+      
+      <guid>https://juliakostrikova.com/posts/chatgpt/plantuml/</guid>
+      <description>Learn how to effortlessly visualize system designs, saving time on syntax and focusing on architecting solutions</description>
+    </item>
+    
     <item>
       <title>How to Mount Synology NAS to RaspberryPi via NFS</title>
       <link>https://juliakostrikova.com/posts/homelab/ovderride-provider/</link>

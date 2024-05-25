@@ -1,18 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head>
-	<meta name="generator" content="Hugo 0.110.0"><meta charset="utf-8">
+<head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
-<title>Yuliia Kostrikova</title>
+<title>homelab | Yuliia Kostrikova</title>
 
 
-
+<meta name="keywords" content="">
 <meta name="description" content="">
 <meta name="author" content="">
-<link rel="canonical" href="https://juliakostrikova.com/">
+<link rel="canonical" href="https://juliakostrikova.com/tags/homelab/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.7140587df96a2b1a49eb723fa7063dc0c641a6cb638f3140e8d3beb4deae4f5c.css" integrity="sha256-cUBYfflqKxpJ63I/pwY9wMZBpstjjzFA6NO&#43;tN6uT1w=" rel="preload stylesheet" as="style">
 <link rel="icon" href="https://juliakostrikova.com/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="https://juliakostrikova.com/favicon-16x16.png">
@@ -22,8 +21,7 @@
 <link rel="icon" type="image/svg+xml"  href="https://juliakostrikova.com/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" type="application/rss+xml" href="https://juliakostrikova.com/index.xml">
-<link rel="alternate" type="application/json" href="https://juliakostrikova.com/index.json">
+<link rel="alternate" type="application/rss+xml" href="https://juliakostrikova.com/tags/homelab/index.xml">
 <noscript>
     <style>
         #theme-toggle,
@@ -71,28 +69,15 @@ if (!doNotTrack) {
 	gtag('config', 'G-BR19XD52CV', { 'anonymize_ip': false });
 }
 </script>
-<meta property="og:title" content="Yuliia Kostrikova" />
+<meta property="og:title" content="homelab" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://juliakostrikova.com/" />
+<meta property="og:url" content="https://juliakostrikova.com/tags/homelab/" />
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Yuliia Kostrikova"/>
+<meta name="twitter:title" content="homelab"/>
 <meta name="twitter:description" content=""/>
 
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "Yuliia Kostrikova",
-  "url": "https://juliakostrikova.com",
-  "description": "",
-  "thumbnailUrl": "https://juliakostrikova.com/favicon.ico",
-  "sameAs": [
-      "https://github.com/yuklia", "https://www.linkedin.com/in/yulia-kostrikova-🇺🇦-67268585/", "https://app.codesignal.com/profile/yulia_k2", "https://medium.com/@yuliakostrikova", "https://ko-fi.com/yuklia"
-  ]
-}
-</script>
     
 </head>
 
@@ -155,83 +140,31 @@ if (!doNotTrack) {
     </nav>
 </header>
 <main class="main"> 
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>Traefik behind AWS ELB. X-Forwarded-For header
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Traefik v1.7 is running within a Docker Swarm, functioning as a global service. Consequently, an instance of Traefik is deployed for each host within our Docker Swarm cluster. It is important to note that the Swarm’s routing mesh is not employed in this setup. Instead, the port mode is configured as “host,” allowing the port to be attached to the host’s network.
-traefik: image: ${REGISTRY}/traefik:1.6 build: ./traefik volumes: - /var/run/docker.sock:/var/run/docker.sock networks: - traefik environment: - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} - AWS_REGION=${AWS_REGION} - AWS_HOSTED_ZONE_ID=${AWS_HOSTED_ZONE_ID} ports: - target: 80 published: 80 protocol: tcp mode: host - target: 443 published: 443 mode: host protocol: tcp - target: 8080 published: 8080 mode: host protocol: tcp deploy: mode: global restart_policy: condition: on-failure Docker Swarm deployed to AWS and lives behind internal/external load balancers (Classic type)....</p>
-  </div>
-  <footer class="entry-footer"><span title='2020-10-17 18:02:25 +0300 +0300'>October 17, 2020</span>&nbsp;·&nbsp;3 min</footer>
-  <a class="entry-link" aria-label="post link to Traefik behind AWS ELB. X-Forwarded-For header" href="https://juliakostrikova.com/posts/cloud/traefik-x-forwarded-for/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>Custom error page in Traefik v2.x. Finally
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>What you will learn today 🦦: what is Traefik and why I decisively recommend to use it with Docker Swarm how to show custom error page if Traefik returns 404 (service not found) How I met Traefik 😁 Traefik is a top modern reverse proxy and load balancer. I started to use it from major version 1. At that moment, I already had Docker Swarm cluster, which I began to prepare for production use, and only one thing in the coherent picture has been left: “External Load Balancer”....</p>
-  </div>
-  <footer class="entry-footer"><span title='2020-10-16 18:02:25 +0300 +0300'>October 16, 2020</span>&nbsp;·&nbsp;3 min</footer>
-  <a class="entry-link" aria-label="post link to Custom error page in Traefik v2.x. Finally" href="https://juliakostrikova.com/posts/cloud/traefik-error-page/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>Solution for CodeSignal: addTwoHugeNumbers (Linked List part 👯)
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Task description on Codesignal
-I’ve spend decent amount of time in order to figure out that I don’t need any string manipulation in this task 😅. My first try was adding missing zeros to the beginning of number slot, convert int to str and back, then the resulting string split by 4 but no luck … It turned out that is simple math 😀 I wanna share my solution with detailed comments ⬇️ (Time complexity O(n) )...</p>
-  </div>
-  <footer class="entry-footer"><span title='2020-09-10 15:35:26 +0200 CEST'>September 10, 2020</span>&nbsp;·&nbsp;3 min</footer>
-  <a class="entry-link" aria-label="post link to Solution for CodeSignal: addTwoHugeNumbers (Linked List part 👯)" href="https://juliakostrikova.com/posts/algorithms/addtwohugenumbers/"></a>
-</article>
-
-<article class="post-entry"> 
-<figure class="entry-cover"><img loading="lazy" src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*bhgcAieou2M-zxD1Zd2s7w.jpeg" alt="cover_img_processor">
-</figure>
-  <header class="entry-header">
-    <h2>How to analyse “high CPU” in php on production. Part 1
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>1 Add tools specifically to php monitoring in order to answer the questions ⬇️ what kind of php scripts were called most of the time? what kind of php scripts took the most CPU? We choose open-source tool Pinba.
-php pinba extension sends data over UDP in protobuf format. pinba server accumulates and processes data and send it to data storage in your choice. (In our case it is Clickhouse DB)...</p>
-  </div>
-  <footer class="entry-footer"><span title='2020-07-10 18:56:57 +0300 +0300'>July 10, 2020</span>&nbsp;·&nbsp;3 min</footer>
-  <a class="entry-link" aria-label="post link to How to analyse “high CPU” in php on production. Part 1" href="https://juliakostrikova.com/posts/php/high-cpu/"></a>
-</article>
-
-<article class="post-entry"> 
-<figure class="entry-cover"><img loading="lazy" src="https://juliakostrikova.com/php/xdebug.gif" alt="xdebug.gif">
-</figure>
-  <header class="entry-header">
-    <h2>XDebug for PHP docker container on macOS
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Into 💆 Pre-conditions: macOS Sierra Docker CE Version 17.06.2-ce-mac27 PHP 7.1.8 XDebug v2.5.0 PhpStorm 2017.2 If you want to set up remote debug from your container you have 2 options:
-xdebug.remote_host = %host_ip% %host_ip% — The IP of the machine running your IDE. It’s assumed on the same host as Docker. xdebug.remote_connect_back = on checks $_SERVER[‘HTTP_X_FORWARDED_FOR’] and $_SERVER[‘REMOTE_ADDR’] variables to find out which IP address to use. You cannot use xdebug....</p>
-  </div>
-  <footer class="entry-footer"><span title='2017-08-14 18:56:57 +0300 +0300'>August 14, 2017</span>&nbsp;·&nbsp;2 min</footer>
-  <a class="entry-link" aria-label="post link to XDebug for PHP docker container on macOS" href="https://juliakostrikova.com/posts/php/xdebug-macos/"></a>
-</article>
-<footer class="page-footer">
-  <nav class="pagination">
-    <a class="prev" href="https://juliakostrikova.com/">
-      «&nbsp;Prev&nbsp;
+<header class="page-header"><div class="breadcrumbs"><a href="https://juliakostrikova.com">Home</a>&nbsp;»&nbsp;<a href="https://juliakostrikova.com/tags/">Tags</a></div>
+  <h1>
+    homelab
+    <a href="/tags/homelab/index.xml" title="RSS" aria-label="RSS">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" height="23">
+        <path d="M4 11a9 9 0 0 1 9 9" />
+        <path d="M4 4a16 16 0 0 1 16 16" />
+        <circle cx="5" cy="19" r="1" />
+      </svg>
     </a>
-    <a class="next" href="https://juliakostrikova.com/page/3/">Next&nbsp;&nbsp;»
-    </a>
-  </nav>
-</footer>
+  </h1>
+</header>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2>RPI 5 on Ubuntu 24.04 (Headless): Connect to WiFi / Mobile Hotspot
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>RPI 5 on Ubuntu 24.04 (headless): Connect to WiFi / Mobile Hotspot Introduction In my free time, I enjoy tinkering with my home lab, exploring new projects and challenges. Recently, I decided to connect my Raspberry Pi 5 to a mobile hotspot—a seemingly straightforward task. However, it turned out not so smooth. In this post, I’ll walk you through how I resolved the error brcmfmac: brcmf_set_channel: set chanspec fail, reason -52 and successfully connected Raspberry Pi to a mobile hotspot....</p>
+  </div>
+  <footer class="entry-footer"><span title='2024-05-25 11:28:58 +0200 CEST'>May 25, 2024</span>&nbsp;·&nbsp;3 min</footer>
+  <a class="entry-link" aria-label="post link to RPI 5 on Ubuntu 24.04 (Headless): Connect to WiFi / Mobile Hotspot" href="https://juliakostrikova.com/posts/homelab/mobile-hotspot-on-rpi5/"></a>
+</article>
     </main>
     
 <footer class="footer">

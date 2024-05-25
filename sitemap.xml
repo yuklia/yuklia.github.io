@@ -2,6 +2,33 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://juliakostrikova.com/tags/bare-metal/</loc>
+    <lastmod>2024-05-25T11:28:58+02:00</lastmod>
+  </url><url>
+    <loc>https://juliakostrikova.com/tags/homelab/</loc>
+    <lastmod>2024-05-25T11:28:58+02:00</lastmod>
+  </url><url>
+    <loc>https://juliakostrikova.com/posts/</loc>
+    <lastmod>2024-05-25T11:28:58+02:00</lastmod>
+  </url><url>
+    <loc>https://juliakostrikova.com/tags/raspberrypi5/</loc>
+    <lastmod>2024-05-25T11:28:58+02:00</lastmod>
+  </url><url>
+    <loc>https://juliakostrikova.com/posts/homelab/mobile-hotspot-on-rpi5/</loc>
+    <lastmod>2024-05-25T11:28:58+02:00</lastmod>
+  </url><url>
+    <loc>https://juliakostrikova.com/tags/</loc>
+    <lastmod>2024-05-25T11:28:58+02:00</lastmod>
+  </url><url>
+    <loc>https://juliakostrikova.com/tags/ubuntu24.04/</loc>
+    <lastmod>2024-05-25T11:28:58+02:00</lastmod>
+  </url><url>
+    <loc>https://juliakostrikova.com/tags/wifi/</loc>
+    <lastmod>2024-05-25T11:28:58+02:00</lastmod>
+  </url><url>
+    <loc>https://juliakostrikova.com/</loc>
+    <lastmod>2024-05-25T11:28:58+02:00</lastmod>
+  </url><url>
     <loc>https://juliakostrikova.com/posts/chatgpt/plantuml/</loc>
     <lastmod>2024-01-28T13:05:09+01:00</lastmod>
   </url><url>
@@ -11,16 +38,7 @@
     <loc>https://juliakostrikova.com/tags/howto/</loc>
     <lastmod>2024-01-28T13:05:09+01:00</lastmod>
   </url><url>
-    <loc>https://juliakostrikova.com/posts/</loc>
-    <lastmod>2024-01-28T13:05:09+01:00</lastmod>
-  </url><url>
     <loc>https://juliakostrikova.com/tags/system-design/</loc>
-    <lastmod>2024-01-28T13:05:09+01:00</lastmod>
-  </url><url>
-    <loc>https://juliakostrikova.com/tags/</loc>
-    <lastmod>2024-01-28T13:05:09+01:00</lastmod>
-  </url><url>
-    <loc>https://juliakostrikova.com/</loc>
     <lastmod>2024-01-28T13:05:09+01:00</lastmod>
   </url><url>
     <loc>https://juliakostrikova.com/tags/home-automation/</loc>
@@ -87,6 +105,8 @@
     <lastmod>2017-08-14T18:56:57+03:00</lastmod>
   </url><url>
     <loc>https://juliakostrikova.com/posts/misc/auto-rollout-terraform/</loc>
+  </url><url>
+    <loc>https://juliakostrikova.com/posts/misc/infra-drifts/</loc>
   </url><url>
     <loc>https://juliakostrikova.com/archives/</loc>
   </url><url>

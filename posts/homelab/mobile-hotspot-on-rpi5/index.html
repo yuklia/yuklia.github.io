@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>RPI 5 on Ubuntu 24.04 (Headless): Connect to WiFi / Mobile Hotspot | Yuliia Kostrikova</title>
+
+
+<meta name="keywords" content="bare-metal, homelab, raspberryPI5, wifi, ubuntu24.04">
+<meta name="description" content="RPI 5 on Ubuntu 24.04 (headless): Connect to WiFi / Mobile Hotspot Introduction In my free time, I enjoy tinkering with my home lab, exploring new projects and challenges. Recently, I decided to connect my Raspberry Pi 5 to a mobile hotspot—a seemingly straightforward task. However, it turned out not so smooth. In this post, I&rsquo;ll walk you through how I resolved the error brcmfmac: brcmf_set_channel: set chanspec fail, reason -52 and successfully connected Raspberry Pi to a mobile hotspot.">
+<meta name="author" content="">
+<link rel="canonical" href="https://juliakostrikova.com/posts/homelab/mobile-hotspot-on-rpi5/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.7140587df96a2b1a49eb723fa7063dc0c641a6cb638f3140e8d3beb4deae4f5c.css" integrity="sha256-cUBYfflqKxpJ63I/pwY9wMZBpstjjzFA6NO&#43;tN6uT1w=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://juliakostrikova.com/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://juliakostrikova.com/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://juliakostrikova.com/favicon-32x32.png">
+<link rel="manifest" href="https://juliakostrikova.com/site.webmanifest">
+<link rel="apple-touch-icon" href="https://juliakostrikova.com/apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml"  href="https://juliakostrikova.com/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BR19XD52CV"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-BR19XD52CV', { 'anonymize_ip': false });
+}
+</script>
+<meta property="og:title" content="RPI 5 on Ubuntu 24.04 (Headless): Connect to WiFi / Mobile Hotspot" />
+<meta property="og:description" content="RPI 5 on Ubuntu 24.04 (headless): Connect to WiFi / Mobile Hotspot Introduction In my free time, I enjoy tinkering with my home lab, exploring new projects and challenges. Recently, I decided to connect my Raspberry Pi 5 to a mobile hotspot—a seemingly straightforward task. However, it turned out not so smooth. In this post, I&rsquo;ll walk you through how I resolved the error brcmfmac: brcmf_set_channel: set chanspec fail, reason -52 and successfully connected Raspberry Pi to a mobile hotspot." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://juliakostrikova.com/posts/homelab/mobile-hotspot-on-rpi5/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-05-25T11:28:58+02:00" />
+<meta property="article:modified_time" content="2024-05-25T11:28:58+02:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="RPI 5 on Ubuntu 24.04 (Headless): Connect to WiFi / Mobile Hotspot"/>
+<meta name="twitter:description" content="RPI 5 on Ubuntu 24.04 (headless): Connect to WiFi / Mobile Hotspot Introduction In my free time, I enjoy tinkering with my home lab, exploring new projects and challenges. Recently, I decided to connect my Raspberry Pi 5 to a mobile hotspot—a seemingly straightforward task. However, it turned out not so smooth. In this post, I&rsquo;ll walk you through how I resolved the error brcmfmac: brcmf_set_channel: set chanspec fail, reason -52 and successfully connected Raspberry Pi to a mobile hotspot."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://juliakostrikova.com/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "RPI 5 on Ubuntu 24.04 (Headless): Connect to WiFi / Mobile Hotspot",
+      "item": "https://juliakostrikova.com/posts/homelab/mobile-hotspot-on-rpi5/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "RPI 5 on Ubuntu 24.04 (Headless): Connect to WiFi / Mobile Hotspot",
+  "name": "RPI 5 on Ubuntu 24.04 (Headless): Connect to WiFi \/ Mobile Hotspot",
+  "description": "RPI 5 on Ubuntu 24.04 (headless): Connect to WiFi / Mobile Hotspot Introduction In my free time, I enjoy tinkering with my home lab, exploring new projects and challenges. Recently, I decided to connect my Raspberry Pi 5 to a mobile hotspot—a seemingly straightforward task. However, it turned out not so smooth. In this post, I\u0026rsquo;ll walk you through how I resolved the error brcmfmac: brcmf_set_channel: set chanspec fail, reason -52 and successfully connected Raspberry Pi to a mobile hotspot.",
+  "keywords": [
+    "bare-metal", "homelab", "raspberryPI5", "wifi", "ubuntu24.04"
+  ],
+  "articleBody": "RPI 5 on Ubuntu 24.04 (headless): Connect to WiFi / Mobile Hotspot Introduction In my free time, I enjoy tinkering with my home lab, exploring new projects and challenges. Recently, I decided to connect my Raspberry Pi 5 to a mobile hotspot—a seemingly straightforward task. However, it turned out not so smooth. In this post, I’ll walk you through how I resolved the error brcmfmac: brcmf_set_channel: set chanspec fail, reason -52 and successfully connected Raspberry Pi to a mobile hotspot.\nPrerequisites Raspberry Pi 5 Ubuntu 24.04 (headless) Mobile phone with hotspot enabled Access to a terminal or SSH connection Mobile hotspot credentials (SSID and password) Step 1: Create wpa_supplicant.conf Create and configure the wpa_supplicant configuration file to connect to your mobile hotspot.\nvi /etc/wpa_supplicant/wpa_supplicant.conf Add the following content, replacing YourHotspotSSID, YourHotspotPassword, YourContryCode with your actual hotspot credentials.\ncountry=YourContryCode ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev update_config=1 network={ ssid=\"YourHotspotSSID\" psk=\"YourHotspotPassword\" key_mgmt=WPA-PSK } Step 2: Configure Netplan Netplan is used to configure networking on Linux. Create a netplan configuration file.\nℹ️ netplan Netplan is a utility for easily configuring networking on a linux system. You simply create a YAML description of the required network interfaces and what each should be configured to do. From this description Netplan will generate all the necessary configuration for your chosen renderer tool.\nNetplan reads network configuration from /etc/netplan/*.yaml which are written by administrators, installers, cloud image instantiations, or other OS deployments. During early boot, Netplan generates backend specific configuration files in /run to hand off control of devices to a particular networking daemon.\nNetplan currently works with these supported renderers: NetworkManager Systemd-networkd\nvi /etc/netplan/01-iphone-hotspot-ap.yaml Add the following configuration, substituting wlan0 with your wireless interface name.\nnetwork: version: 2 renderer: networkd wifis: wlan0: dhcp4: yes dhcp6: yes access-points: \"YourHotspotSSID\": password: \"YourHotspotPassword\" Apply the netplan configuration.\nnetplan generate netplan apply --debug Step 3: Restart wpa_supplicant Restart the wpa_supplicant service to apply the new configuration.\nsystemctl restart wpa_supplicant Step 4: Check Connection Status Verify that your device is connected to the mobile hotspot using netplan status.\nnetplan status or ip link show | grep wlan0 🧯 Troubleshooting: Resolving brcmfmac: brcmf_set_channel: set chanspec fail, reason -52 If you encounter the error brcmfmac: brcmf_set_channel: set chanspec fail, reason -52, it may indicate issues with the wireless regulatory domain settings or interference from USB 3.0 devices.\nCheck Regulatory Domain:\nEnsure the regulatory domain is set correctly.\niw reg get iw reg set US # Replace US with your country code To make this persistent, edit the CRDA configuration file.\nvi /etc/default/crda Add or modify the following line:\nREGDOMAIN=US Update Firmware and Drivers:\nEnsure you have the latest firmware and drivers.\napt update apt install --reinstall linux-firmware reboot Conclusion Connecting a headless Ubuntu 24.04 system to a mobile hotspot involves configuring wpa_supplicant and netplan correctly. By following the steps outlined above, you can establish a stable Wi-Fi connection, even in the face of potential issues like the brcmfmac: brcmf_set_channel: set chanspec fail, reason -52 error. Properly setting the regulatory domain and ensuring up-to-date firmware are key to resolving such problems.\nissues to follow:\nhttps://github.com/raspberrypi/linux/issues/6049 https://lore.kernel.org/all/99977c876429f33d8dbab18d7c3e71590585263b.camel@sipsolutions.net/T/ https://forums.raspberrypi.com/viewtopic.php?t=367466 https://github.com/home-assistant/operating-system/issues/3367\nnetplan code spippets:\nhttps://github.com/canonical/netplan/tree/main/examples\nHappy serfing 🏄 :)\nnetplan_status ",
+  "wordCount" : "518",
+  "inLanguage": "en",
+  "datePublished": "2024-05-25T11:28:58+02:00",
+  "dateModified": "2024-05-25T11:28:58+02:00",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://juliakostrikova.com/posts/homelab/mobile-hotspot-on-rpi5/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Yuliia Kostrikova",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://juliakostrikova.com/favicon.ico"
+    }
+  }
+}
+</script>
+    
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://juliakostrikova.com" accesskey="h" title="Yuliia Kostrikova (Alt + H)">Yuliia Kostrikova</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://juliakostrikova.com/archives/" title="Archive">
+                    <span>Archive</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://juliakostrikova.com/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://juliakostrikova.com/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://juliakostrikova.com">Home</a>&nbsp;»&nbsp;<a href="https://juliakostrikova.com/posts/">Posts</a></div>
+    <h1 class="post-title">
+      RPI 5 on Ubuntu 24.04 (Headless): Connect to WiFi / Mobile Hotspot
+    </h1>
+    <div class="post-meta"><span title='2024-05-25 11:28:58 +0200 CEST'>May 25, 2024</span>&nbsp;·&nbsp;3 min
+
+</div>
+  </header> <div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#rpi-5-on-ubuntu-2404-headless-connect-to-wifi--mobile-hotspot" aria-label="RPI 5 on Ubuntu 24.04 (headless): Connect to WiFi / Mobile Hotspot">RPI 5 on Ubuntu 24.04 (headless): Connect to WiFi / Mobile Hotspot</a><ul>
+                        
+                <li>
+                    <a href="#introduction" aria-label="Introduction">Introduction</a></li>
+                <li>
+                    <a href="#prerequisites" aria-label="Prerequisites">Prerequisites</a></li>
+                <li>
+                    <a href="#step-1-create-wpa_supplicantconf" aria-label="Step 1: Create wpa_supplicant.conf">Step 1: Create wpa_supplicant.conf</a></li>
+                <li>
+                    <a href="#step-2-configure-netplan" aria-label="Step 2: Configure Netplan">Step 2: Configure Netplan</a></li>
+                <li>
+                    <a href="#step-3-restart-wpa_supplicant" aria-label="Step 3: Restart wpa_supplicant">Step 3: Restart wpa_supplicant</a></li>
+                <li>
+                    <a href="#step-4-check-connection-status" aria-label="Step 4: Check Connection Status">Step 4: Check Connection Status</a><ul>
+                        
+                <li>
+                    <a href="#-troubleshooting-resolving-brcmfmac-brcmf_set_channel-set-chanspec-fail-reason--52" aria-label="🧯 Troubleshooting: Resolving brcmfmac: brcmf_set_channel: set chanspec fail, reason -52">🧯 Troubleshooting: Resolving brcmfmac: brcmf_set_channel: set chanspec fail, reason -52</a></li></ul>
+                </li>
+                <li>
+                    <a href="#conclusion" aria-label="Conclusion">Conclusion</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h2 id="rpi-5-on-ubuntu-2404-headless-connect-to-wifi--mobile-hotspot">RPI 5 on Ubuntu 24.04 (headless): Connect to WiFi / Mobile Hotspot<a hidden class="anchor" aria-hidden="true" href="#rpi-5-on-ubuntu-2404-headless-connect-to-wifi--mobile-hotspot">#</a></h2>
+<h3 id="introduction">Introduction<a hidden class="anchor" aria-hidden="true" href="#introduction">#</a></h3>
+<p>In my free time, I enjoy tinkering with my home lab, exploring new projects and challenges. Recently, I decided to connect my Raspberry Pi 5 to a mobile hotspot—a seemingly straightforward task. However, it turned out not so smooth. In this post, I&rsquo;ll walk you through how I resolved the error <code>brcmfmac: brcmf_set_channel: set chanspec fail, reason -52</code> and successfully connected Raspberry Pi to a mobile hotspot.</p>
+<h3 id="prerequisites">Prerequisites<a hidden class="anchor" aria-hidden="true" href="#prerequisites">#</a></h3>
+<ul>
+<li><strong>Raspberry Pi 5</strong></li>
+<li><strong>Ubuntu 24.04 (headless)</strong></li>
+<li><strong>Mobile phone with hotspot enabled</strong></li>
+<li><strong>Access to a terminal or SSH connection</strong></li>
+<li><strong>Mobile hotspot credentials (SSID and password)</strong></li>
+</ul>
+<h3 id="step-1-create-wpa_supplicantconf">Step 1: Create wpa_supplicant.conf<a hidden class="anchor" aria-hidden="true" href="#step-1-create-wpa_supplicantconf">#</a></h3>
+<p>Create and configure the wpa_supplicant configuration file to connect to your mobile hotspot.</p>
+<pre tabindex="0"><code>vi /etc/wpa_supplicant/wpa_supplicant.conf
+</code></pre><p>Add the following content, replacing <code>YourHotspotSSID</code>,  <code>YourHotspotPassword</code>, <code>YourContryCode</code> with your actual hotspot credentials.</p>
+<pre tabindex="0"><code>country=YourContryCode
+ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+update_config=1
+
+network={
+    ssid=&#34;YourHotspotSSID&#34;
+    psk=&#34;YourHotspotPassword&#34;
+    key_mgmt=WPA-PSK
+}
+</code></pre><h3 id="step-2-configure-netplan">Step 2: Configure Netplan<a hidden class="anchor" aria-hidden="true" href="#step-2-configure-netplan">#</a></h3>
+<p>Netplan is used to configure networking on Linux. Create a netplan configuration file.</p>
+<details>
+    <summary>ℹ️ netplan</summary>
+<blockquote>
+<p>Netplan is a utility for easily configuring networking on a linux system. You simply create a YAML description of the required network interfaces and what each should be configured to do. From this description Netplan will generate all the necessary configuration for your chosen renderer tool.</p>
+</blockquote>
+<blockquote>
+<p>Netplan reads network configuration from <code>/etc/netplan/*.yaml</code> which are written by administrators, installers, cloud image instantiations, or other OS deployments. During early boot, Netplan generates backend specific configuration files in <code>/run</code> to hand off control of devices to a particular networking daemon.</p>
+</blockquote>
+<blockquote>
+<p>Netplan currently works with these supported renderers:  <a href="https://help.ubuntu.com/community/NetworkManager">NetworkManager</a> <a href="https://manpages.ubuntu.com/manpages/bionic/man5/systemd.network.5.html">Systemd-networkd</a></p>
+</blockquote>
+</details>
+<pre tabindex="0"><code>vi /etc/netplan/01-iphone-hotspot-ap.yaml
+</code></pre><p>Add the following configuration, substituting <code>wlan0</code> with your wireless interface name.</p>
+<pre tabindex="0"><code>network:
+  version: 2
+  renderer: networkd
+  wifis:
+    wlan0:
+      dhcp4: yes
+      dhcp6: yes
+      access-points:
+        &#34;YourHotspotSSID&#34;:
+          password: &#34;YourHotspotPassword&#34;
+</code></pre><p>Apply the netplan configuration.</p>
+<pre tabindex="0"><code>netplan generate
+netplan apply --debug
+</code></pre><h3 id="step-3-restart-wpa_supplicant">Step 3: Restart wpa_supplicant<a hidden class="anchor" aria-hidden="true" href="#step-3-restart-wpa_supplicant">#</a></h3>
+<p>Restart the wpa_supplicant service to apply the new configuration.</p>
+<pre tabindex="0"><code>systemctl restart wpa_supplicant
+</code></pre><h3 id="step-4-check-connection-status">Step 4: Check Connection Status<a hidden class="anchor" aria-hidden="true" href="#step-4-check-connection-status">#</a></h3>
+<p>Verify that your device is connected to the mobile hotspot using netplan status.</p>
+<pre tabindex="0"><code>netplan status
+or
+ip link show | grep wlan0
+</code></pre><h4 id="-troubleshooting-resolving-brcmfmac-brcmf_set_channel-set-chanspec-fail-reason--52">🧯 Troubleshooting: Resolving brcmfmac: brcmf_set_channel: set chanspec fail, reason -52<a hidden class="anchor" aria-hidden="true" href="#-troubleshooting-resolving-brcmfmac-brcmf_set_channel-set-chanspec-fail-reason--52">#</a></h4>
+<p>If you encounter the error <code>brcmfmac: brcmf_set_channel: set chanspec fail, reason -52</code>, it may indicate issues with the wireless regulatory domain settings or interference from USB 3.0 devices.</p>
+<p>Check Regulatory Domain:</p>
+<p>Ensure the <a href="https://www.arubanetworks.com/techdocs/InstantWenger_Mobile/Advanced/Content/Instant%20User%20Guide%20-%20volumes/Country_Codes_List.htm">regulatory domain</a> is set correctly.</p>
+<pre tabindex="0"><code>iw reg get
+iw reg set US  # Replace US with your country code
+</code></pre><p>To make this persistent, edit the CRDA configuration file.</p>
+<pre tabindex="0"><code>vi /etc/default/crda
+</code></pre><p>Add or modify the following line:</p>
+<pre tabindex="0"><code>REGDOMAIN=US
+</code></pre><p>Update Firmware and Drivers:</p>
+<p>Ensure you have the latest firmware and drivers.</p>
+<pre tabindex="0"><code>apt update
+apt install --reinstall linux-firmware
+reboot
+</code></pre><h3 id="conclusion">Conclusion<a hidden class="anchor" aria-hidden="true" href="#conclusion">#</a></h3>
+<p>Connecting a headless Ubuntu 24.04 system to a mobile hotspot involves configuring wpa_supplicant and netplan correctly. By following the steps outlined above, you can establish a stable Wi-Fi connection, even in the face of potential issues like the <code>brcmfmac: brcmf_set_channel: set chanspec fail, reason -52 error</code>. Properly setting the regulatory domain and ensuring up-to-date firmware are key to resolving such problems.</p>
+<p>issues to follow:</p>
+<p><a href="https://github.com/raspberrypi/linux/issues/6049">https://github.com/raspberrypi/linux/issues/6049</a>
+<a href="https://lore.kernel.org/all/99977c876429f33d8dbab18d7c3e71590585263b.camel@sipsolutions.net/T/">https://lore.kernel.org/all/99977c876429f33d8dbab18d7c3e71590585263b.camel@sipsolutions.net/T/</a>
+<a href="https://forums.raspberrypi.com/viewtopic.php?t=367466">https://forums.raspberrypi.com/viewtopic.php?t=367466</a>
+<a href="https://github.com/home-assistant/operating-system/issues/3367">https://github.com/home-assistant/operating-system/issues/3367</a></p>
+<p>netplan code spippets:</p>
+<p><a href="https://github.com/canonical/netplan/tree/main/examples">https://github.com/canonical/netplan/tree/main/examples</a></p>
+<p>Happy serfing 🏄 :)</p>
+<figure>
+    <img loading="lazy" src="/homelab/netplan_status.png"/> <figcaption>
+            netplan_status
+        </figcaption>
+</figure>
+
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://juliakostrikova.com/tags/bare-metal/">bare-metal</a></li>
+      <li><a href="https://juliakostrikova.com/tags/homelab/">homelab</a></li>
+      <li><a href="https://juliakostrikova.com/tags/raspberrypi5/">raspberryPI5</a></li>
+      <li><a href="https://juliakostrikova.com/tags/wifi/">wifi</a></li>
+      <li><a href="https://juliakostrikova.com/tags/ubuntu24.04/">ubuntu24.04</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="next" href="https://juliakostrikova.com/posts/chatgpt/plantuml/">
+    <span class="title">Next »</span>
+    <br>
+    <span>Automating UML Diagrams with ChatGPT and PlantUML</span>
+  </a>
+</nav>
+
+  </footer><script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
+<script>
+  kofiWidgetOverlay.draw('yuklia', {
+    'type': 'floating-chat',
+    'floating-chat.donateButton.text': '',
+    'floating-chat.donateButton.background-color': '#ffffff',
+    'floating-chat.donateButton.text-color': '#323842'
+  });
+</script>
+
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "yuklia-dev" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2024 <a href="https://juliakostrikova.com">Yuliia Kostrikova</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

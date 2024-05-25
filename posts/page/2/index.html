@@ -171,6 +171,19 @@ if (!doNotTrack) {
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2>Traefik behind AWS ELB. X-Forwarded-For header
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Traefik v1.7 is running within a Docker Swarm, functioning as a global service. Consequently, an instance of Traefik is deployed for each host within our Docker Swarm cluster. It is important to note that the Swarm’s routing mesh is not employed in this setup. Instead, the port mode is configured as “host,” allowing the port to be attached to the host’s network.
+traefik: image: ${REGISTRY}/traefik:1.6 build: ./traefik volumes: - /var/run/docker.sock:/var/run/docker.sock networks: - traefik environment: - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} - AWS_REGION=${AWS_REGION} - AWS_HOSTED_ZONE_ID=${AWS_HOSTED_ZONE_ID} ports: - target: 80 published: 80 protocol: tcp mode: host - target: 443 published: 443 mode: host protocol: tcp - target: 8080 published: 8080 mode: host protocol: tcp deploy: mode: global restart_policy: condition: on-failure Docker Swarm deployed to AWS and lives behind internal/external load balancers (Classic type)....</p>
+  </div>
+  <footer class="entry-footer"><span title='2020-10-17 18:02:25 +0300 +0300'>October 17, 2020</span>&nbsp;·&nbsp;3 min</footer>
+  <a class="entry-link" aria-label="post link to Traefik behind AWS ELB. X-Forwarded-For header" href="https://juliakostrikova.com/posts/cloud/traefik-x-forwarded-for/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2>Custom error page in Traefik v2.x. Finally
     </h2>
   </header>
@@ -223,22 +236,12 @@ xdebug.remote_host = %host_ip% %host_ip% — The IP of the machine running your 
   <footer class="entry-footer"><span title='2017-08-14 18:56:57 +0300 +0300'>August 14, 2017</span>&nbsp;·&nbsp;2 min</footer>
   <a class="entry-link" aria-label="post link to XDebug for PHP docker container on macOS" href="https://juliakostrikova.com/posts/php/xdebug-macos/"></a>
 </article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p></p>
-  </div>
-  <footer class="entry-footer">0 min</footer>
-  <a class="entry-link" aria-label="post link to " href="https://juliakostrikova.com/posts/misc/auto-rollout-terraform/"></a>
-</article>
 <footer class="page-footer">
   <nav class="pagination">
     <a class="prev" href="https://juliakostrikova.com/posts/">
       «&nbsp;Prev&nbsp;
+    </a>
+    <a class="next" href="https://juliakostrikova.com/posts/page/3/">Next&nbsp;&nbsp;»
     </a>
   </nav>
 </footer>

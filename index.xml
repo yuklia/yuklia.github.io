@@ -6,7 +6,16 @@
     <description>Recent content on Yuliia Kostrikova</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Sun, 28 Jan 2024 13:05:09 +0100</lastBuildDate><atom:link href="https://juliakostrikova.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 25 May 2024 11:28:58 +0200</lastBuildDate><atom:link href="https://juliakostrikova.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>RPI 5 on Ubuntu 24.04 (Headless): Connect to WiFi / Mobile Hotspot</title>
+      <link>https://juliakostrikova.com/posts/homelab/mobile-hotspot-on-rpi5/</link>
+      <pubDate>Sat, 25 May 2024 11:28:58 +0200</pubDate>
+      
+      <guid>https://juliakostrikova.com/posts/homelab/mobile-hotspot-on-rpi5/</guid>
+      <description>RPI 5 on Ubuntu 24.04 (headless): Connect to WiFi / Mobile Hotspot Introduction In my free time, I enjoy tinkering with my home lab, exploring new projects and challenges. Recently, I decided to connect my Raspberry Pi 5 to a mobile hotspot—a seemingly straightforward task. However, it turned out not so smooth. In this post, I&amp;rsquo;ll walk you through how I resolved the error brcmfmac: brcmf_set_channel: set chanspec fail, reason -52 and successfully connected Raspberry Pi to a mobile hotspot.</description>
+    </item>
+    
     <item>
       <title>Automating UML Diagrams with ChatGPT and PlantUML</title>
       <link>https://juliakostrikova.com/posts/chatgpt/plantuml/</link>
@@ -98,6 +107,18 @@ I’ve spend decent amount of time in order to figure out that I don’t need an
       
       <guid>https://juliakostrikova.com/posts/misc/auto-rollout-terraform/</guid>
       <description></description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://juliakostrikova.com/posts/misc/infra-drifts/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://juliakostrikova.com/posts/misc/infra-drifts/</guid>
+      <description>how often do you have infra drifts at your work place? what is normal infra drift rate and what is a sign of &amp;ldquo;bad code&amp;rdquo;?
+definition of infra drift
+bad code is when you need to bring breaking change to your core functionality too often. you ideal code should follow one of the SOLID principle &amp;ldquo;Open-Close&amp;rdquo; open for extension but closed for modifications.
+enought theory and lets get into the subject on practical example:</description>
     </item>
     
     

@@ -109,17 +109,5 @@ I’ve spend decent amount of time in order to figure out that I don’t need an
       <description></description>
     </item>
     
-    <item>
-      <title></title>
-      <link>https://juliakostrikova.com/posts/misc/infra-drifts/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://juliakostrikova.com/posts/misc/infra-drifts/</guid>
-      <description>how often do you have infra drifts at your work place? what is normal infra drift rate and what is a sign of &amp;ldquo;bad code&amp;rdquo;?
-definition of infra drift
-bad code is when you need to bring breaking change to your core functionality too often. you ideal code should follow one of the SOLID principle &amp;ldquo;Open-Close&amp;rdquo; open for extension but closed for modifications.
-enought theory and lets get into the subject on practical example:</description>
-    </item>
-    
   </channel>
 </rss>

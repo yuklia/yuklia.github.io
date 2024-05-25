@@ -71,11 +71,13 @@ if (!doNotTrack) {
 <meta property="og:title" content="RPI 5 on Ubuntu 24.04 (Headless): Connect to WiFi / Mobile Hotspot" />
 <meta property="og:description" content="RPI 5 on Ubuntu 24.04 (headless): Connect to WiFi / Mobile Hotspot Introduction In my free time, I enjoy tinkering with my home lab, exploring new projects and challenges. Recently, I decided to connect my Raspberry Pi 5 to a mobile hotspot—a seemingly straightforward task. However, it turned out not so smooth. In this post, I&rsquo;ll walk you through how I resolved the error brcmfmac: brcmf_set_channel: set chanspec fail, reason -52 and successfully connected Raspberry Pi to a mobile hotspot." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://juliakostrikova.com/posts/homelab/mobile-hotspot-on-rpi5/" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="https://juliakostrikova.com/posts/homelab/mobile-hotspot-on-rpi5/" />
+<meta property="og:image" content="https://juliakostrikova.com/chatGPT/author_julia_kostrikova_rpi_iphone_connection.jpg" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2024-05-25T11:28:58+02:00" />
 <meta property="article:modified_time" content="2024-05-25T11:28:58+02:00" />
 
-<meta name="twitter:card" content="summary"/>
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://juliakostrikova.com/chatGPT/author_julia_kostrikova_rpi_iphone_connection.jpg" />
 <meta name="twitter:title" content="RPI 5 on Ubuntu 24.04 (Headless): Connect to WiFi / Mobile Hotspot"/>
 <meta name="twitter:description" content="RPI 5 on Ubuntu 24.04 (headless): Connect to WiFi / Mobile Hotspot Introduction In my free time, I enjoy tinkering with my home lab, exploring new projects and challenges. Recently, I decided to connect my Raspberry Pi 5 to a mobile hotspot—a seemingly straightforward task. However, it turned out not so smooth. In this post, I&rsquo;ll walk you through how I resolved the error brcmfmac: brcmf_set_channel: set chanspec fail, reason -52 and successfully connected Raspberry Pi to a mobile hotspot."/>
 
@@ -113,7 +115,7 @@ if (!doNotTrack) {
   "articleBody": "RPI 5 on Ubuntu 24.04 (headless): Connect to WiFi / Mobile Hotspot Introduction In my free time, I enjoy tinkering with my home lab, exploring new projects and challenges. Recently, I decided to connect my Raspberry Pi 5 to a mobile hotspot—a seemingly straightforward task. However, it turned out not so smooth. In this post, I’ll walk you through how I resolved the error brcmfmac: brcmf_set_channel: set chanspec fail, reason -52 and successfully connected Raspberry Pi to a mobile hotspot.\nPrerequisites Raspberry Pi 5 Ubuntu 24.04 (headless) Mobile phone with hotspot enabled Access to a terminal or SSH connection Mobile hotspot credentials (SSID and password) Step 1: Create wpa_supplicant.conf Create and configure the wpa_supplicant configuration file to connect to your mobile hotspot.\nvi /etc/wpa_supplicant/wpa_supplicant.conf Add the following content, replacing YourHotspotSSID, YourHotspotPassword, YourContryCode with your actual hotspot credentials.\ncountry=YourContryCode ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev update_config=1 network={ ssid=\"YourHotspotSSID\" psk=\"YourHotspotPassword\" key_mgmt=WPA-PSK } Step 2: Configure Netplan Netplan is used to configure networking on Linux. Create a netplan configuration file.\nℹ️ netplan Netplan is a utility for easily configuring networking on a linux system. You simply create a YAML description of the required network interfaces and what each should be configured to do. From this description Netplan will generate all the necessary configuration for your chosen renderer tool.\nNetplan reads network configuration from /etc/netplan/*.yaml which are written by administrators, installers, cloud image instantiations, or other OS deployments. During early boot, Netplan generates backend specific configuration files in /run to hand off control of devices to a particular networking daemon.\nNetplan currently works with these supported renderers: NetworkManager Systemd-networkd\nvi /etc/netplan/01-iphone-hotspot-ap.yaml Add the following configuration, substituting wlan0 with your wireless interface name.\nnetwork: version: 2 renderer: networkd wifis: wlan0: dhcp4: yes dhcp6: yes access-points: \"YourHotspotSSID\": password: \"YourHotspotPassword\" Apply the netplan configuration.\nnetplan generate netplan apply --debug Step 3: Restart wpa_supplicant Restart the wpa_supplicant service to apply the new configuration.\nsystemctl restart wpa_supplicant Step 4: Check Connection Status Verify that your device is connected to the mobile hotspot using netplan status.\nnetplan status or ip link show | grep wlan0 🧯 Troubleshooting: Resolving brcmfmac: brcmf_set_channel: set chanspec fail, reason -52 If you encounter the error brcmfmac: brcmf_set_channel: set chanspec fail, reason -52, it may indicate issues with the wireless regulatory domain settings or interference from USB 3.0 devices.\nCheck Regulatory Domain:\nEnsure the regulatory domain is set correctly.\niw reg get iw reg set US # Replace US with your country code To make this persistent, edit the CRDA configuration file.\nvi /etc/default/crda Add or modify the following line:\nREGDOMAIN=US Update Firmware and Drivers:\nEnsure you have the latest firmware and drivers.\napt update apt install --reinstall linux-firmware reboot Conclusion Connecting a headless Ubuntu 24.04 system to a mobile hotspot involves configuring wpa_supplicant and netplan correctly. By following the steps outlined above, you can establish a stable Wi-Fi connection, even in the face of potential issues like the brcmfmac: brcmf_set_channel: set chanspec fail, reason -52 error. Properly setting the regulatory domain and ensuring up-to-date firmware are key to resolving such problems.\nissues to follow:\nhttps://github.com/raspberrypi/linux/issues/6049 https://lore.kernel.org/all/99977c876429f33d8dbab18d7c3e71590585263b.camel@sipsolutions.net/T/ https://forums.raspberrypi.com/viewtopic.php?t=367466 https://github.com/home-assistant/operating-system/issues/3367\nnetplan code spippets:\nhttps://github.com/canonical/netplan/tree/main/examples\nHappy serfing 🏄 :)\nnetplan_status ",
   "wordCount" : "518",
   "inLanguage": "en",
-  "datePublished": "2024-05-25T11:28:58+02:00",
+  "image":"https://juliakostrikova.com/chatGPT/author_julia_kostrikova_rpi_iphone_connection.jpg","datePublished": "2024-05-25T11:28:58+02:00",
   "dateModified": "2024-05-25T11:28:58+02:00",
   "mainEntityOfPage": {
     "@type": "WebPage",
@@ -201,7 +203,10 @@ if (!doNotTrack) {
     <div class="post-meta"><span title='2024-05-25 11:28:58 +0200 CEST'>May 25, 2024</span>&nbsp;·&nbsp;3 min
 
 </div>
-  </header> <div class="toc">
+  </header> 
+<figure class="entry-cover"><img loading="lazy" src="https://juliakostrikova.com/chatGPT/author_julia_kostrikova_rpi_iphone_connection.jpg" alt="">
+        
+</figure><div class="toc">
     <details >
         <summary accesskey="c" title="(Alt + C)">
             <span class="details">Table of Contents</span>

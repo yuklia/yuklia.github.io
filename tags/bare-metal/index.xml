@@ -1,12 +1,23 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>bare-metal on Yuliia Kostrikova</title>
+    <title>Bare Metal on Yuliia Kostrikova</title>
     <link>https://juliakostrikova.com/tags/bare-metal/</link>
-    <description>Recent content in bare-metal on Yuliia Kostrikova</description>
+    <description>Recent content in Bare Metal on Yuliia Kostrikova</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Sat, 25 May 2024 11:28:58 +0200</lastBuildDate><atom:link href="https://juliakostrikova.com/tags/bare-metal/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 19 Jun 2024 11:28:58 +0200</lastBuildDate><atom:link href="https://juliakostrikova.com/tags/bare-metal/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Setting Up a DHCP Server on Synology NAS in a UniFi Dream Machine SE Subnet</title>
+      <link>https://juliakostrikova.com/posts/homelab/dhcp-nas/</link>
+      <pubDate>Wed, 19 Jun 2024 11:28:58 +0200</pubDate>
+      
+      <guid>https://juliakostrikova.com/posts/homelab/dhcp-nas/</guid>
+      <description>UniFi Dream Machine In this blog post, I&amp;rsquo;ll guide you through the process of setting up a DHCP server on your Synology NAS within a subnet created on a UniFi Dream Machine Special Edition (UDM SE).
+Synology NAS Prerequisites Before we start, ensure you have the following:
+UDM SE: UniFi Dream Machine Special Edition. Synology NAS: Network Attached Storage device from Synology. Raspberry Pi: Any model will suffice. Ethernet cables: To connect your devices.</description>
+    </item>
+    
     <item>
       <title>RPI 5 on Ubuntu 24.04 (Headless): Connect to WiFi / Mobile Hotspot</title>
       <link>https://juliakostrikova.com/posts/homelab/mobile-hotspot-on-rpi5/</link>

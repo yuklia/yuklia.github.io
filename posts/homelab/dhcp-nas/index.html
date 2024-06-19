@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Setting Up a DHCP Server on Synology NAS in a UniFi Dream Machine SE Subnet | Yuliia Kostrikova</title>
+
+
+<meta name="keywords" content="UDM SE subnet setup, Synology NAS DHCP server, VLAN configuration UDM SE, Set up DHCP on Synology NAS, UDM SE VLAN tutorial, Synology NAS network configuration, Raspberry Pi DHCP client setup, UniFi Dream Machine Special Edition VLAN, Home lab network configuration, Synology DSM DHCP setup, Static IP configuration Synology NAS, UniFi network controller VLAN setup, Synology NAS DHCP server installation, Advanced network configuration UDM SE, DHCP server application Synology, Synology NAS VLAN setup guide, UniFi Dream Machine VLAN assignment, Raspberry Pi network setup VLAN, Synology NAS DHCP logs, Small office network configuration">
+<meta name="description" content="UniFi Dream Machine In this blog post, I&rsquo;ll guide you through the process of setting up a DHCP server on your Synology NAS within a subnet created on a UniFi Dream Machine Special Edition (UDM SE).
+Synology NAS Prerequisites Before we start, ensure you have the following:
+UDM SE: UniFi Dream Machine Special Edition. Synology NAS: Network Attached Storage device from Synology. Raspberry Pi: Any model will suffice. Ethernet cables: To connect your devices.">
+<meta name="author" content="">
+<link rel="canonical" href="https://juliakostrikova.com/posts/homelab/dhcp-nas/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.7140587df96a2b1a49eb723fa7063dc0c641a6cb638f3140e8d3beb4deae4f5c.css" integrity="sha256-cUBYfflqKxpJ63I/pwY9wMZBpstjjzFA6NO&#43;tN6uT1w=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://juliakostrikova.com/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://juliakostrikova.com/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://juliakostrikova.com/favicon-32x32.png">
+<link rel="manifest" href="https://juliakostrikova.com/site.webmanifest">
+<link rel="apple-touch-icon" href="https://juliakostrikova.com/apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml"  href="https://juliakostrikova.com/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BR19XD52CV"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-BR19XD52CV', { 'anonymize_ip': false });
+}
+</script>
+<meta property="og:title" content="Setting Up a DHCP Server on Synology NAS in a UniFi Dream Machine SE Subnet" />
+<meta property="og:description" content="UniFi Dream Machine In this blog post, I&rsquo;ll guide you through the process of setting up a DHCP server on your Synology NAS within a subnet created on a UniFi Dream Machine Special Edition (UDM SE).
+Synology NAS Prerequisites Before we start, ensure you have the following:
+UDM SE: UniFi Dream Machine Special Edition. Synology NAS: Network Attached Storage device from Synology. Raspberry Pi: Any model will suffice. Ethernet cables: To connect your devices." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://juliakostrikova.com/posts/homelab/dhcp-nas/" />
+<meta property="og:image" content="https://juliakostrikova.com/chatGPT/author_julia_kostrikova_cat_dhcp_server.jpg" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-06-19T11:28:58+02:00" />
+<meta property="article:modified_time" content="2024-06-19T11:28:58+02:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://juliakostrikova.com/chatGPT/author_julia_kostrikova_cat_dhcp_server.jpg" />
+<meta name="twitter:title" content="Setting Up a DHCP Server on Synology NAS in a UniFi Dream Machine SE Subnet"/>
+<meta name="twitter:description" content="UniFi Dream Machine In this blog post, I&rsquo;ll guide you through the process of setting up a DHCP server on your Synology NAS within a subnet created on a UniFi Dream Machine Special Edition (UDM SE).
+Synology NAS Prerequisites Before we start, ensure you have the following:
+UDM SE: UniFi Dream Machine Special Edition. Synology NAS: Network Attached Storage device from Synology. Raspberry Pi: Any model will suffice. Ethernet cables: To connect your devices."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://juliakostrikova.com/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "Setting Up a DHCP Server on Synology NAS in a UniFi Dream Machine SE Subnet",
+      "item": "https://juliakostrikova.com/posts/homelab/dhcp-nas/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Setting Up a DHCP Server on Synology NAS in a UniFi Dream Machine SE Subnet",
+  "name": "Setting Up a DHCP Server on Synology NAS in a UniFi Dream Machine SE Subnet",
+  "description": "UniFi Dream Machine In this blog post, I\u0026rsquo;ll guide you through the process of setting up a DHCP server on your Synology NAS within a subnet created on a UniFi Dream Machine Special Edition (UDM SE).\nSynology NAS Prerequisites Before we start, ensure you have the following:\nUDM SE: UniFi Dream Machine Special Edition. Synology NAS: Network Attached Storage device from Synology. Raspberry Pi: Any model will suffice. Ethernet cables: To connect your devices.",
+  "keywords": [
+    "UDM SE subnet setup", "Synology NAS DHCP server", "VLAN configuration UDM SE", "Set up DHCP on Synology NAS", "UDM SE VLAN tutorial", "Synology NAS network configuration", "Raspberry Pi DHCP client setup", "UniFi Dream Machine Special Edition VLAN", "Home lab network configuration", "Synology DSM DHCP setup", "Static IP configuration Synology NAS", "UniFi network controller VLAN setup", "Synology NAS DHCP server installation", "Advanced network configuration UDM SE", "DHCP server application Synology", "Synology NAS VLAN setup guide", "UniFi Dream Machine VLAN assignment", "Raspberry Pi network setup VLAN", "Synology NAS DHCP logs", "Small office network configuration"
+  ],
+  "articleBody": " UniFi Dream Machine In this blog post, I’ll guide you through the process of setting up a DHCP server on your Synology NAS within a subnet created on a UniFi Dream Machine Special Edition (UDM SE).\nSynology NAS Prerequisites Before we start, ensure you have the following:\nUDM SE: UniFi Dream Machine Special Edition. Synology NAS: Network Attached Storage device from Synology. Raspberry Pi: Any model will suffice. Ethernet cables: To connect your devices. Step-by-Step Guide 1. Create a Subnet on UDM SE Log in to your UniFi Router: Access your UDM SE via the UniFi Network application.\nCreate a New VLAN:\nGo to Settings \u003e Networks \u003e Create New Network. Name your network (e.g., VLAN101). Set the VLAN ID (e.g., 101). Set the Gateway/Subnet to 192.168.101.1/24. Set DHCP Mode to None. Assign Ports to VLAN:\nGo to Settings \u003e Ports. Assign Port 2 and Port 7 to the newly created VLAN 101. (example) 2. Configure Static IP on Synology NAS Connect Your NAS:\nPlug your Synology NAS into Port 7 of your UDM SE. Log in to Your Synology NAS:\nOpen a web browser and log in to the Synology DSM interface. Install DHCP Server Application:\nGo to Package Center. Search for and install the DHCP Server application. Set Static IP Address:\nGo to Control Panel \u003e Network \u003e Network Interface. Select your LAN connection or both if you have connected both Ethernet ports for redundancy. Click on Edit and set a static IP address within your subnet (e.g., 192.168.101.252). 3. Configure DHCP Server on Synology NAS Open DHCP Server Application:\nAfter installation, open the DHCP Server application from the main menu. Enable DHCP Server:\nGo to the DHCP Server application and enable the server. Set the Primary DNS and Secondary DNS (e.g., 8.8.8.8). Create Subnet List: Add a new subnet with the following details: Network Interface: Select the interface connected to VLAN101. Subnet: 192.168.101.0/24. Start IP: 192.168.101.100. End IP: 192.168.101.200. Subnet Mask: 255.255.255.0. Gateway: 192.168.101.1. 4. Connect and Verify Raspberry Pi Connect Raspberry Pi:\nPlug your Raspberry Pi into Port 2 of your UDM SE. Check DHCP Client Logs:\nOn your Synology NAS, go to the DHCP Server application. Check the Logs table. You should see the Raspberry Pi listed as a new DHCP client with an IP address assigned from the 192.168.101.x range. Conclusion Setting up a DHCP server on your Synology NAS within a UDM SE subnet is a straightforward process that offers robust network management capabilities. By following these steps, you can ensure your devices get IP addresses dynamically while maintaining control over your network configuration. If you encounter any issues, ensure all settings are correctly applied and consult the Synology and UniFi documentation for further troubleshooting.\nHappy networking!\n",
+  "wordCount" : "454",
+  "inLanguage": "en",
+  "image":"https://juliakostrikova.com/chatGPT/author_julia_kostrikova_cat_dhcp_server.jpg","datePublished": "2024-06-19T11:28:58+02:00",
+  "dateModified": "2024-06-19T11:28:58+02:00",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://juliakostrikova.com/posts/homelab/dhcp-nas/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Yuliia Kostrikova",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://juliakostrikova.com/favicon.ico"
+    }
+  }
+}
+</script>
+    
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://juliakostrikova.com" accesskey="h" title="Yuliia Kostrikova (Alt + H)">Yuliia Kostrikova</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://juliakostrikova.com/archives/" title="Archive">
+                    <span>Archive</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://juliakostrikova.com/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://juliakostrikova.com/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://juliakostrikova.com">Home</a>&nbsp;»&nbsp;<a href="https://juliakostrikova.com/posts/">Posts</a></div>
+    <h1 class="post-title">
+      Setting Up a DHCP Server on Synology NAS in a UniFi Dream Machine SE Subnet
+    </h1>
+    <div class="post-meta"><span title='2024-06-19 11:28:58 +0200 CEST'>June 19, 2024</span>&nbsp;·&nbsp;3 min
+
+</div>
+  </header> 
+<figure class="entry-cover"><img loading="lazy" src="https://juliakostrikova.com/chatGPT/author_julia_kostrikova_cat_dhcp_server.jpg" alt="">
+        
+</figure><div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#prerequisites" aria-label="Prerequisites">Prerequisites</a></li>
+                <li>
+                    <a href="#step-by-step-guide" aria-label="Step-by-Step Guide">Step-by-Step Guide</a><ul>
+                        
+                <li>
+                    <a href="#1-create-a-subnet-on-udm-se" aria-label="1. Create a Subnet on UDM SE">1. Create a Subnet on UDM SE</a></li>
+                <li>
+                    <a href="#2-configure-static-ip-on-synology-nas" aria-label="2. Configure Static IP on Synology NAS">2. Configure Static IP on Synology NAS</a></li>
+                <li>
+                    <a href="#3-configure-dhcp-server-on-synology-nas" aria-label="3. Configure DHCP Server on Synology NAS">3. Configure DHCP Server on Synology NAS</a></li>
+                <li>
+                    <a href="#4-connect-and-verify-raspberry-pi" aria-label="4. Connect and Verify Raspberry Pi">4. Connect and Verify Raspberry Pi</a></li></ul>
+                </li>
+                <li>
+                    <a href="#conclusion" aria-label="Conclusion">Conclusion</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><figure>
+    <img loading="lazy" src="/homelab/pxe/udm_se_copy.png"/> <figcaption>
+            UniFi Dream Machine
+        </figcaption>
+</figure>
+
+<p>In this blog post, I&rsquo;ll guide you through the process of setting up a DHCP server on your Synology NAS within a subnet created on a UniFi Dream Machine Special Edition (UDM SE).</p>
+<figure>
+    <img loading="lazy" src="/homelab/pxe/nas_front.png"/> <figcaption>
+            Synology NAS
+        </figcaption>
+</figure>
+
+<h2 id="prerequisites">Prerequisites<a hidden class="anchor" aria-hidden="true" href="#prerequisites">#</a></h2>
+<p>Before we start, ensure you have the following:</p>
+<ol>
+<li><strong>UDM SE</strong>: UniFi Dream Machine Special Edition.</li>
+<li><strong>Synology NAS</strong>: Network Attached Storage device from Synology.</li>
+<li><strong>Raspberry Pi</strong>: Any model will suffice.</li>
+<li><strong>Ethernet cables</strong>: To connect your devices.</li>
+</ol>
+<h2 id="step-by-step-guide">Step-by-Step Guide<a hidden class="anchor" aria-hidden="true" href="#step-by-step-guide">#</a></h2>
+<h3 id="1-create-a-subnet-on-udm-se">1. Create a Subnet on UDM SE<a hidden class="anchor" aria-hidden="true" href="#1-create-a-subnet-on-udm-se">#</a></h3>
+<ol>
+<li>
+<p><strong>Log in to your UniFi Router</strong>: Access your UDM SE via the UniFi Network application.</p>
+</li>
+<li>
+<p><strong>Create a New VLAN</strong>:</p>
+<ul>
+<li>Go to <strong>Settings</strong> &gt; <strong>Networks</strong> &gt; <strong>Create New Network</strong>.</li>
+<li>Name your network (e.g., <code>VLAN101</code>).</li>
+<li>Set the <strong>VLAN ID</strong> (e.g., <code>101</code>).</li>
+<li>Set the <strong>Gateway/Subnet</strong> to <code>192.168.101.1/24</code>.</li>
+<li>Set <strong>DHCP Mode</strong> to <code>None</code>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Assign Ports to VLAN</strong>:</p>
+<ul>
+<li>Go to <strong>Settings</strong> &gt; <strong>Ports</strong>.</li>
+<li>Assign <strong>Port 2</strong> and <strong>Port 7</strong> to the newly created VLAN <code>101</code>. (example)</li>
+</ul>
+</li>
+</ol>
+<figure>
+    <img loading="lazy" src="/homelab/pxe/port_assignment.png"/> 
+</figure>
+
+<h3 id="2-configure-static-ip-on-synology-nas">2. Configure Static IP on Synology NAS<a hidden class="anchor" aria-hidden="true" href="#2-configure-static-ip-on-synology-nas">#</a></h3>
+<ol>
+<li>
+<p><strong>Connect Your NAS</strong>:</p>
+<ul>
+<li>Plug your Synology NAS into <strong>Port 7</strong> of your UDM SE.</li>
+</ul>
+</li>
+<li>
+<p><strong>Log in to Your Synology NAS</strong>:</p>
+<ul>
+<li>Open a web browser and log in to the Synology DSM interface.</li>
+</ul>
+</li>
+<li>
+<p><strong>Install DHCP Server Application</strong>:</p>
+<ul>
+<li>Go to <strong>Package Center</strong>.</li>
+<li>Search for and install the <strong>DHCP Server</strong> application.</li>
+</ul>
+</li>
+<li>
+<p><strong>Set Static IP Address</strong>:</p>
+<ul>
+<li>Go to <strong>Control Panel</strong> &gt; <strong>Network</strong> &gt; <strong>Network Interface</strong>.</li>
+<li>Select your LAN connection or both if you have connected both Ethernet ports for redundancy.</li>
+<li>Click on <strong>Edit</strong> and set a static IP address within your subnet (e.g., <code>192.168.101.252</code>).</li>
+</ul>
+</li>
+</ol>
+<p><figure>
+    <img loading="lazy" src="/homelab/pxe/network_interface.png"/> 
+</figure>
+
+<figure>
+    <img loading="lazy" src="/homelab/pxe/static_ip.png"/> 
+</figure>
+</p>
+<h3 id="3-configure-dhcp-server-on-synology-nas">3. Configure DHCP Server on Synology NAS<a hidden class="anchor" aria-hidden="true" href="#3-configure-dhcp-server-on-synology-nas">#</a></h3>
+<ol>
+<li>
+<p><strong>Open DHCP Server Application</strong>:</p>
+<ul>
+<li>After installation, open the <strong>DHCP Server</strong> application from the main menu.</li>
+</ul>
+</li>
+<li>
+<p><strong>Enable DHCP Server</strong>:</p>
+<ul>
+<li>Go to the <strong>DHCP Server</strong> application and enable the server.</li>
+<li>Set the <strong>Primary DNS</strong> and <strong>Secondary DNS</strong> (e.g., <code>8.8.8.8</code>).</li>
+</ul>
+</li>
+</ol>
+<p><figure>
+    <img loading="lazy" src="/homelab/pxe/enable_dhcp.png"/> 
+</figure>
+
+<figure>
+    <img loading="lazy" src="/homelab/pxe/enable_dhcp_server.png"/> 
+</figure>
+</p>
+<ol start="3">
+<li><strong>Create Subnet List</strong>:
+<ul>
+<li>Add a new subnet with the following details:
+<ul>
+<li><strong>Network Interface</strong>: Select the interface connected to VLAN101.</li>
+<li><strong>Subnet</strong>: <code>192.168.101.0/24</code>.</li>
+<li><strong>Start IP</strong>: <code>192.168.101.100</code>.</li>
+<li><strong>End IP</strong>: <code>192.168.101.200</code>.</li>
+<li><strong>Subnet Mask</strong>: <code>255.255.255.0</code>.</li>
+<li><strong>Gateway</strong>: <code>192.168.101.1</code>.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<figure>
+    <img loading="lazy" src="/homelab/pxe/edit_dhcp_subnet.png"/> 
+</figure>
+
+<h3 id="4-connect-and-verify-raspberry-pi">4. Connect and Verify Raspberry Pi<a hidden class="anchor" aria-hidden="true" href="#4-connect-and-verify-raspberry-pi">#</a></h3>
+<ol>
+<li>
+<p><strong>Connect Raspberry Pi</strong>:</p>
+<ul>
+<li>Plug your Raspberry Pi into <strong>Port 2</strong> of your UDM SE.</li>
+</ul>
+</li>
+<li>
+<p><strong>Check DHCP Client Logs</strong>:</p>
+<ul>
+<li>On your Synology NAS, go to the <strong>DHCP Server</strong> application.</li>
+<li>Check the <strong>Logs</strong> table.</li>
+<li>You should see the Raspberry Pi listed as a new DHCP client with an IP address assigned from the <code>192.168.101.x</code> range.</li>
+</ul>
+</li>
+</ol>
+<figure>
+    <img loading="lazy" src="/homelab/pxe/dhcp_clients.png"/> 
+</figure>
+
+<h2 id="conclusion">Conclusion<a hidden class="anchor" aria-hidden="true" href="#conclusion">#</a></h2>
+<p>Setting up a DHCP server on your Synology NAS within a UDM SE subnet is a straightforward process that offers robust network management capabilities. By following these steps, you can ensure your devices get IP addresses dynamically while maintaining control over your network configuration.
+If you encounter any issues, ensure all settings are correctly applied and consult the Synology and UniFi documentation for further troubleshooting.</p>
+<p>Happy networking!</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://juliakostrikova.com/tags/howto/">howto</a></li>
+      <li><a href="https://juliakostrikova.com/tags/home-automation/">home automation</a></li>
+      <li><a href="https://juliakostrikova.com/tags/homelab/">homelab</a></li>
+      <li><a href="https://juliakostrikova.com/tags/bare-metal/">Bare Metal</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="next" href="https://juliakostrikova.com/posts/homelab/mobile-hotspot-on-rpi5/">
+    <span class="title">Next »</span>
+    <br>
+    <span>RPI 5 on Ubuntu 24.04 (Headless): Connect to WiFi / Mobile Hotspot</span>
+  </a>
+</nav>
+
+  </footer><script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
+<script>
+  kofiWidgetOverlay.draw('yuklia', {
+    'type': 'floating-chat',
+    'floating-chat.donateButton.text': '',
+    'floating-chat.donateButton.background-color': '#ffffff',
+    'floating-chat.donateButton.text-color': '#323842'
+  });
+</script>
+
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "yuklia-dev" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2024 <a href="https://juliakostrikova.com">Yuliia Kostrikova</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

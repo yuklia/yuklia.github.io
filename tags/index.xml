@@ -6,13 +6,58 @@
     <description>Recent content in Tags on Yuliia Kostrikova</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Wed, 19 Jun 2024 11:28:58 +0200</lastBuildDate><atom:link href="https://juliakostrikova.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 06 Aug 2024 11:28:58 +0200</lastBuildDate><atom:link href="https://juliakostrikova.com/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Bare Metal</title>
       <link>https://juliakostrikova.com/tags/bare-metal/</link>
-      <pubDate>Wed, 19 Jun 2024 11:28:58 +0200</pubDate>
+      <pubDate>Tue, 06 Aug 2024 11:28:58 +0200</pubDate>
       
       <guid>https://juliakostrikova.com/tags/bare-metal/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>debian</title>
+      <link>https://juliakostrikova.com/tags/debian/</link>
+      <pubDate>Tue, 06 Aug 2024 11:28:58 +0200</pubDate>
+      
+      <guid>https://juliakostrikova.com/tags/debian/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>homelab</title>
+      <link>https://juliakostrikova.com/tags/homelab/</link>
+      <pubDate>Tue, 06 Aug 2024 11:28:58 +0200</pubDate>
+      
+      <guid>https://juliakostrikova.com/tags/homelab/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>howto</title>
+      <link>https://juliakostrikova.com/tags/howto/</link>
+      <pubDate>Tue, 06 Aug 2024 11:28:58 +0200</pubDate>
+      
+      <guid>https://juliakostrikova.com/tags/howto/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>PXE boot</title>
+      <link>https://juliakostrikova.com/tags/pxe-boot/</link>
+      <pubDate>Tue, 06 Aug 2024 11:28:58 +0200</pubDate>
+      
+      <guid>https://juliakostrikova.com/tags/pxe-boot/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>raspberryPI5</title>
+      <link>https://juliakostrikova.com/tags/raspberrypi5/</link>
+      <pubDate>Tue, 06 Aug 2024 11:28:58 +0200</pubDate>
+      
+      <guid>https://juliakostrikova.com/tags/raspberrypi5/</guid>
       <description></description>
     </item>
     
@@ -22,33 +67,6 @@
       <pubDate>Wed, 19 Jun 2024 11:28:58 +0200</pubDate>
       
       <guid>https://juliakostrikova.com/tags/home-automation/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>homelab</title>
-      <link>https://juliakostrikova.com/tags/homelab/</link>
-      <pubDate>Wed, 19 Jun 2024 11:28:58 +0200</pubDate>
-      
-      <guid>https://juliakostrikova.com/tags/homelab/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>howto</title>
-      <link>https://juliakostrikova.com/tags/howto/</link>
-      <pubDate>Wed, 19 Jun 2024 11:28:58 +0200</pubDate>
-      
-      <guid>https://juliakostrikova.com/tags/howto/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>raspberryPI5</title>
-      <link>https://juliakostrikova.com/tags/raspberrypi5/</link>
-      <pubDate>Sat, 25 May 2024 11:28:58 +0200</pubDate>
-      
-      <guid>https://juliakostrikova.com/tags/raspberrypi5/</guid>
       <description></description>
     </item>
     

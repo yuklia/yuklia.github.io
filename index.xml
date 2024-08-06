@@ -6,7 +6,16 @@
     <description>Recent content on Yuliia Kostrikova</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Wed, 19 Jun 2024 11:28:58 +0200</lastBuildDate><atom:link href="https://juliakostrikova.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 06 Aug 2024 11:28:58 +0200</lastBuildDate><atom:link href="https://juliakostrikova.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Detailed HowTo: PXE boot multiple RPi (Birthday Edition 🍰)</title>
+      <link>https://juliakostrikova.com/posts/homelab/pxe-boot/</link>
+      <pubDate>Tue, 06 Aug 2024 11:28:58 +0200</pubDate>
+      
+      <guid>https://juliakostrikova.com/posts/homelab/pxe-boot/</guid>
+      <description>PXE (Preboot eXecution Environment) is a client-server environment which makes possible to boot and install operating systems without the need of physical media.</description>
+    </item>
+    
     <item>
       <title>Setting Up a DHCP Server on Synology NAS in a UniFi Dream Machine SE Subnet</title>
       <link>https://juliakostrikova.com/posts/homelab/dhcp-nas/</link>

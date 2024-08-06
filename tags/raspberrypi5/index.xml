@@ -6,7 +6,16 @@
     <description>Recent content in raspberryPI5 on Yuliia Kostrikova</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Sat, 25 May 2024 11:28:58 +0200</lastBuildDate><atom:link href="https://juliakostrikova.com/tags/raspberrypi5/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 06 Aug 2024 11:28:58 +0200</lastBuildDate><atom:link href="https://juliakostrikova.com/tags/raspberrypi5/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Detailed HowTo: PXE boot multiple RPi (Birthday Edition 🍰)</title>
+      <link>https://juliakostrikova.com/posts/homelab/pxe-boot/</link>
+      <pubDate>Tue, 06 Aug 2024 11:28:58 +0200</pubDate>
+      
+      <guid>https://juliakostrikova.com/posts/homelab/pxe-boot/</guid>
+      <description>PXE (Preboot eXecution Environment) is a client-server environment which makes possible to boot and install operating systems without the need of physical media.</description>
+    </item>
+    
     <item>
       <title>RPI 5 on Ubuntu 24.04 (Headless): Connect to WiFi / Mobile Hotspot</title>
       <link>https://juliakostrikova.com/posts/homelab/mobile-hotspot-on-rpi5/</link>

@@ -3,31 +3,40 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://juliakostrikova.com/tags/bare-metal/</loc>
-    <lastmod>2024-06-19T11:28:58+02:00</lastmod>
+    <lastmod>2024-08-06T11:28:58+02:00</lastmod>
+  </url><url>
+    <loc>https://juliakostrikova.com/tags/debian/</loc>
+    <lastmod>2024-08-06T11:28:58+02:00</lastmod>
+  </url><url>
+    <loc>https://juliakostrikova.com/posts/homelab/pxe-boot/</loc>
+    <lastmod>2024-08-06T11:28:58+02:00</lastmod>
+  </url><url>
+    <loc>https://juliakostrikova.com/tags/homelab/</loc>
+    <lastmod>2024-08-06T11:28:58+02:00</lastmod>
+  </url><url>
+    <loc>https://juliakostrikova.com/tags/howto/</loc>
+    <lastmod>2024-08-06T11:28:58+02:00</lastmod>
+  </url><url>
+    <loc>https://juliakostrikova.com/posts/</loc>
+    <lastmod>2024-08-06T11:28:58+02:00</lastmod>
+  </url><url>
+    <loc>https://juliakostrikova.com/tags/pxe-boot/</loc>
+    <lastmod>2024-08-06T11:28:58+02:00</lastmod>
+  </url><url>
+    <loc>https://juliakostrikova.com/tags/raspberrypi5/</loc>
+    <lastmod>2024-08-06T11:28:58+02:00</lastmod>
+  </url><url>
+    <loc>https://juliakostrikova.com/tags/</loc>
+    <lastmod>2024-08-06T11:28:58+02:00</lastmod>
+  </url><url>
+    <loc>https://juliakostrikova.com/</loc>
+    <lastmod>2024-08-06T11:28:58+02:00</lastmod>
   </url><url>
     <loc>https://juliakostrikova.com/tags/home-automation/</loc>
     <lastmod>2024-06-19T11:28:58+02:00</lastmod>
   </url><url>
-    <loc>https://juliakostrikova.com/tags/homelab/</loc>
-    <lastmod>2024-06-19T11:28:58+02:00</lastmod>
-  </url><url>
-    <loc>https://juliakostrikova.com/tags/howto/</loc>
-    <lastmod>2024-06-19T11:28:58+02:00</lastmod>
-  </url><url>
-    <loc>https://juliakostrikova.com/posts/</loc>
-    <lastmod>2024-06-19T11:28:58+02:00</lastmod>
-  </url><url>
     <loc>https://juliakostrikova.com/posts/homelab/dhcp-nas/</loc>
     <lastmod>2024-06-19T11:28:58+02:00</lastmod>
-  </url><url>
-    <loc>https://juliakostrikova.com/tags/</loc>
-    <lastmod>2024-06-19T11:28:58+02:00</lastmod>
-  </url><url>
-    <loc>https://juliakostrikova.com/</loc>
-    <lastmod>2024-06-19T11:28:58+02:00</lastmod>
-  </url><url>
-    <loc>https://juliakostrikova.com/tags/raspberrypi5/</loc>
-    <lastmod>2024-05-25T11:28:58+02:00</lastmod>
   </url><url>
     <loc>https://juliakostrikova.com/posts/homelab/mobile-hotspot-on-rpi5/</loc>
     <lastmod>2024-05-25T11:28:58+02:00</lastmod>

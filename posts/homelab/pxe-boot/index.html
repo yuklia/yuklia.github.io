@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Detailed HowTo: PXE boot multiple RPi (Birthday Edition 🍰) | Yuliia Kostrikova</title>
+
+
+<meta name="keywords" content="Raspberry Pi PXE Boot, Home Data Center Setup, PXE Boot Raspberry Pi 5, Raspberry Pi Network Boot, Raspberry Pi 400, Home Automation with Raspberry Pi, Raspberry Pi Cluster, PXE Boot Tutorial, NFS and TFTP Raspberry Pi, Raspberry Pi Server Rack, DIY Home Server, Kubernetes on Raspberry Pi, Raspberry Pi PoE Hat, UDM Dream Machine SE, Synology NAS for PXE Boot, Raspberry Pi EEPROM Configuration, DHCP and TFTP Configuration, Raspberry Pi Boot Process, Raspberry Pi OS Network Installation, Raspberry Pi Network File System">
+<meta name="description" content="PXE (Preboot eXecution Environment) is a client-server environment which makes possible to boot and install operating systems without the need of physical media.">
+<meta name="author" content="">
+<link rel="canonical" href="https://juliakostrikova.com/posts/homelab/pxe-boot/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.7140587df96a2b1a49eb723fa7063dc0c641a6cb638f3140e8d3beb4deae4f5c.css" integrity="sha256-cUBYfflqKxpJ63I/pwY9wMZBpstjjzFA6NO&#43;tN6uT1w=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://juliakostrikova.com/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://juliakostrikova.com/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://juliakostrikova.com/favicon-32x32.png">
+<link rel="manifest" href="https://juliakostrikova.com/site.webmanifest">
+<link rel="apple-touch-icon" href="https://juliakostrikova.com/apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml"  href="https://juliakostrikova.com/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BR19XD52CV"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-BR19XD52CV', { 'anonymize_ip': false });
+}
+</script>
+<meta property="og:title" content="Detailed HowTo: PXE boot multiple RPi (Birthday Edition 🍰)" />
+<meta property="og:description" content="PXE (Preboot eXecution Environment) is a client-server environment which makes possible to boot and install operating systems without the need of physical media." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://juliakostrikova.com/posts/homelab/pxe-boot/" />
+<meta property="og:image" content="https://juliakostrikova.com/homelab/pxe/author_julia_kostrikova_pxe_boot_process.png" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-08-06T11:28:58+02:00" />
+<meta property="article:modified_time" content="2024-08-06T11:28:58+02:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://juliakostrikova.com/homelab/pxe/author_julia_kostrikova_pxe_boot_process.png" />
+<meta name="twitter:title" content="Detailed HowTo: PXE boot multiple RPi (Birthday Edition 🍰)"/>
+<meta name="twitter:description" content="PXE (Preboot eXecution Environment) is a client-server environment which makes possible to boot and install operating systems without the need of physical media."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://juliakostrikova.com/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "Detailed HowTo: PXE boot multiple RPi (Birthday Edition 🍰)",
+      "item": "https://juliakostrikova.com/posts/homelab/pxe-boot/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Detailed HowTo: PXE boot multiple RPi (Birthday Edition 🍰)",
+  "name": "Detailed HowTo: PXE boot multiple RPi (Birthday Edition 🍰)",
+  "description": "PXE (Preboot eXecution Environment) is a client-server environment which makes possible to boot and install operating systems without the need of physical media.",
+  "keywords": [
+    "Raspberry Pi PXE Boot", "Home Data Center Setup", "PXE Boot Raspberry Pi 5", "Raspberry Pi Network Boot", "Raspberry Pi 400", "Home Automation with Raspberry Pi", "Raspberry Pi Cluster", "PXE Boot Tutorial", "NFS and TFTP Raspberry Pi", "Raspberry Pi Server Rack", "DIY Home Server", "Kubernetes on Raspberry Pi", "Raspberry Pi PoE Hat", "UDM Dream Machine SE", "Synology NAS for PXE Boot", "Raspberry Pi EEPROM Configuration", "DHCP and TFTP Configuration", "Raspberry Pi Boot Process", "Raspberry Pi OS Network Installation", "Raspberry Pi Network File System"
+  ],
+  "articleBody": "introduction I’ve always been intrigued by the idea of creating a home data center with Raspberry PIs as a computable instances. However, managing individuals node with SD cards is not fun 😼. So decided to try PXE (Preboot Execution Environment) booting. Instead of dealing with each SD card individually, PXE protocol lets me manage all my RPis from one central server, making updates and further patches easier. In this post, I’ll share how you can set up PXE booting for your RPi fleet and enjoy these benefits to :)\nmy appliances I;ll provide your with examples that are specific to my devices but once you would grasp the idea you could to the same on your set up.\n1 x UDM Dream Machine SE 1 x Synology NAS 4 x RaspberryPI 5 4 x PoE Hat for RaspberryPI 5 1 x microSD card (optional) 1 x monitor + HDMI to mini HDMI cable plan After a series of trials and errors, I found out the recipe that worked for me. I am happy to share it with you. :)\n[UDM] create a separate subnet (e.g VLAN ) for RPi’s and NAS [UDM] configure DHCP server [SD card] Write OS [RPi] update EEPROM firmware for all RPi machines [NAS] enable NFS service [NAS] create SharedFolder [NAS] enable TFTP service [NAS] enable rsync [NAS] create folders node1/rootfs in TFTP root folder [RPi node1] mount NFS shared folder /volume1/RPI5-PXE/node1/rootfs to node1 [RPI node1] upload / root filesystem to [NAS] /volume1/RPI5-PXE/node1/rootfs [NAS] copy the content of /volume1/RPI5-PXE/node1/rootfs/boot/firmware into the /volume1/RPI5-PXE/node1/ [NAS] modify cmdline.txt in /volume1/RPI5-PXE/node1/ [NAS] modify fstab in /volume1/RPI5-PXE/node1/rootfs/etc/ repeat steps from 10 - 14 for other nodes{2,3,4,..n} final step 1 [UDM] create a separate subnet (e.g VLAN ) for RPi’s and NAS Network segmentation gives me better devices organization / isolation, security benefits (firewall rules, content filtering, etc). For now, in my home network, I have 2 subnets: default and cluster. default includes all devices that connected to home mesh, including phones, PlayStations, IoT devices, ect. And cluster is a dedicated segment with network devices dedicated to my home data center project. Our main focus will be concentrated in cluster subnet today 🎯. Assign cluster subent to specific ports. Bottom row is RPi’s ports. In the top row, the port on the far right belongs to the NAS. ports assignment 2 [UDM] configure DHCP server DHCP server plays is big role in PXE envirounment. And it requires extra configuraions because it not only provide IP address, IP mask, etc to all booting DHCP clients but also provides TFTP server IP address and name of NBP only to identified booting clients. Practicly speaking, you need to configure DHCP Options which iusually is and advanced section in your DHCP settings.\nAdjust your DHCP Options to these values:\ncode value 60 PXEClient 66 192.168.101.253 67 bootcode.bin 43 1.2.3.4 43 - Vendor Specific Information\n60 - Vendor Class Identifier\n66 - TFTP Server Name\n67 - Bootfile Name\nI would like to point your attention to option 43. In the official RPi tech spec it was told:\nVendor-Option Option 43 contains the important part of the reply. This must contain the string “Raspberry Pi Boot”. Due to a bug in the boot ROM, you may need to add three spaces to the end of the string.\nIt might work in your case, but in my no. This field on my router has a specific validation rule and it accepts only IP address format. So I set 1.2.3.4\n3 [SD card] Write OS micro SD card You can install any OS using Raspberry Pi Imager. My choice is Raspberry PI OS (Lite) 64-bit. A port of Debian Bookworm with no desktop environment.\nEnable SSH agent 4 [RPi] update EEPROM firmware for all RPi machines Install SD card into RPi node1. Connect to node1 via SSH. Run to see your current EEPROM settings.\nvcgencmd bootloader_config Run command below to extract settings into the file bootconf.txt\ncp /lib/firmware/raspberrypi/bootloader-2712/stable/pieeprom-2024-06-05.bin pieeprom.bin rpi-eeprom-config pieeprom.bin \u003e bootconf.txt Modify bootconf.txt :\n[all] BOOT_UART=1 POWER_OFF_ON_HALT=0 BOOT_ORDER=0x21 TFTP_PREFIX=1 TFTP_PREFIX_STR=node1/ PXE_OPTION43=1.2.3.4 Apply new EEPROM config.\nrpi-eeprom-config --out pieeprom-new.bin --config bootconf.txt pieeprom.bin rpi-eeprom-update -d -f ./pieeprom-new.bin reboot Do the same steps for all machines. But change TFTP_PREFIX_STR=node{2,3,4}/\n5 [NAS] enable NFS service 6 [NAS] create SharedFolder 7 [NAS] enable TFTP service 8 [NAS] enable rsync 9 [NAS] create folders node1/rootfs in TFTP root folder SSH to your NAS and create subfolders for each node\ndrwxrwxrwx+ 1 root root 52 Jul 25 18:31 . drwxr-xr-x 1 root root 680 Jul 25 17:41 .. drwxrwxrwx+ 1 yuklia users 1280 Jul 27 23:12 node1 drwxrwxrwx+ 1 yuklia users 1232 Jul 25 18:11 node2 drwxrwxrwx+ 1 yuklia users 1232 Jul 25 18:19 node3 drwxrwxrwx+ 1 yuklia users 1232 Jul 25 18:39 node4 yuklia@nas:/volume1/RPi5-PXE$ 10 [RPi node1] mount NFS shared folder /volume1/RPI5-PXE/node1/rootfs to node1 sudo mkdir -p /mnt/img sudo mount -t nfs 192.168.101.253:/volume1/RPI5-PXE/node1/rootfs /mnt/img 11 [RPI node1] upload / root filesystem to [NAS] /volume1/RPI5-PXE/node1/rootfs sudo rsync -a --exclude={\"/proc/*\",\"/sys/*\",\"/dev/*\",\"/run/*\",\"/tmp/*\",\"/mnt/*\"} --info=progress2 / /mnt/img 12 [NAS] copy the content of /volume1/RPI5-PXE/node1/rootfs/boot/firmware into the /volume1/RPI5-PXE/node1/ cp -r /volume1/RPI5-PXE/node1/rootfs/boot/firmware/* /volume1/RPI5-PXE/node1/ 13 [NAS] modify cmdline.txt in /volume1/RPI5-PXE/node1/ dwcotg.lpm_enable=0 console=serial0,115200 console=tty1 elevator=deadline rootwait rw root=/dev/nfs nfsroot=192.168.101.253:/volume1/RPi5-PXE/node1/rootfs,v3,tcp ip=dhcp 14 [NAS] modify fstab in /volume1/RPI5-PXE/node1/rootfs/etc/ proc /proc proc defaults 0 0 192.168.101.253:/volume1/RPi5-PXE/node1 /boot nfs defaults,vers=3,proto=tcp 0 0 15 repeat steps from 10 - 14 for other nodes{2,3,4,..n} 16 final step Remove micro SD card, power on PRi’s 🔌. DHCP server should navigate them to the bootfile location.\nRun findmnt for validation\nyuklia@node-1:~ $ findmnt TARGET SOURCE FSTYPE OPTIONS / 192.168.101.253:/volume1/RPi5-PXE/node1/rootfs nfs rw,relatime,vers=3,rsize=131072,wsize=131072,na |-/sys sysfs sysfs rw,nosuid,nodev,noexec,relatime | |-/sys/kernel/security securityfs securityf rw,nosuid,nodev,noexec,relatime | |-/sys/fs/cgroup cgroup2 cgroup2 rw,nosuid,nodev,noexec,relatime,nsdelegate,memo | |-/sys/fs/pstore pstore pstore rw,nosuid,nodev,noexec,relatime | |-/sys/fs/bpf bpf bpf rw,nosuid,nodev,noexec,relatime,mode=700 | |-/sys/kernel/debug debugfs debugfs rw,nosuid,nodev,noexec,relatime | |-/sys/kernel/tracing tracefs tracefs rw,nosuid,nodev,noexec,relatime | |-/sys/kernel/config configfs configfs rw,nosuid,nodev,noexec,relatime | `-/sys/fs/fuse/connections fusectl fusectl rw,nosuid,nodev,noexec,relatime |-/proc proc proc rw,relatime | `-/proc/sys/fs/binfmt_misc systemd-1 autofs rw,relatime,fd=30,pgrp=1,timeout=0,minproto=5,m | `-/proc/sys/fs/binfmt_misc binfmt_misc binfmt_mi rw,nosuid,nodev,noexec,relatime |-/dev udev devtmpfs rw,nosuid,relatime,size=3950816k,nr_inodes=2469 | |-/dev/pts devpts devpts rw,nosuid,noexec,relatime,gid=5,mode=620,ptmxmo | |-/dev/shm tmpfs tmpfs rw,nosuid,nodev | `-/dev/mqueue mqueue mqueue rw,nosuid,nodev,noexec,relatime |-/run tmpfs tmpfs rw,nosuid,nodev,noexec,relatime,size=824576k,mo | |-/run/lock tmpfs tmpfs rw,nosuid,nodev,noexec,relatime,size=5120k | |-/run/credentials/systemd-sysusers.service | | ramfs ramfs ro,nosuid,nodev,noexec,relatime,mode=700 | |-/run/credentials/systemd-sysctl.service | | ramfs ramfs ro,nosuid,nodev,noexec,relatime,mode=700 | |-/run/credentials/systemd-tmpfiles-setup-dev.service | | ramfs ramfs ro,nosuid,nodev,noexec,relatime,mode=700 | |-/run/rpc_pipefs sunrpc rpc_pipef rw,relatime | |-/run/credentials/systemd-tmpfiles-setup.service | | ramfs ramfs ro,nosuid,nodev,noexec,relatime,mode=700 | `-/run/user/1000 tmpfs tmpfs rw,nosuid,nodev,relatime,size=824560k,nr_inodes `-/boot 192.168.101.253:/volume1/RPi5-PXE/node1 nfs rw,relatime,vers=3,rsize=131072,wsize=131072,na This is how my home server rack looks like 🥰\nInner side of the server rack\nsummary PXE boot up \u0026 running and it means that it is a time to host something in my cluster 🤔 As a next step I want to set up Kubernetes “the hard-way”. Stay tuned 😄\nThat is the end of the journey. :) I hope it might be handy for your own setup! If you have any questions, don’t hesitate to write in the comments or DM me on Linkedin. I am always passionate about discussing geeky stuff. 😉\n",
+  "wordCount" : "1144",
+  "inLanguage": "en",
+  "image":"https://juliakostrikova.com/homelab/pxe/author_julia_kostrikova_pxe_boot_process.png","datePublished": "2024-08-06T11:28:58+02:00",
+  "dateModified": "2024-08-06T11:28:58+02:00",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://juliakostrikova.com/posts/homelab/pxe-boot/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Yuliia Kostrikova",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://juliakostrikova.com/favicon.ico"
+    }
+  }
+}
+</script>
+    
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://juliakostrikova.com" accesskey="h" title="Yuliia Kostrikova (Alt + H)">Yuliia Kostrikova</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://juliakostrikova.com/archives/" title="Archive">
+                    <span>Archive</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://juliakostrikova.com/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://juliakostrikova.com/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://juliakostrikova.com">Home</a>&nbsp;»&nbsp;<a href="https://juliakostrikova.com/posts/">Posts</a></div>
+    <h1 class="post-title">
+      Detailed HowTo: PXE boot multiple RPi (Birthday Edition 🍰)
+    </h1>
+    <div class="post-description">
+      PXE (Preboot eXecution Environment) is a client-server environment which makes possible to boot and install operating systems without the need of physical media.
+    </div>
+    <div class="post-meta"><span title='2024-08-06 11:28:58 +0200 CEST'>August 6, 2024</span>&nbsp;·&nbsp;6 min
+
+</div>
+  </header> 
+<figure class="entry-cover"><img loading="lazy" src="https://juliakostrikova.com/homelab/pxe/author_julia_kostrikova_pxe_boot_process.png" alt="">
+        
+</figure><div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#introduction" aria-label="introduction">introduction</a></li>
+                <li>
+                    <a href="#my-appliances" aria-label="my appliances">my appliances</a></li>
+                <li>
+                    <a href="#plan" aria-label="plan">plan</a><ul>
+                        
+                <li>
+                    <a href="#1-udm-create-a-separate-subnet-eg-vlan--for-rpis-and-nas" aria-label="1 [UDM] create a separate subnet (e.g VLAN ) for RPi&amp;rsquo;s and NAS">1 [UDM] create a separate subnet (e.g VLAN ) for RPi&rsquo;s and NAS</a></li>
+                <li>
+                    <a href="#2-udm-configure-dhcp-server" aria-label="2 [UDM] configure DHCP server">2 [UDM] configure DHCP server</a></li>
+                <li>
+                    <a href="#3-sd-card-write-os" aria-label="3 [SD card] Write OS">3 [SD card] Write OS</a></li>
+                <li>
+                    <a href="#4-rpi-update-eeprom-firmware-for-all-rpi-machines" aria-label="4 [RPi] update EEPROM firmware for all RPi machines">4 [RPi] update EEPROM firmware for all RPi machines</a></li>
+                <li>
+                    <a href="#5-nas-enable-nfs-service" aria-label="5 [NAS] enable NFS service">5 [NAS] enable NFS service</a></li>
+                <li>
+                    <a href="#6-nas-create-sharedfolder" aria-label="6 [NAS] create SharedFolder">6 [NAS] create SharedFolder</a></li>
+                <li>
+                    <a href="#7-nas-enable-tftp-service" aria-label="7 [NAS] enable TFTP service">7 [NAS] enable TFTP service</a></li>
+                <li>
+                    <a href="#8-nas-enable-rsync" aria-label="8 [NAS] enable rsync">8 [NAS] enable rsync</a></li>
+                <li>
+                    <a href="#9-nas-create-folders-node1rootfs-in-tftp-root-folder" aria-label="9 [NAS] create folders node1/rootfs in TFTP root folder">9 [NAS] create folders <code>node1/rootfs</code> in TFTP root folder</a></li>
+                <li>
+                    <a href="#10-rpi-node1-mount-nfs-shared-folder-volume1rpi5-pxenode1rootfs-to-node1" aria-label="10 [RPi node1] mount NFS shared folder /volume1/RPI5-PXE/node1/rootfs to node1">10 [RPi node1] mount NFS shared folder <code>/volume1/RPI5-PXE/node1/rootfs</code> to <code>node1</code></a></li>
+                <li>
+                    <a href="#11-rpi-node1-upload--root-filesystem-to-nas-volume1rpi5-pxenode1rootfs" aria-label="11 [RPI node1] upload / root filesystem to [NAS] /volume1/RPI5-PXE/node1/rootfs">11 [RPI node1] upload <code>/</code> root filesystem to [NAS] <code>/volume1/RPI5-PXE/node1/rootfs</code></a></li>
+                <li>
+                    <a href="#12-nas-copy-the-content-of-volume1rpi5-pxenode1rootfsbootfirmware-into-the-volume1rpi5-pxenode1" aria-label="12 [NAS] copy the content of /volume1/RPI5-PXE/node1/rootfs/boot/firmware into the /volume1/RPI5-PXE/node1/">12 [NAS] copy the content of <code>/volume1/RPI5-PXE/node1/rootfs/boot/firmware</code> into the <code>/volume1/RPI5-PXE/node1/</code></a></li>
+                <li>
+                    <a href="#13-nas-modify-cmdlinetxt-in-volume1rpi5-pxenode1" aria-label="13 [NAS] modify cmdline.txt in /volume1/RPI5-PXE/node1/">13 [NAS] modify <code>cmdline.txt</code> in <code>/volume1/RPI5-PXE/node1/</code></a></li>
+                <li>
+                    <a href="#14-nas-modify-fstab-in-volume1rpi5-pxenode1rootfsetc" aria-label="14 [NAS] modify fstab in /volume1/RPI5-PXE/node1/rootfs/etc/">14 [NAS] modify <code>fstab</code> in <code>/volume1/RPI5-PXE/node1/rootfs/etc/</code></a></li>
+                <li>
+                    <a href="#15-repeat-steps-from-10---14-for-other-nodes234n" aria-label="15 repeat steps from 10 - 14 for other nodes{2,3,4,..n}">15 repeat steps from 10 - 14 for other nodes{2,3,4,..n}</a></li>
+                <li>
+                    <a href="#16-final-step" aria-label="16 final step">16 final step</a></li></ul>
+                </li>
+                <li>
+                    <a href="#summary" aria-label="summary">summary</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h2 id="introduction">introduction<a hidden class="anchor" aria-hidden="true" href="#introduction">#</a></h2>
+<p>I&rsquo;ve always been intrigued by the idea of creating a home data center with Raspberry PIs as a computable instances. However, managing individuals node with SD cards is not fun 😼. So decided to try PXE (Preboot Execution Environment) booting. Instead of dealing with each SD card individually, PXE protocol lets me manage all my RPis from one central server, making updates and further patches easier. In this post, I&rsquo;ll share how you can set up PXE booting for your RPi fleet and enjoy these benefits to :)</p>
+<h2 id="my-appliances">my appliances<a hidden class="anchor" aria-hidden="true" href="#my-appliances">#</a></h2>
+<p>I;ll provide your with examples that are specific to my devices but once you would grasp the idea you could to the same on your set up.</p>
+<ul>
+<li>1 x UDM Dream Machine SE</li>
+<li>1 x Synology NAS</li>
+<li>4 x RaspberryPI 5</li>
+<li>4 x PoE Hat for RaspberryPI 5</li>
+<li>1 x microSD card</li>
+<li>(optional) 1 x monitor + HDMI to mini HDMI cable</li>
+</ul>
+<h2 id="plan">plan<a hidden class="anchor" aria-hidden="true" href="#plan">#</a></h2>
+<p>After a series of trials and errors, I found out the recipe that worked for me. I am happy to share it with you. :)</p>
+<ol>
+<li>[UDM] create a separate subnet (e.g VLAN ) for RPi&rsquo;s and NAS</li>
+<li>[UDM] configure DHCP server</li>
+<li>[SD card] Write OS</li>
+<li>[RPi] update EEPROM firmware for all RPi machines</li>
+<li>[NAS] enable NFS service</li>
+<li>[NAS] create SharedFolder</li>
+<li>[NAS] enable TFTP service</li>
+<li>[NAS] enable rsync</li>
+<li>[NAS] create folders <code>node1/rootfs</code> in TFTP root folder</li>
+<li>[RPi node1] mount NFS shared folder <code>/volume1/RPI5-PXE/node1/rootfs</code> to <code>node1</code></li>
+<li>[RPI node1] upload <code>/</code> root filesystem to [NAS] <code>/volume1/RPI5-PXE/node1/rootfs</code></li>
+<li>[NAS] copy the content of <code>/volume1/RPI5-PXE/node1/rootfs/boot/firmware</code> into the <code>/volume1/RPI5-PXE/node1/</code></li>
+<li>[NAS] modify <code>cmdline.txt</code> in <code>/volume1/RPI5-PXE/node1/</code></li>
+<li>[NAS] modify <code>fstab</code> in <code>/volume1/RPI5-PXE/node1/rootfs/etc/</code></li>
+<li>repeat steps from 10 - 14 for other nodes{2,3,4,..n}</li>
+<li>final step</li>
+</ol>
+<h3 id="1-udm-create-a-separate-subnet-eg-vlan--for-rpis-and-nas">1 [UDM] create a separate subnet (e.g VLAN ) for RPi&rsquo;s and NAS<a hidden class="anchor" aria-hidden="true" href="#1-udm-create-a-separate-subnet-eg-vlan--for-rpis-and-nas">#</a></h3>
+<p>Network segmentation gives me better devices organization / isolation, security benefits (firewall rules, content filtering, etc). For now, in my home network, I have 2 subnets: <code>default</code> and <code>cluster</code>. <code>default</code> includes all devices that connected to home mesh, including phones, PlayStations, IoT devices, ect. And <code>cluster</code> is a dedicated segment with network devices dedicated to my home data center project. Our main focus will be concentrated in <code>cluster</code> subnet today 🎯.
+Assign cluster subent to specific ports. Bottom row is RPi&rsquo;s ports. In the top row, the port on the far right belongs to the NAS.
+<figure>
+    <img loading="lazy" src="/homelab/pxe/vlan_ports.png"/> <figcaption>
+            ports assignment
+        </figcaption>
+</figure>
+</p>
+<h3 id="2-udm-configure-dhcp-server">2 [UDM] configure DHCP server<a hidden class="anchor" aria-hidden="true" href="#2-udm-configure-dhcp-server">#</a></h3>
+<p>DHCP server plays is big role in PXE envirounment. And it requires extra configuraions because it not only provide IP address, IP mask, etc to all booting DHCP clients but also provides TFTP server IP address and name of NBP only to identified booting clients. Practicly speaking, you need to configure DHCP Options which iusually is and advanced section in your DHCP settings.</p>
+<p>Adjust your DHCP Options to these values:</p>
+<table>
+<thead>
+<tr>
+<th>code</th>
+<th>value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>60</td>
+<td>PXEClient</td>
+</tr>
+<tr>
+<td>66</td>
+<td>192.168.101.253</td>
+</tr>
+<tr>
+<td>67</td>
+<td>bootcode.bin</td>
+</tr>
+<tr>
+<td>43</td>
+<td>1.2.3.4</td>
+</tr>
+</tbody>
+</table>
+<p>43 - Vendor Specific Information</p>
+<p>60 - Vendor Class Identifier</p>
+<p>66 - TFTP Server Name</p>
+<p>67 - Bootfile Name</p>
+<p>I would like to point your attention to option <code>43</code>. In the official <a href="https://www.raspberrypi.com/documentation/computers/raspberry-pi.html#dhcp-request-reply">RPi tech spec</a> it was told:</p>
+<blockquote>
+<p>Vendor-Option Option 43 contains the important part of the reply. This must contain the string &ldquo;Raspberry Pi Boot&rdquo;. Due to a bug in the boot ROM, you may need to add three spaces to the end of the string.</p>
+</blockquote>
+<p>It might work in your case, but in my no. This field on my router has a specific validation rule and it accepts only IP address format. So I set <code>1.2.3.4</code></p>
+<h3 id="3-sd-card-write-os">3 [SD card] Write OS<a hidden class="anchor" aria-hidden="true" href="#3-sd-card-write-os">#</a></h3>
+<figure>
+    <img loading="lazy" src="/homelab/pxe/SANDISK_SDSQUA4-032G-GN6MA_01.jpg"/> <figcaption>
+            micro SD card
+        </figcaption>
+</figure>
+
+<p>You can install any OS using <a href="https://www.raspberrypi.com/software/">Raspberry Pi Imager</a>. My choice is Raspberry PI OS (Lite) 64-bit. A port of Debian Bookworm with no desktop environment.</p>
+<figure>
+    <img loading="lazy" src="/homelab/pxe/ssh.png"/> <figcaption>
+            Enable SSH agent
+        </figcaption>
+</figure>
+
+<h3 id="4-rpi-update-eeprom-firmware-for-all-rpi-machines">4 [RPi] update EEPROM firmware for all RPi machines<a hidden class="anchor" aria-hidden="true" href="#4-rpi-update-eeprom-firmware-for-all-rpi-machines">#</a></h3>
+<p>Install SD card into RPi node1. Connect to node1 via SSH.
+Run to see your current EEPROM settings.</p>
+<pre tabindex="0"><code>vcgencmd bootloader_config
+</code></pre><p>Run command below to extract settings into the file <code>bootconf.txt</code></p>
+<pre tabindex="0"><code>cp /lib/firmware/raspberrypi/bootloader-2712/stable/pieeprom-2024-06-05.bin pieeprom.bin
+rpi-eeprom-config pieeprom.bin &gt; bootconf.txt
+</code></pre><p>Modify <code>bootconf.txt </code>:</p>
+<pre tabindex="0"><code>[all]
+BOOT_UART=1
+POWER_OFF_ON_HALT=0
+BOOT_ORDER=0x21
+TFTP_PREFIX=1
+TFTP_PREFIX_STR=node1/
+PXE_OPTION43=1.2.3.4
+</code></pre><p>Apply new EEPROM config.</p>
+<pre tabindex="0"><code>rpi-eeprom-config --out pieeprom-new.bin --config bootconf.txt pieeprom.bin
+rpi-eeprom-update -d -f ./pieeprom-new.bin
+reboot
+</code></pre><blockquote>
+<p>Do the same steps for all machines. But change <code>TFTP_PREFIX_STR=node{2,3,4}/</code></p>
+</blockquote>
+<h3 id="5-nas-enable-nfs-service">5 [NAS] enable NFS service<a hidden class="anchor" aria-hidden="true" href="#5-nas-enable-nfs-service">#</a></h3>
+<figure>
+    <img loading="lazy" src="/homelab/pxe/nfs_nas.png"/> 
+</figure>
+
+<h3 id="6-nas-create-sharedfolder">6 [NAS] create SharedFolder<a hidden class="anchor" aria-hidden="true" href="#6-nas-create-sharedfolder">#</a></h3>
+<figure>
+    <img loading="lazy" src="/homelab/pxe/tftp_root.png"/> 
+</figure>
+
+<h3 id="7-nas-enable-tftp-service">7 [NAS] enable TFTP service<a hidden class="anchor" aria-hidden="true" href="#7-nas-enable-tftp-service">#</a></h3>
+<figure>
+    <img loading="lazy" src="/homelab/pxe/enable_tftp.png"/> 
+</figure>
+
+<h3 id="8-nas-enable-rsync">8 [NAS] enable rsync<a hidden class="anchor" aria-hidden="true" href="#8-nas-enable-rsync">#</a></h3>
+<figure>
+    <img loading="lazy" src="/homelab/pxe/enable_rsynh.png"/> 
+</figure>
+
+<h3 id="9-nas-create-folders-node1rootfs-in-tftp-root-folder">9 [NAS] create folders <code>node1/rootfs</code> in TFTP root folder<a hidden class="anchor" aria-hidden="true" href="#9-nas-create-folders-node1rootfs-in-tftp-root-folder">#</a></h3>
+<p>SSH to your NAS and create subfolders for each node</p>
+<pre tabindex="0"><code>drwxrwxrwx+ 1 root   root    52 Jul 25 18:31 .
+drwxr-xr-x  1 root   root   680 Jul 25 17:41 ..
+drwxrwxrwx+ 1 yuklia users 1280 Jul 27 23:12 node1
+drwxrwxrwx+ 1 yuklia users 1232 Jul 25 18:11 node2
+drwxrwxrwx+ 1 yuklia users 1232 Jul 25 18:19 node3
+drwxrwxrwx+ 1 yuklia users 1232 Jul 25 18:39 node4
+yuklia@nas:/volume1/RPi5-PXE$ 
+</code></pre><h3 id="10-rpi-node1-mount-nfs-shared-folder-volume1rpi5-pxenode1rootfs-to-node1">10 [RPi node1] mount NFS shared folder <code>/volume1/RPI5-PXE/node1/rootfs</code> to <code>node1</code><a hidden class="anchor" aria-hidden="true" href="#10-rpi-node1-mount-nfs-shared-folder-volume1rpi5-pxenode1rootfs-to-node1">#</a></h3>
+<pre tabindex="0"><code>sudo mkdir -p /mnt/img
+sudo mount -t nfs 192.168.101.253:/volume1/RPI5-PXE/node1/rootfs /mnt/img
+</code></pre><h3 id="11-rpi-node1-upload--root-filesystem-to-nas-volume1rpi5-pxenode1rootfs">11 [RPI node1] upload <code>/</code> root filesystem to [NAS] <code>/volume1/RPI5-PXE/node1/rootfs</code><a hidden class="anchor" aria-hidden="true" href="#11-rpi-node1-upload--root-filesystem-to-nas-volume1rpi5-pxenode1rootfs">#</a></h3>
+<pre tabindex="0"><code>sudo rsync -a --exclude={&#34;/proc/*&#34;,&#34;/sys/*&#34;,&#34;/dev/*&#34;,&#34;/run/*&#34;,&#34;/tmp/*&#34;,&#34;/mnt/*&#34;} --info=progress2 / /mnt/img
+</code></pre><h3 id="12-nas-copy-the-content-of-volume1rpi5-pxenode1rootfsbootfirmware-into-the-volume1rpi5-pxenode1">12 [NAS] copy the content of <code>/volume1/RPI5-PXE/node1/rootfs/boot/firmware</code> into the <code>/volume1/RPI5-PXE/node1/</code><a hidden class="anchor" aria-hidden="true" href="#12-nas-copy-the-content-of-volume1rpi5-pxenode1rootfsbootfirmware-into-the-volume1rpi5-pxenode1">#</a></h3>
+<pre tabindex="0"><code>cp -r /volume1/RPI5-PXE/node1/rootfs/boot/firmware/* /volume1/RPI5-PXE/node1/
+</code></pre><h3 id="13-nas-modify-cmdlinetxt-in-volume1rpi5-pxenode1">13 [NAS] modify <code>cmdline.txt</code> in <code>/volume1/RPI5-PXE/node1/</code><a hidden class="anchor" aria-hidden="true" href="#13-nas-modify-cmdlinetxt-in-volume1rpi5-pxenode1">#</a></h3>
+<pre tabindex="0"><code>dwcotg.lpm_enable=0 console=serial0,115200 console=tty1 elevator=deadline rootwait rw root=/dev/nfs nfsroot=192.168.101.253:/volume1/RPi5-PXE/node1/rootfs,v3,tcp ip=dhcp
+</code></pre><h3 id="14-nas-modify-fstab-in-volume1rpi5-pxenode1rootfsetc">14 [NAS] modify <code>fstab</code> in <code>/volume1/RPI5-PXE/node1/rootfs/etc/</code><a hidden class="anchor" aria-hidden="true" href="#14-nas-modify-fstab-in-volume1rpi5-pxenode1rootfsetc">#</a></h3>
+<pre tabindex="0"><code>proc            /proc           proc    defaults          0       0
+192.168.101.253:/volume1/RPi5-PXE/node1 /boot nfs defaults,vers=3,proto=tcp 0 0
+</code></pre><h3 id="15-repeat-steps-from-10---14-for-other-nodes234n">15 repeat steps from 10 - 14 for other nodes{2,3,4,..n}<a hidden class="anchor" aria-hidden="true" href="#15-repeat-steps-from-10---14-for-other-nodes234n">#</a></h3>
+<h3 id="16-final-step">16 final step<a hidden class="anchor" aria-hidden="true" href="#16-final-step">#</a></h3>
+<p>Remove micro SD card, power on PRi&rsquo;s 🔌. DHCP server should navigate them to the bootfile location.</p>
+<p>Run <code>findmnt</code> for validation</p>
+<pre tabindex="0"><code>yuklia@node-1:~ $ findmnt
+TARGET                         SOURCE      FSTYPE    OPTIONS
+/                              192.168.101.253:/volume1/RPi5-PXE/node1/rootfs
+                                           nfs       rw,relatime,vers=3,rsize=131072,wsize=131072,na
+|-/sys                         sysfs       sysfs     rw,nosuid,nodev,noexec,relatime
+| |-/sys/kernel/security       securityfs  securityf rw,nosuid,nodev,noexec,relatime
+| |-/sys/fs/cgroup             cgroup2     cgroup2   rw,nosuid,nodev,noexec,relatime,nsdelegate,memo
+| |-/sys/fs/pstore             pstore      pstore    rw,nosuid,nodev,noexec,relatime
+| |-/sys/fs/bpf                bpf         bpf       rw,nosuid,nodev,noexec,relatime,mode=700
+| |-/sys/kernel/debug          debugfs     debugfs   rw,nosuid,nodev,noexec,relatime
+| |-/sys/kernel/tracing        tracefs     tracefs   rw,nosuid,nodev,noexec,relatime
+| |-/sys/kernel/config         configfs    configfs  rw,nosuid,nodev,noexec,relatime
+| `-/sys/fs/fuse/connections   fusectl     fusectl   rw,nosuid,nodev,noexec,relatime
+|-/proc                        proc        proc      rw,relatime
+| `-/proc/sys/fs/binfmt_misc   systemd-1   autofs    rw,relatime,fd=30,pgrp=1,timeout=0,minproto=5,m
+|   `-/proc/sys/fs/binfmt_misc binfmt_misc binfmt_mi rw,nosuid,nodev,noexec,relatime
+|-/dev                         udev        devtmpfs  rw,nosuid,relatime,size=3950816k,nr_inodes=2469
+| |-/dev/pts                   devpts      devpts    rw,nosuid,noexec,relatime,gid=5,mode=620,ptmxmo
+| |-/dev/shm                   tmpfs       tmpfs     rw,nosuid,nodev
+| `-/dev/mqueue                mqueue      mqueue    rw,nosuid,nodev,noexec,relatime
+|-/run                         tmpfs       tmpfs     rw,nosuid,nodev,noexec,relatime,size=824576k,mo
+| |-/run/lock                  tmpfs       tmpfs     rw,nosuid,nodev,noexec,relatime,size=5120k
+| |-/run/credentials/systemd-sysusers.service
+| |                            ramfs       ramfs     ro,nosuid,nodev,noexec,relatime,mode=700
+| |-/run/credentials/systemd-sysctl.service
+| |                            ramfs       ramfs     ro,nosuid,nodev,noexec,relatime,mode=700
+| |-/run/credentials/systemd-tmpfiles-setup-dev.service
+| |                            ramfs       ramfs     ro,nosuid,nodev,noexec,relatime,mode=700
+| |-/run/rpc_pipefs            sunrpc      rpc_pipef rw,relatime
+| |-/run/credentials/systemd-tmpfiles-setup.service
+| |                            ramfs       ramfs     ro,nosuid,nodev,noexec,relatime,mode=700
+| `-/run/user/1000             tmpfs       tmpfs     rw,nosuid,nodev,relatime,size=824560k,nr_inodes
+`-/boot                        192.168.101.253:/volume1/RPi5-PXE/node1
+                                           nfs       rw,relatime,vers=3,rsize=131072,wsize=131072,na
+</code></pre><p>This is how my home server rack looks like 🥰</p>
+<figure>
+    <img loading="lazy" src="/homelab/pxe/cluster_hardware.png"/> 
+</figure>
+
+<p>Inner side of the server rack</p>
+<figure>
+    <img loading="lazy" src="/homelab/pxe/rack_back.png"/> 
+</figure>
+
+<h2 id="summary">summary<a hidden class="anchor" aria-hidden="true" href="#summary">#</a></h2>
+<p>PXE boot up &amp; running and it means that it is a time to host something in my cluster 🤔 As a next step I want to set up Kubernetes &ldquo;the hard-way&rdquo;. Stay tuned 😄</p>
+<p>That is the end of the journey. :) I hope it might be handy for your own setup! If you have any questions, don’t hesitate to write in the comments or DM me on <a href="https://www.linkedin.com/in/yulia-kostrikova-67268585/">Linkedin</a>. I am always passionate about discussing geeky stuff. 😉</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://juliakostrikova.com/tags/howto/">howto</a></li>
+      <li><a href="https://juliakostrikova.com/tags/pxe-boot/">PXE boot</a></li>
+      <li><a href="https://juliakostrikova.com/tags/raspberrypi5/">raspberryPI5</a></li>
+      <li><a href="https://juliakostrikova.com/tags/bare-metal/">Bare Metal</a></li>
+      <li><a href="https://juliakostrikova.com/tags/homelab/">homelab</a></li>
+      <li><a href="https://juliakostrikova.com/tags/debian/">debian</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="next" href="https://juliakostrikova.com/posts/homelab/dhcp-nas/">
+    <span class="title">Next »</span>
+    <br>
+    <span>Setting Up a DHCP Server on Synology NAS in a UniFi Dream Machine SE Subnet</span>
+  </a>
+</nav>
+
+  </footer><script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
+<script>
+  kofiWidgetOverlay.draw('yuklia', {
+    'type': 'floating-chat',
+    'floating-chat.donateButton.text': '',
+    'floating-chat.donateButton.background-color': '#ffffff',
+    'floating-chat.donateButton.text-color': '#323842'
+  });
+</script>
+
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "yuklia-dev" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2024 <a href="https://juliakostrikova.com">Yuliia Kostrikova</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

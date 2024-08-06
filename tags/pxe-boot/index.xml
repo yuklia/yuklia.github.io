@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>PXE boot on Yuliia Kostrikova</title>
+    <link>https://juliakostrikova.com/tags/pxe-boot/</link>
+    <description>Recent content in PXE boot on Yuliia Kostrikova</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Tue, 06 Aug 2024 11:28:58 +0200</lastBuildDate><atom:link href="https://juliakostrikova.com/tags/pxe-boot/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Detailed HowTo: PXE boot multiple RPi (Birthday Edition 🍰)</title>
+      <link>https://juliakostrikova.com/posts/homelab/pxe-boot/</link>
+      <pubDate>Tue, 06 Aug 2024 11:28:58 +0200</pubDate>
+      
+      <guid>https://juliakostrikova.com/posts/homelab/pxe-boot/</guid>
+      <description>PXE (Preboot eXecution Environment) is a client-server environment which makes possible to boot and install operating systems without the need of physical media.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -107,18 +107,9 @@
     </item>
     
     <item>
-      <title>raspberryPI400</title>
-      <link>https://juliakostrikova.com/tags/raspberrypi400/</link>
-      <pubDate>Sat, 23 Sep 2023 11:28:58 +0200</pubDate>
-      
-      <guid>https://juliakostrikova.com/tags/raspberrypi400/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>aws</title>
       <link>https://juliakostrikova.com/tags/aws/</link>
-      <pubDate>Mon, 16 Jan 2023 15:35:26 +0200</pubDate>
+      <pubDate>Sat, 20 Jan 2024 19:35:26 +0200</pubDate>
       
       <guid>https://juliakostrikova.com/tags/aws/</guid>
       <description></description>
@@ -127,7 +118,7 @@
     <item>
       <title>cloud</title>
       <link>https://juliakostrikova.com/tags/cloud/</link>
-      <pubDate>Mon, 16 Jan 2023 15:35:26 +0200</pubDate>
+      <pubDate>Sat, 20 Jan 2024 19:35:26 +0200</pubDate>
       
       <guid>https://juliakostrikova.com/tags/cloud/</guid>
       <description></description>
@@ -136,9 +127,18 @@
     <item>
       <title>SAA-C03</title>
       <link>https://juliakostrikova.com/tags/saa-c03/</link>
-      <pubDate>Mon, 16 Jan 2023 15:35:26 +0200</pubDate>
+      <pubDate>Sat, 20 Jan 2024 19:35:26 +0200</pubDate>
       
       <guid>https://juliakostrikova.com/tags/saa-c03/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>raspberryPI400</title>
+      <link>https://juliakostrikova.com/tags/raspberrypi400/</link>
+      <pubDate>Sat, 23 Sep 2023 11:28:58 +0200</pubDate>
+      
+      <guid>https://juliakostrikova.com/tags/raspberrypi400/</guid>
       <description></description>
     </item>
     

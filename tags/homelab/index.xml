@@ -6,7 +6,16 @@
     <description>Recent content in homelab on Yuliia Kostrikova</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Tue, 06 Aug 2024 11:28:58 +0200</lastBuildDate><atom:link href="https://juliakostrikova.com/tags/homelab/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 09 Feb 2025 00:30:58 +0200</lastBuildDate><atom:link href="https://juliakostrikova.com/tags/homelab/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>k8s cluster on Raspberry PI&#39;s with iSCSI block storage</title>
+      <link>https://juliakostrikova.com/posts/homelab/iscsi_pxe_mount/</link>
+      <pubDate>Sun, 09 Feb 2025 00:30:58 +0200</pubDate>
+      
+      <guid>https://juliakostrikova.com/posts/homelab/iscsi_pxe_mount/</guid>
+      <description>exploring the challenges of running a k8s cluster on Raspberry PI&amp;#39;s with PXE network boot and overcoming containerd storage limitations using iSCSI</description>
+    </item>
+    
     <item>
       <title>Detailed HowTo: PXE boot multiple RPi (Birthday Edition 🍰)</title>
       <link>https://juliakostrikova.com/posts/homelab/pxe-boot/</link>

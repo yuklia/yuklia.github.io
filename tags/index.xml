@@ -6,7 +6,61 @@
     <description>Recent content in Tags on Yuliia Kostrikova</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Tue, 06 Aug 2024 11:28:58 +0200</lastBuildDate><atom:link href="https://juliakostrikova.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 09 Feb 2025 00:30:58 +0200</lastBuildDate><atom:link href="https://juliakostrikova.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>homelab</title>
+      <link>https://juliakostrikova.com/tags/homelab/</link>
+      <pubDate>Sun, 09 Feb 2025 00:30:58 +0200</pubDate>
+      
+      <guid>https://juliakostrikova.com/tags/homelab/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>iscsi</title>
+      <link>https://juliakostrikova.com/tags/iscsi/</link>
+      <pubDate>Sun, 09 Feb 2025 00:30:58 +0200</pubDate>
+      
+      <guid>https://juliakostrikova.com/tags/iscsi/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>kubernetes</title>
+      <link>https://juliakostrikova.com/tags/kubernetes/</link>
+      <pubDate>Sun, 09 Feb 2025 00:30:58 +0200</pubDate>
+      
+      <guid>https://juliakostrikova.com/tags/kubernetes/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>nfs</title>
+      <link>https://juliakostrikova.com/tags/nfs/</link>
+      <pubDate>Sun, 09 Feb 2025 00:30:58 +0200</pubDate>
+      
+      <guid>https://juliakostrikova.com/tags/nfs/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>pxe boot</title>
+      <link>https://juliakostrikova.com/tags/pxe-boot/</link>
+      <pubDate>Sun, 09 Feb 2025 00:30:58 +0200</pubDate>
+      
+      <guid>https://juliakostrikova.com/tags/pxe-boot/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>raspberry pi</title>
+      <link>https://juliakostrikova.com/tags/raspberry-pi/</link>
+      <pubDate>Sun, 09 Feb 2025 00:30:58 +0200</pubDate>
+      
+      <guid>https://juliakostrikova.com/tags/raspberry-pi/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>Bare Metal</title>
       <link>https://juliakostrikova.com/tags/bare-metal/</link>
@@ -26,29 +80,11 @@
     </item>
     
     <item>
-      <title>homelab</title>
-      <link>https://juliakostrikova.com/tags/homelab/</link>
-      <pubDate>Tue, 06 Aug 2024 11:28:58 +0200</pubDate>
-      
-      <guid>https://juliakostrikova.com/tags/homelab/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>howto</title>
       <link>https://juliakostrikova.com/tags/howto/</link>
       <pubDate>Tue, 06 Aug 2024 11:28:58 +0200</pubDate>
       
       <guid>https://juliakostrikova.com/tags/howto/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>PXE boot</title>
-      <link>https://juliakostrikova.com/tags/pxe-boot/</link>
-      <pubDate>Tue, 06 Aug 2024 11:28:58 +0200</pubDate>
-      
-      <guid>https://juliakostrikova.com/tags/pxe-boot/</guid>
       <description></description>
     </item>
     

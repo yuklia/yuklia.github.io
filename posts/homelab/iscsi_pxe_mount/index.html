@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>k8s cluster on Raspberry PI&#39;s with iSCSI block storage | Yuliia Kostrikova</title>
+
+
+<meta name="keywords" content="k8s, containerd, overlayfs, pxe boot, iscsi">
+<meta name="description" content="exploring the challenges of running a k8s cluster on Raspberry PI&#39;s with PXE network boot and overcoming containerd storage limitations using iSCSI">
+<meta name="author" content="">
+<link rel="canonical" href="https://juliakostrikova.com/posts/homelab/iscsi_pxe_mount/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.7140587df96a2b1a49eb723fa7063dc0c641a6cb638f3140e8d3beb4deae4f5c.css" integrity="sha256-cUBYfflqKxpJ63I/pwY9wMZBpstjjzFA6NO&#43;tN6uT1w=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://juliakostrikova.com/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://juliakostrikova.com/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://juliakostrikova.com/favicon-32x32.png">
+<link rel="manifest" href="https://juliakostrikova.com/site.webmanifest">
+<link rel="apple-touch-icon" href="https://juliakostrikova.com/apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml"  href="https://juliakostrikova.com/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BR19XD52CV"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-BR19XD52CV', { 'anonymize_ip': false });
+}
+</script>
+<meta property="og:title" content="k8s cluster on Raspberry PI&#39;s with iSCSI block storage" />
+<meta property="og:description" content="exploring the challenges of running a k8s cluster on Raspberry PI&#39;s with PXE network boot and overcoming containerd storage limitations using iSCSI" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://juliakostrikova.com/posts/homelab/iscsi_pxe_mount/" />
+<meta property="og:image" content="https://juliakostrikova.com/homelab/k8s/Toba_On_Server_Rack.png" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2025-02-09T00:30:58+02:00" />
+<meta property="article:modified_time" content="2025-02-09T00:30:58+02:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://juliakostrikova.com/homelab/k8s/Toba_On_Server_Rack.png" />
+<meta name="twitter:title" content="k8s cluster on Raspberry PI&#39;s with iSCSI block storage"/>
+<meta name="twitter:description" content="exploring the challenges of running a k8s cluster on Raspberry PI&#39;s with PXE network boot and overcoming containerd storage limitations using iSCSI"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://juliakostrikova.com/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "k8s cluster on Raspberry PI's with iSCSI block storage",
+      "item": "https://juliakostrikova.com/posts/homelab/iscsi_pxe_mount/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "k8s cluster on Raspberry PI's with iSCSI block storage",
+  "name": "k8s cluster on Raspberry PI\u0027s with iSCSI block storage",
+  "description": "exploring the challenges of running a k8s cluster on Raspberry PI's with PXE network boot and overcoming containerd storage limitations using iSCSI",
+  "keywords": [
+    "k8s", "containerd", "overlayfs", "pxe boot", "iscsi"
+  ],
+  "articleBody": "Disclaimer Meet Toba the cat, the latest security shield model, equipped with 24/7 surveillance mode and an aggressive defense mechanism when unauthorized movement is detected. 🚨😼\nAny attempt to relocate this elite guardian from the server rack results in immediate resistance, accompanied by sharp glares and indignant meows. 🛑🐾\nPlan to Host Mastodon on 4 × Raspberry Pis In my current homelab project, I am building a bare-metal Kubernetes cluster to host ~10–50 containers per node. What app will run there? Well, I’ll figure that out along the way, but I’m considering hosting Mastodon. (For those who don’t know, Mastodon is a decentralized microblogging platform.)\nNo Hypervisors for This Project 🚫 As you might know from my previous posts, I have 4× Raspberry Pi 5 boards. Each features a 64-bit quad-core ARM Cortex-A76 processor running at 2.4GHz with 8 GB RAM. In my setup, 3 Raspberry Pis act as worker nodes, while 1 serves as the control plane (in the future, I’ll increase it to 3 to meet RAFT consensus, but for now, this setup is fine).\nKubernetes pods will run directly on the host OS. The OS is Raspberry Pi OS (64-bit), booted over the LAN network. If you’re interested, you can read more in this post about setting up PXE boot.\nEven though Raspberry Pi 5 delivers a 2–3× increase in CPU performance compared to Raspberry Pi 4, I’m avoiding virtualization solutions like VMware and Proxmox (I like Proxmox, but not for this setup) because they introduce unnecessary overhead.\n➕ One day, I’m thinking about building a voice assistant (currently, I have a Siri HomePod but want to make it smarter) that interacts with LLMs and controls physical devices like smart sockets, lights, or energy monitoring systems. For that, I need access to GPIO pins (direct hardware interaction). Virtualization makes passing through “exotic” hardware problematic, so running on bare metal is the better choice.\nWhat is for dinner? 💭 In today’s post, I am going to shed a light on the issue I faced with PXE boot on NFS and containderd’s component snapshotter that is not compatible with NFS. But how I come to that conclusion? let’s check it out.\ndmesg, linux kernel dump tool spaws this log ⬇️\n[Thu Feb 6 09:20:56 2025] overlayfs: upper fs does not support tmpfile. [Thu Feb 6 09:20:56 2025] overlayfs: upper fs does not support RENAME_WHITEOUT. [Thu Feb 6 09:20:56 2025] overlayfs: failed to set xattr on upper [Thu Feb 6 09:20:56 2025] overlayfs: ...falling back to redirect_dir=nofollow. [Thu Feb 6 09:20:56 2025] overlayfs: ...falling back to uuid=null. [Thu Feb 6 09:20:56 2025] overlayfs: upper fs missing required feature and kubectl describe pod shows this error, but they are both about that same matter.\nkubectl describe pod -l app=nginx --namespace default --kubeconfig /opt/hl-control-node/_tmp/kubeconfigs/admin.kubeconfig Events: Type Reason Age From Message ---- ------ ---- ---- ------- Warning FailedCreatePodSandBox 13m (x19065 over 2d23h) kubelet (combined from similar events): Failed to create pod sandbox: rpc error: code = Unknown desc = failed to start sandbox \"1323c487a948330ef32a782dc48095e74998758163f49401ce91cd649013d8ec\": failed to create containerd task: failed to create shim task: failed to mount rootfs component: invalid argument Warning FailedCreatePodSandBox 5m29s kubelet Failed to create pod sandbox: rpc error: code = Unknown desc = failed to start s overlayfs is one of the file systems that used by snapshotter. upper fs is literally my “upper FS” in my case it is NFS, since my Entire Root Filesystem (/) is on NFS.\ndf -h Filesystem Size Used Avail Use% Mounted on udev 3.8G 0 3.8G 0% /dev tmpfs 806M 5.3M 801M 1% /run 192.168.101.253:/volume1/RPi5-PXE/node4/rootfs 885G 148G 737G 17% / tmpfs 4.0G 0 4.0G 0% /dev/shm tmpfs 5.0M 48K 5.0M 1% /run/lock 192.168.101.253:/volume1/RPi5-PXE/node4 885G 148G 737G 17% /boot tmpfs 806M 0 806M 0% /run/user/1000 all this means that network file system doesn’t have required features like: tmtfile; RENAME_WHITEOUT; xattr.\ncontainerd architectureImage taken from official source https://containerd.io\nmy first thought was to switch overlayfs into btrsfs or devmapper storage drivers, but is is “bargain one trouble for another” rather then help. all these storage drivers works by allocating block storage.\nhere is my illustration how block storage works: block storage in comparision to network file storage, it has a logic on top of file storage that is responsible for assign unique identifiers to files which are stored in the data lookup table. read operations are obviously much more faster then in a unsturctured storage like nfs.\nand it means that for making k8s work in the current setup i need to “transform” those directories that kuberenets need into block storage type. and solution for that is iSCSI (/aɪˈskʌzi/ eye-SKUZ-ee). boom.\niSCSIfication iSCSI (Internet Small Computer System Interface)\nWiki: iSCSI provides block-level access to storage devices by carrying SCSI commands over a TCP/IP network.\niSCSI allows remote data sharing (same as nfs) but at the block level. It enables data exchange between multiple client machines and a block storage device (or block server), which is accessed similarly to a local disk drive.\nhere is illustration how it works in with my homelab devices\niSCSI client/server auth flow Setting up iSCSI on Synology NAS create an iSCSI Targets for each cluster node. define logical unit numbers (LUN) for: /var/lib/containerd (stores container images and metadata) /var/lib/kubelet (kubernetes node-specific data) /var/logs/pods (stores logs from running containers) Configuring iSCSI Initiator on Raspberry PI nodes install the iscsi client: sudo apt install -y open-iscsi sudo systemctl enable --now open-iscsi discover the iscsi targets: iscsiadm -m discovery -t st -p 192.168.101.253 login to the iscsi target: sudo iscsiadm -m node --targetname \"iqn.2000-01.com.synology:nas.Target-node3\" --portal \"192.168.101.253:3260\" --login 3.1. enable iSCSI auto-login, to restore session after reboot\nsudo iscsiadm -m node --targetname \"iqn.2000-01.com.synology:nas.Target-node3\" --portal \"192.168.101.253:3260\" --op update -n node.startup -v automatic format the block devices as ext4: sudo mkfs.ext4 -L kubelet /dev/sda sudo mkfs.ext4 -L logs /dev/sdb sudo mkfs.ext4 -L containerd /dev/sdc yuklia@node3:~ $ sudo blkid /dev/sda /dev/sda: LABEL=\"kubelet\" UUID=\"317346de-f632-4f5d-9ec0-90770f56938d\" BLOCK_SIZE=\"4096\" TYPE=\"ext4\" yuklia@node3:~ $ sudo blkid /dev/sdb /dev/sdb: LABEL=\"logs\" UUID=\"d35111a5-f56a-4bde-a731-87e630fa0aed\" BLOCK_SIZE=\"4096\" TYPE=\"ext4\" yuklia@node3:~ $ sudo blkid /dev/sdc /dev/sdc: LABEL=\"containerd\" UUID=\"8c83f195-eb3e-4226-914d-98837e3ddcca\" BLOCK_SIZE=\"4096\" TYPE=\"ext4\" 4.1 update fstab to persist mount targets after reboot\ncat /etc/fstab proc /proc proc defaults 0 0 192.168.101.253:/volume1/RPi5-PXE/node4 /boot nfs defaults,vers=3,proto=tcp 0 0 UUID=317346de-f632-4f5d-9ec0-90770f56938d /var/lib/kubelet ext4 defaults,_netdev 0 0 UUID=d35111a5-f56a-4bde-a731-87e630fa0aed /var/logs/pods ext4 defaults,_netdev 0 0 UUID=8c83f195-eb3e-4226-914d-98837e3ddcca /var/lib/containerd ext4 defaults,_netdev 0 0 mount the block devices:\nsudo mount /dev/sda /var/lib/kubelet sudo mount /dev/sdb /var/logs/pods sudo mount /dev/sdc /var/lib/containerd update /etc/fstab to persist mounts:\nUUID=317346de-f632-4f5d-9ec0-90770f56938d /var/lib/kubelet ext4 defaults,_netdev 0 0 UUID=d35111a5-f56a-4bde-a731-87e630fa0aed /var/logs/pods ext4 defaults,_netdev 0 0 UUID=8c83f195-eb3e-4226-914d-98837e3ddcca /var/lib/containerd ext4 defaults,_netdev 0 0 job done\nyuklia@node3:~ $ df -h Filesystem Size Used Avail Use% Mounted on udev 3.8G 0 3.8G 0% /dev tmpfs 806M 5.4M 800M 1% /run 192.168.101.253:/volume1/RPi5-PXE/node4/rootfs 885G 227G 658G 26% / tmpfs 4.0G 0 4.0G 0% /dev/shm tmpfs 5.0M 48K 5.0M 1% /run/lock /dev/sdb 4.9G 24K 4.6G 1% /var/logs/pods /dev/sda 11G 124K 11G 1% /var/lib/kubelet /dev/sdc 9.8G 270M 9.0G 3% /var/lib/containerd 192.168.101.253:/volume1/RPi5-PXE/node4 885G 227G 658G 26% /boot tmpfs 806M 0 806M 0% /run/user/1000 Smoke test ? kubectl get pod -l app=nginx\noh, no CrashLoopBackOff ... Reason: CrashLoopBackOff Last State: Terminated Reason: StartError Message: failed to create containerd task: failed to create shim task: OCI runtime create failed: runc create failed: unable to start container process: error during container init: error setting cgroup config for procHooks process: unified resource \"memory.oom.group\" can't be set: controller \"memory\" not available Root Cause: memory.oom.group Can’t Be Set This means\nthe container runtime (containerd + runc) is trying to set memory cgroup configurations, but the memory cgroup controller is missing or not enabled on your system.\nupdating kernel boot parameters with systemd.unified_cgroup_hierarchy=1 cgroup_enable=memory helped.\nsudo cat /boot/cmdline.txt dwcotg.lpm_enable=0 console=serial0,115200 console=tty1 elevator=deadline rootwait rw root=/dev/nfs nfsroot=192.168.101.253:/volume1/RPi5-PXE/node4/rootfs,v3,tcp ip=dhcp cgroup_enable=memory cgroup_memory=1 systemd.unified_cgroup_hierarchy=1 Smoke test-test 🧪 check that all nodes up \u0026 running\nkubectl get nodes --kubeconfig /opt/hl-control-node/_tmp/kubeconfigs/admin.kubeconfig NAME STATUS ROLES AGE VERSION node1 Ready 37d v1.31.2 node2 Ready 37d v1.31.2 node3 Ready 37d v1.31.2 check that nginx pod up \u0026 running\nkubectl get pod -l app=nginx --namespace default --kubeconfig /opt/hl-control-node/_tmp/kubeconfigs/admin.kubeconfig NAME READY STATUS RESTARTS AGE nginx-54f87867d6-9tbgl 1/1 Running 0 3h13m Final Thoughts I started with PXE boot and NFS, thinking it would be a clean and efficient solution. However, I quickly encountered limitations due to OverlayFS incompatibility in containerd. After troubleshooting, I realized that NFS wasn’t sufficient and decided to pivot to iSCSI block storage.\nSetting up iSCSI on my Synology NAS and configuring the initiators on the Raspberry Pi nodes required some effort. Once completed, it resolved the persistent storage issue. Of course, Kubernetes wouldn’t let me off that easy. I hit another roadblock with memory cgroup issues, which I fixed by tweaking kernel boot parameters.\nAfter all the adjustments and smoke tests, the cluster is now running smoothly. I can finally deploy workloads without storage headaches. Next step? Automating iSCSI provisioning with OpenTofu (Terraform) to make scaling effortless. Stay tuned for that adventure! 🚀\n",
+  "wordCount" : "1469",
+  "inLanguage": "en",
+  "image":"https://juliakostrikova.com/homelab/k8s/Toba_On_Server_Rack.png","datePublished": "2025-02-09T00:30:58+02:00",
+  "dateModified": "2025-02-09T00:30:58+02:00",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://juliakostrikova.com/posts/homelab/iscsi_pxe_mount/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Yuliia Kostrikova",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://juliakostrikova.com/favicon.ico"
+    }
+  }
+}
+</script>
+    
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://juliakostrikova.com" accesskey="h" title="Yuliia Kostrikova (Alt + H)">Yuliia Kostrikova</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://juliakostrikova.com/archives/" title="Archive">
+                    <span>Archive</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://juliakostrikova.com/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://juliakostrikova.com/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://juliakostrikova.com">Home</a>&nbsp;»&nbsp;<a href="https://juliakostrikova.com/posts/">Posts</a></div>
+    <h1 class="post-title">
+      k8s cluster on Raspberry PI&#39;s with iSCSI block storage
+    </h1>
+    <div class="post-description">
+      exploring the challenges of running a k8s cluster on Raspberry PI&#39;s with PXE network boot and overcoming containerd storage limitations using iSCSI
+    </div>
+    <div class="post-meta"><span title='2025-02-09 00:30:58 +0200 +0200'>February 9, 2025</span>&nbsp;·&nbsp;7 min
+
+</div>
+  </header> 
+<figure class="entry-cover"><img loading="lazy" src="https://juliakostrikova.com/homelab/k8s/Toba_On_Server_Rack.png" alt="">
+        
+</figure><div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#disclaimer" aria-label="Disclaimer">Disclaimer</a></li>
+                <li>
+                    <a href="#plan-to-host-mastodon-on-4--raspberry-pis" aria-label="Plan to Host Mastodon on 4 × Raspberry Pis">Plan to Host Mastodon on 4 × Raspberry Pis</a></li>
+                <li>
+                    <a href="#no-hypervisors-for-this-project-" aria-label="No Hypervisors for This Project 🚫">No Hypervisors for This Project 🚫</a></li>
+                <li>
+                    <a href="#what-is-for-dinner-" aria-label="What is for dinner? 💭">What is for dinner? 💭</a></li>
+                <li>
+                    <a href="#iscsification" aria-label="iSCSIfication">iSCSIfication</a><ul>
+                        
+                <li>
+                    <a href="#setting-up-iscsi-on-synology-nas" aria-label="Setting up iSCSI on Synology NAS">Setting up iSCSI on Synology NAS</a></li>
+                <li>
+                    <a href="#configuring-iscsi-initiator-on-raspberry-pi-nodes" aria-label="Configuring iSCSI Initiator on Raspberry PI nodes">Configuring iSCSI Initiator on Raspberry PI nodes</a></li></ul>
+                </li>
+                <li>
+                    <a href="#smoke-test-" aria-label="Smoke test ?">Smoke test ?</a><ul>
+                        
+                <li>
+                    <a href="#oh-no-crashloopbackoff" aria-label="oh, no CrashLoopBackOff">oh, no CrashLoopBackOff</a></li></ul>
+                </li>
+                <li>
+                    <a href="#smoke-test-test-" aria-label="Smoke test-test 🧪">Smoke test-test 🧪</a></li>
+                <li>
+                    <a href="#final-thoughts" aria-label="Final Thoughts">Final Thoughts</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h3 id="disclaimer">Disclaimer<a hidden class="anchor" aria-hidden="true" href="#disclaimer">#</a></h3>
+<p>Meet <strong>Toba the cat</strong>, the latest <strong>security shield</strong> model, equipped with <strong>24/7 surveillance mode</strong> and an <strong>aggressive defense mechanism</strong> when unauthorized movement is detected. 🚨😼</p>
+<blockquote>
+<p>Any attempt to relocate this elite guardian from the <strong>server rack</strong> results in immediate resistance, accompanied by <strong>sharp glares and indignant meows</strong>. 🛑🐾</p>
+</blockquote>
+<h3 id="plan-to-host-mastodon-on-4--raspberry-pis">Plan to Host Mastodon on 4 × Raspberry Pis<a hidden class="anchor" aria-hidden="true" href="#plan-to-host-mastodon-on-4--raspberry-pis">#</a></h3>
+<p>In my current homelab project, I am building a <strong>bare-metal Kubernetes cluster</strong> to host <strong>~10–50 containers per node</strong>. What app will run there? Well, I’ll figure that out along the way, but I’m considering hosting <a href="https://docs.joinmastodon.org">Mastodon</a>. <em>(For those who don’t know, Mastodon is a decentralized microblogging platform.)</em></p>
+<h3 id="no-hypervisors-for-this-project-">No Hypervisors for This Project 🚫<a hidden class="anchor" aria-hidden="true" href="#no-hypervisors-for-this-project-">#</a></h3>
+<p>As you might know from my previous posts, I have <strong>4× Raspberry Pi 5</strong> boards. Each features a <strong>64-bit quad-core ARM Cortex-A76 processor running at 2.4GHz</strong> with <strong>8 GB RAM</strong>. In my setup, <strong>3 Raspberry Pis</strong> act as worker nodes, while 1 serves as the control plane <em>(in the future, I’ll increase it to 3 to meet RAFT consensus, but for now, this setup is fine).</em></p>
+<p>Kubernetes pods will run directly on the host OS. The OS is <strong>Raspberry Pi OS (64-bit)</strong>, booted over the LAN network. If you’re interested, you can read more in <a href="https://juliakostrikova.com/posts/homelab/pxe-boot/">this post</a> about setting up <strong>PXE boot</strong>.</p>
+<p>Even though <strong>Raspberry Pi 5</strong> delivers a 2–3× increase in CPU performance compared to Raspberry Pi 4, I’m avoiding virtualization solutions like <strong>VMware</strong> and <strong>Proxmox</strong> <em>(I like Proxmox, but not for this setup)</em> because they introduce unnecessary overhead.</p>
+<p>➕ One day, I’m thinking about building a voice assistant <em>(currently, I have a Siri HomePod but want to make it smarter)</em> that interacts with <strong>LLMs</strong> and controls physical devices like smart sockets, lights, or energy monitoring systems. For that, I need access to <strong>GPIO pins</strong> (direct hardware interaction). Virtualization makes passing through &ldquo;exotic&rdquo; hardware problematic, so running on bare metal is the better choice.</p>
+<h3 id="what-is-for-dinner-">What is for dinner? 💭<a hidden class="anchor" aria-hidden="true" href="#what-is-for-dinner-">#</a></h3>
+<p>In today&rsquo;s post, I am going to shed a light on the issue I faced with <strong>PXE boot on NFS</strong> and <strong>containderd&rsquo;s</strong> component <strong>snapshotter</strong> that is not compatible with <strong>NFS</strong>. But how I come to that conclusion? let&rsquo;s check it out.</p>
+<p>dmesg, linux kernel dump tool spaws this log ⬇️</p>
+<pre tabindex="0"><code>[Thu Feb  6 09:20:56 2025] overlayfs: upper fs does not support tmpfile.
+[Thu Feb  6 09:20:56 2025] overlayfs: upper fs does not support RENAME_WHITEOUT.
+[Thu Feb  6 09:20:56 2025] overlayfs: failed to set xattr on upper
+[Thu Feb  6 09:20:56 2025] overlayfs: ...falling back to redirect_dir=nofollow.
+[Thu Feb  6 09:20:56 2025] overlayfs: ...falling back to uuid=null.
+[Thu Feb  6 09:20:56 2025] overlayfs: upper fs missing required feature
+</code></pre><p>and <code>kubectl describe pod</code> shows this error, but they are both about that same matter.</p>
+<pre tabindex="0"><code>kubectl describe pod -l app=nginx --namespace default --kubeconfig /opt/hl-control-node/_tmp/kubeconfigs/admin.kubeconfig
+
+Events:
+  Type     Reason                  Age                      From     Message
+  ----     ------                  ----                     ----     -------
+  Warning  FailedCreatePodSandBox  13m (x19065 over 2d23h)  kubelet  (combined from similar events): Failed to create pod sandbox: rpc error: code = Unknown desc = failed to start sandbox &#34;1323c487a948330ef32a782dc48095e74998758163f49401ce91cd649013d8ec&#34;: failed to create containerd task: failed to create shim task: failed to mount rootfs component: invalid argument
+  Warning  FailedCreatePodSandBox  5m29s                    kubelet  Failed to create pod sandbox: rpc error: code = Unknown desc = failed to start s
+</code></pre><p><strong>overlayfs</strong> is one of the file systems that used by <strong>snapshotter</strong>. <code>upper fs</code> is literally my &ldquo;upper FS&rdquo; in my case it is NFS, since my Entire Root Filesystem (/) is on NFS.</p>
+<pre tabindex="0"><code> df -h
+Filesystem                                      Size  Used Avail Use% Mounted on
+udev                                            3.8G     0  3.8G   0% /dev
+tmpfs                                           806M  5.3M  801M   1% /run
+192.168.101.253:/volume1/RPi5-PXE/node4/rootfs  885G  148G  737G  17% /
+tmpfs                                           4.0G     0  4.0G   0% /dev/shm
+tmpfs                                           5.0M   48K  5.0M   1% /run/lock
+192.168.101.253:/volume1/RPi5-PXE/node4         885G  148G  737G  17% /boot
+tmpfs                                           806M     0  806M   0% /run/user/1000
+</code></pre><p>all this means that network file system doesn&rsquo;t have required features like: <code>tmtfile</code>; <code>RENAME_WHITEOUT</code>; <code>xattr</code>.</p>
+<figure>
+    <img loading="lazy" src="/homelab/k8s/containerd.png"
+         alt="Image taken from official source https://containerd.io"/> <figcaption>
+            containerd architecture<p>Image taken from official source <a href="https://containerd.io">https://containerd.io</a></p>
+        </figcaption>
+</figure>
+
+<p>my first thought was to switch <strong>overlayfs</strong> into <strong>btrsfs</strong> or <strong>devmapper</strong> storage drivers, but is is &ldquo;bargain one trouble for another&rdquo; rather then help. all these storage drivers works by allocating block storage.</p>
+<p>here is my illustration how block storage works:
+<figure>
+    <img loading="lazy" src="/homelab/k8s/block_storage.png"/> <figcaption>
+            block storage
+        </figcaption>
+</figure>
+</p>
+<p>in comparision to network file storage, it has a logic on top of file storage that is responsible for assign unique identifiers to files which are stored in the data lookup table. read operations are obviously much more faster then in a unsturctured storage like nfs.</p>
+<p>and it means that for making k8s work in the current setup i need to &ldquo;transform&rdquo; those directories that kuberenets need into block storage type. and solution for that is iSCSI (/aɪˈskʌzi/ eye-SKUZ-ee). boom.</p>
+<h3 id="iscsification">iSCSIfication<a hidden class="anchor" aria-hidden="true" href="#iscsification">#</a></h3>
+<p>iSCSI (Internet Small Computer System Interface)</p>
+<blockquote>
+<p>Wiki: iSCSI provides block-level access to storage devices by carrying SCSI commands over a TCP/IP network.</p>
+</blockquote>
+<p>iSCSI allows remote data sharing (same as nfs) but at the block level.  It enables data exchange between multiple client machines and a block storage device (or block server), which is accessed similarly to a local disk drive.</p>
+<p>here is illustration how it works in with my homelab devices</p>
+<figure>
+    <img loading="lazy" src="/homelab/k8s/iscasi.png"/> <figcaption>
+            iSCSI client/server auth flow
+        </figcaption>
+</figure>
+
+<h4 id="setting-up-iscsi-on-synology-nas">Setting up iSCSI on Synology NAS<a hidden class="anchor" aria-hidden="true" href="#setting-up-iscsi-on-synology-nas">#</a></h4>
+<ol>
+<li>create an <strong>iSCSI Targets</strong> for each cluster node.</li>
+<li>define logical unit numbers (LUN) for:
+<ul>
+<li><code>/var/lib/containerd</code> (stores container images and metadata)</li>
+<li><code>/var/lib/kubelet</code> (kubernetes node-specific data)</li>
+<li><code>/var/logs/pods</code> (stores logs from running containers)</li>
+</ul>
+</li>
+</ol>
+<h4 id="configuring-iscsi-initiator-on-raspberry-pi-nodes">Configuring iSCSI Initiator on Raspberry PI nodes<a hidden class="anchor" aria-hidden="true" href="#configuring-iscsi-initiator-on-raspberry-pi-nodes">#</a></h4>
+<ol>
+<li>install the iscsi client:
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">sudo apt install -y open-iscsi
+</span></span><span class="line"><span class="cl">sudo systemctl <span class="nb">enable</span> --now open-iscsi
+</span></span></code></pre></div></li>
+<li>discover the iscsi targets:
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">iscsiadm -m discovery -t st -p 192.168.101.253
+</span></span></code></pre></div></li>
+<li>login to the iscsi target:
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">sudo iscsiadm -m node --targetname <span class="s2">&#34;iqn.2000-01.com.synology:nas.Target-node3&#34;</span> --portal <span class="s2">&#34;192.168.101.253:3260&#34;</span> --login
+</span></span></code></pre></div></li>
+</ol>
+<p>3.1. enable iSCSI auto-login, to restore session after reboot</p>
+<pre tabindex="0"><code>sudo iscsiadm -m node --targetname &#34;iqn.2000-01.com.synology:nas.Target-node3&#34; --portal &#34;192.168.101.253:3260&#34; --op update -n node.startup -v automatic
+</code></pre><ol start="4">
+<li>format the block devices as <code>ext4</code>:
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">sudo mkfs.ext4 -L kubelet /dev/sda
+</span></span><span class="line"><span class="cl">sudo mkfs.ext4 -L logs /dev/sdb
+</span></span><span class="line"><span class="cl">sudo mkfs.ext4 -L containerd /dev/sdc
+</span></span></code></pre></div><pre tabindex="0"><code> yuklia@node3:~ $ sudo blkid /dev/sda
+ /dev/sda: LABEL=&#34;kubelet&#34; UUID=&#34;317346de-f632-4f5d-9ec0-90770f56938d&#34; BLOCK_SIZE=&#34;4096&#34; TYPE=&#34;ext4&#34;
+ yuklia@node3:~ $ sudo blkid /dev/sdb
+ /dev/sdb: LABEL=&#34;logs&#34; UUID=&#34;d35111a5-f56a-4bde-a731-87e630fa0aed&#34; BLOCK_SIZE=&#34;4096&#34; TYPE=&#34;ext4&#34;
+ yuklia@node3:~ $ sudo blkid /dev/sdc
+ /dev/sdc: LABEL=&#34;containerd&#34; UUID=&#34;8c83f195-eb3e-4226-914d-98837e3ddcca&#34; BLOCK_SIZE=&#34;4096&#34; TYPE=&#34;ext4&#34;
+</code></pre></li>
+</ol>
+<p>4.1 update <code>fstab</code> to persist mount targets after reboot</p>
+<pre tabindex="0"><code>cat /etc/fstab 
+proc            /proc           proc    defaults          0       0
+192.168.101.253:/volume1/RPi5-PXE/node4 /boot nfs defaults,vers=3,proto=tcp 0 0
+UUID=317346de-f632-4f5d-9ec0-90770f56938d /var/lib/kubelet ext4 defaults,_netdev 0 0
+UUID=d35111a5-f56a-4bde-a731-87e630fa0aed /var/logs/pods ext4 defaults,_netdev 0 0
+UUID=8c83f195-eb3e-4226-914d-98837e3ddcca /var/lib/containerd ext4 defaults,_netdev 0 0
+</code></pre><ol start="5">
+<li>
+<p>mount the block devices:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">sudo mount /dev/sda /var/lib/kubelet
+</span></span><span class="line"><span class="cl">sudo mount /dev/sdb /var/logs/pods
+</span></span><span class="line"><span class="cl">sudo mount /dev/sdc /var/lib/containerd
+</span></span></code></pre></div></li>
+<li>
+<p>update <code>/etc/fstab</code> to persist mounts:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="nv">UUID</span><span class="o">=</span>317346de-f632-4f5d-9ec0-90770f56938d /var/lib/kubelet ext4 defaults,_netdev <span class="m">0</span> <span class="m">0</span>
+</span></span><span class="line"><span class="cl"><span class="nv">UUID</span><span class="o">=</span>d35111a5-f56a-4bde-a731-87e630fa0aed /var/logs/pods ext4 defaults,_netdev <span class="m">0</span> <span class="m">0</span>
+</span></span><span class="line"><span class="cl"><span class="nv">UUID</span><span class="o">=</span>8c83f195-eb3e-4226-914d-98837e3ddcca /var/lib/containerd ext4 defaults,_netdev <span class="m">0</span> <span class="m">0</span>
+</span></span></code></pre></div></li>
+<li>
+<p>job done</p>
+<pre tabindex="0"><code>yuklia@node3:~ $ df -h
+Filesystem                                      Size  Used Avail Use% Mounted on
+udev                                            3.8G     0  3.8G   0% /dev
+tmpfs                                           806M  5.4M  800M   1% /run
+192.168.101.253:/volume1/RPi5-PXE/node4/rootfs  885G  227G  658G  26% /
+tmpfs                                           4.0G     0  4.0G   0% /dev/shm
+tmpfs                                           5.0M   48K  5.0M   1% /run/lock
+/dev/sdb                                        4.9G   24K  4.6G   1% /var/logs/pods
+/dev/sda                                         11G  124K   11G   1% /var/lib/kubelet
+/dev/sdc                                        9.8G  270M  9.0G   3% /var/lib/containerd
+192.168.101.253:/volume1/RPi5-PXE/node4         885G  227G  658G  26% /boot
+tmpfs                                           806M     0  806M   0% /run/user/1000
+</code></pre></li>
+</ol>
+<h3 id="smoke-test-">Smoke test ?<a hidden class="anchor" aria-hidden="true" href="#smoke-test-">#</a></h3>
+<p><code>kubectl get pod -l app=nginx</code></p>
+<h4 id="oh-no-crashloopbackoff">oh, no CrashLoopBackOff<a hidden class="anchor" aria-hidden="true" href="#oh-no-crashloopbackoff">#</a></h4>
+<pre tabindex="0"><code>...
+     Reason:       CrashLoopBackOff
+    Last State:     Terminated
+      Reason:       StartError
+      Message:      failed to create containerd task: failed to create shim task: OCI runtime create failed: runc create failed: unable to start container process: error during container init: error setting cgroup config for procHooks process: unified resource &#34;memory.oom.group&#34; can&#39;t be set: controller &#34;memory&#34; not available
+</code></pre><p>Root Cause: <strong>memory.oom.group Can&rsquo;t Be Set</strong>
+This means</p>
+<blockquote>
+<p>the container runtime (containerd + runc) is trying to set memory cgroup configurations, but the memory cgroup controller is missing or not enabled on your system.</p>
+</blockquote>
+<p>updating kernel boot parameters with <code>systemd.unified_cgroup_hierarchy=1 cgroup_enable=memory</code> helped.</p>
+<pre tabindex="0"><code>sudo cat /boot/cmdline.txt
+dwcotg.lpm_enable=0 console=serial0,115200 console=tty1 elevator=deadline rootwait rw root=/dev/nfs nfsroot=192.168.101.253:/volume1/RPi5-PXE/node4/rootfs,v3,tcp ip=dhcp cgroup_enable=memory cgroup_memory=1 systemd.unified_cgroup_hierarchy=1
+</code></pre><h3 id="smoke-test-test-">Smoke test-test 🧪<a hidden class="anchor" aria-hidden="true" href="#smoke-test-test-">#</a></h3>
+<p>check that all nodes up &amp; running</p>
+<pre tabindex="0"><code>kubectl get nodes --kubeconfig /opt/hl-control-node/_tmp/kubeconfigs/admin.kubeconfig
+NAME    STATUS   ROLES    AGE   VERSION
+node1   Ready    &lt;none&gt;   37d   v1.31.2
+node2   Ready    &lt;none&gt;   37d   v1.31.2
+node3   Ready    &lt;none&gt;   37d   v1.31.2
+</code></pre><p>check that nginx pod up &amp; running</p>
+<pre tabindex="0"><code>kubectl get pod -l app=nginx --namespace default --kubeconfig /opt/hl-control-node/_tmp/kubeconfigs/admin.kubeconfig
+NAME                     READY   STATUS    RESTARTS   AGE
+nginx-54f87867d6-9tbgl   1/1     Running   0          3h13m
+</code></pre><h3 id="final-thoughts">Final Thoughts<a hidden class="anchor" aria-hidden="true" href="#final-thoughts">#</a></h3>
+<p>I started with <strong>PXE boot</strong> and <strong>NFS</strong>, thinking it would be a clean and efficient solution. However, I quickly encountered limitations due to <strong>OverlayFS</strong> incompatibility in containerd. After troubleshooting, I realized that <strong>NFS</strong> wasn’t sufficient and decided to pivot to <strong>iSCSI</strong> block storage.</p>
+<p>Setting up <strong>iSCSI</strong> on my <strong>Synology NAS</strong> and configuring the initiators on the <strong>Raspberry Pi</strong> nodes required some effort. Once completed, it resolved the persistent storage issue. Of course, <strong>Kubernetes</strong> wouldn’t let me off that easy. I hit another roadblock with memory <strong>cgroup</strong> issues, which I fixed by tweaking kernel boot parameters.</p>
+<p>After all the adjustments and smoke tests, the cluster is now running smoothly. I can finally deploy workloads without storage headaches. Next step? Automating <strong>iSCSI</strong> provisioning with <strong>OpenTofu (Terraform)</strong> to make scaling effortless. Stay tuned for that adventure! 🚀</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://juliakostrikova.com/tags/kubernetes/">kubernetes</a></li>
+      <li><a href="https://juliakostrikova.com/tags/raspberry-pi/">raspberry pi</a></li>
+      <li><a href="https://juliakostrikova.com/tags/iscsi/">iscsi</a></li>
+      <li><a href="https://juliakostrikova.com/tags/homelab/">homelab</a></li>
+      <li><a href="https://juliakostrikova.com/tags/nfs/">nfs</a></li>
+      <li><a href="https://juliakostrikova.com/tags/pxe-boot/">pxe boot</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="next" href="https://juliakostrikova.com/posts/homelab/pxe-boot/">
+    <span class="title">Next »</span>
+    <br>
+    <span>Detailed HowTo: PXE boot multiple RPi (Birthday Edition 🍰)</span>
+  </a>
+</nav>
+
+  </footer><script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
+<script>
+  kofiWidgetOverlay.draw('yuklia', {
+    'type': 'floating-chat',
+    'floating-chat.donateButton.text': '',
+    'floating-chat.donateButton.background-color': '#ffffff',
+    'floating-chat.donateButton.text-color': '#323842'
+  });
+</script>
+
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "yuklia-dev" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2025 <a href="https://juliakostrikova.com">Yuliia Kostrikova</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

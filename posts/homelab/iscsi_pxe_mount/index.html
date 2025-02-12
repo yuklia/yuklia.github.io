@@ -321,6 +321,12 @@ tmpfs                                           806M     0  806M   0% /run/user/
 <h4 id="setting-up-iscsi-on-synology-nas">Setting up iSCSI on Synology NAS<a hidden class="anchor" aria-hidden="true" href="#setting-up-iscsi-on-synology-nas">#</a></h4>
 <ol>
 <li>create an <strong>iSCSI Targets</strong> for each cluster node.</li>
+</ol>
+<figure>
+    <img loading="lazy" src="/homelab/k8s/san_target.png"/> 
+</figure>
+
+<ol start="2">
 <li>define logical unit numbers (LUN) for:
 <ul>
 <li><code>/var/lib/containerd</code> (stores container images and metadata)</li>
@@ -329,6 +335,10 @@ tmpfs                                           806M     0  806M   0% /run/user/
 </ul>
 </li>
 </ol>
+<figure>
+    <img loading="lazy" src="/homelab/k8s/sun_lun.png"/> 
+</figure>
+
 <h4 id="configuring-iscsi-initiator-on-raspberry-pi-nodes">Configuring iSCSI Initiator on Raspberry PI nodes<a hidden class="anchor" aria-hidden="true" href="#configuring-iscsi-initiator-on-raspberry-pi-nodes">#</a></h4>
 <ol>
 <li>install the iscsi client:

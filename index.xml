@@ -138,15 +138,6 @@ I’ve spend decent amount of time in order to figure out that I don’t need an
       <description>How to guide: Configure remote debugging with XDebug for php docker container on macOS</description>
     </item>
     
-    <item>
-      <title></title>
-      <link>https://juliakostrikova.com/posts/misc/auto-rollout-terraform/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://juliakostrikova.com/posts/misc/auto-rollout-terraform/</guid>
-      <description></description>
-    </item>
-    
     
     
   </channel>

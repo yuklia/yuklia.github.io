@@ -5,13 +5,21 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
-<title>XDebug for PHP docker container on macOS | Yuliia Kostrikova</title>
+<title>Yuliia Kostrikova</title>
 
 
-<meta name="keywords" content=", ">
-<meta name="description" content="How to guide: Configure remote debugging with XDebug for php docker container on macOS">
+<meta name="keywords" content="">
+<meta name="description" content="kubeconfig file used to rganize cluster access info about clusters, users,namespaces, auth.
+kubectl USES kubeconfig to fund info it neds to choose a cluster and communicate via api server.
+kubeconfig file. organzeing access to cluster. who or what creates this file?
+how to choose a file.
+kubecatl &ndash;kubeconfig or export KUBECONFIG= or default is: $HOME/.kube/config
+Supporting multiple clusters, clusters, auth types
+kubeconfig file has CONTEXT
+context:
+cluster namespace user kubectl config use-context">
 <meta name="author" content="">
-<link rel="canonical" href="https://juliakostrikova.com/posts/php/xdebug-macos/">
+<link rel="canonical" href="https://juliakostrikova.com/posts/kubernetes/cka/org_cluster_access/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.7140587df96a2b1a49eb723fa7063dc0c641a6cb638f3140e8d3beb4deae4f5c.css" integrity="sha256-cUBYfflqKxpJ63I/pwY9wMZBpstjjzFA6NO&#43;tN6uT1w=" rel="preload stylesheet" as="style">
 <link rel="icon" href="https://juliakostrikova.com/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="https://juliakostrikova.com/favicon-16x16.png">
@@ -68,18 +76,32 @@ if (!doNotTrack) {
 	gtag('config', 'G-BR19XD52CV', { 'anonymize_ip': false });
 }
 </script>
-<meta property="og:title" content="XDebug for PHP docker container on macOS" />
-<meta property="og:description" content="How to guide: Configure remote debugging with XDebug for php docker container on macOS" />
+<meta property="og:title" content="" />
+<meta property="og:description" content="kubeconfig file used to rganize cluster access info about clusters, users,namespaces, auth.
+kubectl USES kubeconfig to fund info it neds to choose a cluster and communicate via api server.
+kubeconfig file. organzeing access to cluster. who or what creates this file?
+how to choose a file.
+kubecatl &ndash;kubeconfig or export KUBECONFIG= or default is: $HOME/.kube/config
+Supporting multiple clusters, clusters, auth types
+kubeconfig file has CONTEXT
+context:
+cluster namespace user kubectl config use-context" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://juliakostrikova.com/posts/php/xdebug-macos/" />
-<meta property="og:image" content="https://juliakostrikova.com/php/xdebug.gif" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2017-08-14T18:56:57+03:00" />
-<meta property="article:modified_time" content="2017-08-14T18:56:57+03:00" />
+<meta property="og:url" content="https://juliakostrikova.com/posts/kubernetes/cka/org_cluster_access/" /><meta property="article:section" content="posts" />
 
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://juliakostrikova.com/php/xdebug.gif" />
-<meta name="twitter:title" content="XDebug for PHP docker container on macOS"/>
-<meta name="twitter:description" content="How to guide: Configure remote debugging with XDebug for php docker container on macOS"/>
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content=""/>
+<meta name="twitter:description" content="kubeconfig file used to rganize cluster access info about clusters, users,namespaces, auth.
+kubectl USES kubeconfig to fund info it neds to choose a cluster and communicate via api server.
+kubeconfig file. organzeing access to cluster. who or what creates this file?
+how to choose a file.
+kubecatl &ndash;kubeconfig or export KUBECONFIG= or default is: $HOME/.kube/config
+Supporting multiple clusters, clusters, auth types
+kubeconfig file has CONTEXT
+context:
+cluster namespace user kubectl config use-context"/>
 
 
 <script type="application/ld+json">
@@ -96,8 +118,8 @@ if (!doNotTrack) {
     {
       "@type": "ListItem",
       "position":  3 ,
-      "name": "XDebug for PHP docker container on macOS",
-      "item": "https://juliakostrikova.com/posts/php/xdebug-macos/"
+      "name": "",
+      "item": "https://juliakostrikova.com/posts/kubernetes/cka/org_cluster_access/"
     }
   ]
 }
@@ -106,20 +128,20 @@ if (!doNotTrack) {
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "XDebug for PHP docker container on macOS",
-  "name": "XDebug for PHP docker container on macOS",
-  "description": "How to guide: Configure remote debugging with XDebug for php docker container on macOS",
+  "headline": "",
+  "name": "",
+  "description": "kubeconfig file used to rganize cluster access info about clusters, users,namespaces, auth.\nkubectl USES kubeconfig to fund info it neds to choose a cluster and communicate via api server.\nkubeconfig file. organzeing access to cluster. who or what creates this file?\nhow to choose a file.\nkubecatl \u0026ndash;kubeconfig or export KUBECONFIG= or default is: $HOME/.kube/config\nSupporting multiple clusters, clusters, auth types\nkubeconfig file has CONTEXT\ncontext:\ncluster namespace user kubectl config use-context",
   "keywords": [
-    "", ""
+    
   ],
-  "articleBody": "Into 💆 Pre-conditions: macOS Sierra Docker CE Version 17.06.2-ce-mac27 PHP 7.1.8 XDebug v2.5.0 PhpStorm 2017.2 If you want to set up remote debug from your container you have 2 options:\nxdebug.remote_host = %host_ip% %host_ip% — The IP of the machine running your IDE. It’s assumed on the same host as Docker. xdebug.remote_connect_back = on checks $_SERVER[‘HTTP_X_FORWARDED_FOR’] and $_SERVER[‘REMOTE_ADDR’] variables to find out which IP address to use. You cannot use xdebug.remote_connect_back because it takes containers’s internal IP. So xdebug.remote_host is the only option we have. It’s pretty simple to get host IP on Linux OS just look at : ifconfig \u003e docker0. Moreover you can create a fixed set of IPs for both host and containers using docker network. For instance:\ndocker network create -d bridge \\ — subnet 192.168.0.0/24 \\ — gateway 192.168.0.1 \\ dockernet Now each container can connect to the host under the fixed IP 192.168.0.1 But the docker0 interface is not available for Docker in macOS. This interface is actually within HyperKit. So unfortunately there is no a reliable way of looping back to host for macOS. The only solution is to create your local IP’s alias to something else : sudo ifconfig lo0 alias 10.254.254.254\nHowTo guide 👩‍💻 sudo ifconfig lo0 alias 10.254.254.254 (optional) For permanent setting up save.plist file sudo curl -o /Library/LaunchDaemons/com.yuklia.docker_localhost_alias.plist build docker containers … add server to IDE storm1 configure Debug’s port in my case it’s 9002. xDebug client will knock to this port. storm2 configure DBGp Proxy storm3 Bonus 🍰 If you need to get a shell of the VM that was created by HyperKit run:\nscreen ~/Library/Containers/com.docker.docker/Data/com.docker.driver.amd64-linux/tty or screen ~/Library/Containers/com.docker.docker/Data/vms/0/tty For getting all screens run: screen -ls For exiting screen run : screen -X -S %screen_name% kill Once you get the tty running you can navigate to /var/lib/docker: storm4 Here is my Dockerfile and docker-compose versions for php:7-fpm with XDebug So that’s all for now 😊. Hope it will save a bunch of time for someone! I will be glad to get comments and questions. Happy hacking=) 🦾\n",
-  "wordCount" : "339",
+  "articleBody": "kubeconfig file used to rganize cluster access info about clusters, users,namespaces, auth.\nkubectl USES kubeconfig to fund info it neds to choose a cluster and communicate via api server.\nkubeconfig file. organzeing access to cluster. who or what creates this file?\nhow to choose a file.\nkubecatl –kubeconfig or export KUBECONFIG= or default is: $HOME/.kube/config\nSupporting multiple clusters, clusters, auth types\nkubeconfig file has CONTEXT\ncontext:\ncluster namespace user kubectl config use-context\nkubectl config view – output is merhing several files\nexport KUBECONFIG=\"${KUBECONFIG}:${HOME}/admin.kubeconfig\" /home/yuklia/admin.kubeconfig\nwhen user logs in into linux system, login sessions initiate startup files like bash_profile, profile\nhow to connect to the custer remotely? from my laptop:\nkunectl installed kubeconfig setup.\nfor now in otder to connect to the customer you have to login in to one of the nodes, using secure shell (SSH). when user authentificaed to linux machine, linux runs bash_profile, or .profile. so env vars that set there will be exported to the correct login session.\nlearned new thing: docker doesn’tstore ENV vars on disk. it injects them in runtime.\n",
+  "wordCount" : "175",
   "inLanguage": "en",
-  "image":"https://juliakostrikova.com/php/xdebug.gif","datePublished": "2017-08-14T18:56:57+03:00",
-  "dateModified": "2017-08-14T18:56:57+03:00",
+  "datePublished": "0001-01-01T00:00:00Z",
+  "dateModified": "0001-01-01T00:00:00Z",
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://juliakostrikova.com/posts/php/xdebug-macos/"
+    "@id": "https://juliakostrikova.com/posts/kubernetes/cka/org_cluster_access/"
   },
   "publisher": {
     "@type": "Organization",
@@ -198,129 +220,56 @@ if (!doNotTrack) {
   <header class="post-header">
     <div class="breadcrumbs"><a href="https://juliakostrikova.com">Home</a>&nbsp;»&nbsp;<a href="https://juliakostrikova.com/posts/">Posts</a></div>
     <h1 class="post-title">
-      XDebug for PHP docker container on macOS
+      
     </h1>
-    <div class="post-description">
-      How to guide: Configure remote debugging with XDebug for php docker container on macOS
-    </div>
-    <div class="post-meta"><span title='2017-08-14 18:56:57 +0300 +0300'>August 14, 2017</span>&nbsp;·&nbsp;2 min
+    <div class="post-meta">1 min
 
 </div>
   </header> 
-<figure class="entry-cover"><img loading="lazy" src="https://juliakostrikova.com/php/xdebug.gif" alt="xdebug.gif">
-        
-</figure><div class="toc">
-    <details >
-        <summary accesskey="c" title="(Alt + C)">
-            <span class="details">Table of Contents</span>
-        </summary>
 
-        <div class="inner"><ul><ul>
-                <li>
-                    <a href="#into-" aria-label="Into 💆">Into 💆</a></li>
-                <li>
-                    <a href="#howto-guide-" aria-label="HowTo guide 👩‍💻">HowTo guide 👩‍💻</a></li></ul>
-                    
-                <li>
-                    <a href="#bonus-" aria-label="Bonus 🍰">Bonus 🍰</a>
-                </li>
-            </ul>
-        </div>
-    </details>
-</div>
-
-  <div class="post-content"><h3 id="into-">Into 💆<a hidden class="anchor" aria-hidden="true" href="#into-">#</a></h3>
-<pre tabindex="0"><code>Pre-conditions:
-  macOS Sierra
-  Docker CE Version 17.06.2-ce-mac27
-  PHP 7.1.8
-  XDebug v2.5.0
-  PhpStorm 2017.2
-</code></pre><p>If you want to set up remote debug from your container you have 2 options:</p>
-<ol>
-<li><code>xdebug.remote_host = %host_ip%</code> <code>%host_ip%</code> — The IP of the machine running your IDE. It’s assumed on the same host as Docker.</li>
-<li><code>xdebug.remote_connect_back = on</code> checks <code>$_SERVER[‘HTTP_X_FORWARDED_FOR’] and $_SERVER[‘REMOTE_ADDR’]</code> variables to find out which IP address to use.</li>
-</ol>
-<p>You cannot use <code>xdebug.remote_connect_back</code> because it takes containers’s internal IP. So <code>xdebug.remote_host</code> is the only option we have.
-It’s pretty simple to get host IP on Linux OS just look at : <code>ifconfig &gt; docker0</code>. Moreover you can create a fixed set of IPs for both host and containers using docker network. For instance:</p>
-<pre tabindex="0"><code>docker network create -d bridge \
-— subnet 192.168.0.0/24 \
-— gateway 192.168.0.1 \
-dockernet
-</code></pre><p>Now each container can connect to the host under the fixed IP <code>192.168.0.1</code>
-But the <code>docker0 interface</code> is not available for Docker in macOS. This interface is actually within HyperKit. So unfortunately there is no a reliable way of looping back to host for macOS. The only solution is to create your local IP’s alias to something else : sudo ifconfig lo0 alias <code>10.254.254.254</code></p>
-<h3 id="howto-guide-">HowTo guide 👩‍💻<a hidden class="anchor" aria-hidden="true" href="#howto-guide-">#</a></h3>
-<ol>
-<li><code>sudo ifconfig lo0 alias 10.254.254.254</code></li>
-</ol>
-<p>(optional) For permanent setting up save.plist file
-<code>sudo curl -o /Library/LaunchDaemons/com.yuklia.docker_localhost_alias.plist</code>
-<script type="application/javascript" src="https://gist.github.com/yuklia/378a7350f8a2456e9513154b962c7cb0.js"></script>
-</p>
-<ol start="2">
-<li>build docker containers &hellip;</li>
-<li>add server to IDE
-<figure>
-    <img loading="lazy" src="/php/storm1.png"/> <figcaption>
-            storm1
-        </figcaption>
-</figure>
-</li>
-<li>configure Debug’s port in my case it’s <code>9002</code>. xDebug client will knock to this port.
-<figure>
-    <img loading="lazy" src="/php/storm2.png"/> <figcaption>
-            storm2
-        </figcaption>
-</figure>
-</li>
-<li>configure DBGp Proxy
-<figure>
-    <img loading="lazy" src="/php/storm3.png"/> <figcaption>
-            storm3
-        </figcaption>
-</figure>
-</li>
-</ol>
-<h2 id="bonus-">Bonus 🍰<a hidden class="anchor" aria-hidden="true" href="#bonus-">#</a></h2>
-<p>If you need to get a shell of the VM that was created by HyperKit run:</p>
-<pre tabindex="0"><code>screen ~/Library/Containers/com.docker.docker/Data/com.docker.driver.amd64-linux/tty
+  <div class="post-content"><p>kubeconfig file used to rganize cluster access
+info about clusters, users,namespaces, auth.</p>
+<p>kubectl USES kubeconfig to fund info it neds to choose a cluster and communicate via api server.</p>
+<p>kubeconfig file. organzeing access to cluster.
+who or what creates this file?</p>
+<p>how to choose a file.</p>
+<p>kubecatl &ndash;kubeconfig
 or
-screen ~/Library/Containers/com.docker.docker/Data/vms/0/tty
-For getting all screens run: screen -ls
-For exiting screen run : screen -X -S %screen_name% kill
-</code></pre><p>Once you get the tty running you can navigate to <code>/var/lib/docker</code>:
-<figure>
-    <img loading="lazy" src="/php/storm4.png"/> <figcaption>
-            storm4
-        </figcaption>
-</figure>
-</p>
-<p>Here is my Dockerfile and docker-compose versions for <code>php:7-fpm with XDebug</code>
-<script type="application/javascript" src="https://gist.github.com/yuklia/e495b0dffee21f1d0f0dbcf250a6eb35.js"></script>
-
-<script type="application/javascript" src="https://gist.github.com/yuklia/bc8f49a06ab4892ca1373f6be7f97158.js"></script>
-</p>
-<p>So that’s all for now 😊. Hope it will save a bunch of time for someone! I will be glad to get comments and questions. Happy hacking=) 🦾</p>
+export KUBECONFIG=
+or
+default is: $HOME/.kube/config</p>
+<p>Supporting multiple clusters, clusters, auth types</p>
+<p>kubeconfig file has CONTEXT</p>
+<p>context:</p>
+<ol>
+<li>cluster</li>
+<li>namespace</li>
+<li>user</li>
+</ol>
+<p>kubectl config use-context</p>
+<p>kubectl config view &ndash; output is merhing several files</p>
+<p>export KUBECONFIG=&quot;${KUBECONFIG}:${HOME}/admin.kubeconfig&quot;
+/home/yuklia/admin.kubeconfig</p>
+<p>when user logs in into linux system, login sessions initiate startup files like
+bash_profile, profile</p>
+<p>how to connect to the custer remotely?
+from my laptop:</p>
+<p>kunectl installed
+kubeconfig setup.</p>
+<p>for now in otder to connect to the customer you have to login in to one of the nodes, using secure shell (SSH). when user authentificaed to linux machine, linux runs bash_profile, or .profile. so env vars that set there will be exported to the correct login session.</p>
+<p>learned new thing: docker doesn&rsquo;tstore ENV vars on disk. it injects them in runtime.</p>
 
 
   </div>
 
   <footer class="post-footer">
     <ul class="post-tags">
-      <li><a href="https://juliakostrikova.com/tags/php/">php</a></li>
-      <li><a href="https://juliakostrikova.com/tags/xdebug/">xdebug</a></li>
-      <li><a href="https://juliakostrikova.com/tags/docker/">docker</a></li>
     </ul>
 <nav class="paginav">
-  <a class="prev" href="https://juliakostrikova.com/posts/php/high-cpu/">
+  <a class="prev" href="https://juliakostrikova.com/posts/php/xdebug-macos/">
     <span class="title">« Prev</span>
     <br>
-    <span>How to analyse “high CPU” in php on production. Part 1</span>
-  </a>
-  <a class="next" href="https://juliakostrikova.com/posts/kubernetes/cka/org_cluster_access/">
-    <span class="title">Next »</span>
-    <br>
-    <span></span>
+    <span>XDebug for PHP docker container on macOS</span>
   </a>
 </nav>
 

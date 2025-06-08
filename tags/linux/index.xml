@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>linux on Yuliia Kostrikova</title>
+    <link>https://juliakostrikova.com/tags/linux/</link>
+    <description>Recent content in linux on Yuliia Kostrikova</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Sun, 08 Jun 2025 00:30:58 +0200</lastBuildDate><atom:link href="https://juliakostrikova.com/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>HowTo: Fix iSCSI mounts after reboot</title>
+      <link>https://juliakostrikova.com/posts/homelab/iscasi-autoconnect/</link>
+      <pubDate>Sun, 08 Jun 2025 00:30:58 +0200</pubDate>
+      
+      <guid>https://juliakostrikova.com/posts/homelab/iscasi-autoconnect/</guid>
+      <description>a follow-up to my previous article on PXE/iSCSI setup, addressing the annoying issue of iSCSI auto-mounting failure</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>HowTo: Fix iSCSI mounts after reboot | Yuliia Kostrikova</title>
+
+
+<meta name="keywords" content="k8s, pxe boot, iscsi, linux">
+<meta name="description" content="a follow-up to my previous article on PXE/iSCSI setup, addressing the annoying issue of iSCSI auto-mounting failure">
+<meta name="author" content="">
+<link rel="canonical" href="https://juliakostrikova.com/posts/homelab/iscasi-autoconnect/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.7140587df96a2b1a49eb723fa7063dc0c641a6cb638f3140e8d3beb4deae4f5c.css" integrity="sha256-cUBYfflqKxpJ63I/pwY9wMZBpstjjzFA6NO&#43;tN6uT1w=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://juliakostrikova.com/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://juliakostrikova.com/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://juliakostrikova.com/favicon-32x32.png">
+<link rel="manifest" href="https://juliakostrikova.com/site.webmanifest">
+<link rel="apple-touch-icon" href="https://juliakostrikova.com/apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml"  href="https://juliakostrikova.com/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BR19XD52CV"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-BR19XD52CV', { 'anonymize_ip': false });
+}
+</script>
+<meta property="og:title" content="HowTo: Fix iSCSI mounts after reboot" />
+<meta property="og:description" content="a follow-up to my previous article on PXE/iSCSI setup, addressing the annoying issue of iSCSI auto-mounting failure" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://juliakostrikova.com/posts/homelab/iscasi-autoconnect/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2025-06-08T00:30:58+02:00" />
+<meta property="article:modified_time" content="2025-06-08T00:30:58+02:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="HowTo: Fix iSCSI mounts after reboot"/>
+<meta name="twitter:description" content="a follow-up to my previous article on PXE/iSCSI setup, addressing the annoying issue of iSCSI auto-mounting failure"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://juliakostrikova.com/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "HowTo: Fix iSCSI mounts after reboot",
+      "item": "https://juliakostrikova.com/posts/homelab/iscasi-autoconnect/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "HowTo: Fix iSCSI mounts after reboot",
+  "name": "HowTo: Fix iSCSI mounts after reboot",
+  "description": "a follow-up to my previous article on PXE/iSCSI setup, addressing the annoying issue of iSCSI auto-mounting failure",
+  "keywords": [
+    "k8s", "pxe boot", "iscsi", "linux"
+  ],
+  "articleBody": "the problem so i was working on my PXE boot with iSCSI storage setup, and everything seemed perfect. but there were some things that were missed to make it work after system reboot.\nwhat went wrong container services refusing to start kubernetes nodes stuck in NotReady state having to manually fix things after every single reboot if you’re dealing with a similar mess where your PXE/iSCSI setup works until you reboot, this guide should help you out. the issue usually boils down to timing problems between iSCSI connections, mount points, and when services try to start up.\nkubernetes node going haywire here’s what happened during what should have been a simple reboot of my kubernetes node:\nboot log:\n[FAILED] Failed to mount var-lib-containerd.mount - /var/lib/containerd [DEPEND] Dependency failed for containerd.service - containerd container runtime [DEPEND] Dependency failed for kubelet.service - Kubernetes Kubelet system state:\n$ sudo systemctl --failed UNIT LOAD ACTIVE SUB DESCRIPTION ● var-lib-containerd.mount loaded failed failed /var/lib/containerd ● containerd.service loaded failed failed containerd container runtime ● kubelet.service loaded failed failed Kubernetes Kubelet $ df -h | grep -E \"(containerd|kubelet|pods)\" # No output - nothing mounted $ kubectl get nodes NAME STATUS ROLES AGE VERSION node1 NotReady control-plane 45d v1.28.2 step-by-step fix here’s how to actually solve this mess:\nsetting iSCSI to auto-connect fixing the mount configuration setting up proper service dependencies (the crucial part!) step 1: fix iSCSI auto-connection first, make sure your iSCSI target actually reconnects when you boot:\nsudo iscsiadm -m node -T iqn.2000-01.com.synology:nas.Target-node1 \\ --op update -n node.startup -v automatic sudo iscsiadm -m node -T iqn.2000-01.com.synology:nas.Target-node1 \\ --show | grep node.startup # Should output: node.startup = automatic sudo systemctl enable iscsid sudo systemctl enable open-iscsi step 2: mount the disks after establishing the iSCSI connection, you should see 3 disks:\nlsblk NAME MAJ:MIN RM SIZE RO TYPE MOUNTPOINTS sda 8:0 0 10G 0 disk sdb 8:16 0 11G 0 disk sdc 8:32 0 5G 0 disk format them:\nmkfs.ext4 -L containerd /dev/sda mkfs.ext4 -L logs /dev/sdb mkfs.ext4 -L kubelet /dev/sdc mount them where they belong:\nsudo mount /dev/sdc /var/lib/containerd sudo mount /dev/sda /var/lib/kubelet sudo mount /dev/sdb /var/log/pods now edit /etc/fstab and add these lines (replace UUIDs with your actual values):\nmake sure to set the _netdev option because this is network storage:\nUUID=c911f6ed-52d2-4e04-a18a-cb026ed86aeb /var/lib/containerd ext4 defaults,_netdev 0 2 UUID=317346de-f632-4f5d-9ec0-90770f56938d /var/lib/kubelet ext4 defaults,_netdev 0 2 UUID=d35111a5-f56a-4bde-a731-87e630fa0aed /var/log/pods ext4 defaults,_netdev 0 2 step 4: set up service dependencies here’s the crucial part. we need services to start in the right order: iSCSI first, then mounts, then containerd, then kubelet.\nwhy this order matters:\niSCSI services need to establish the network connection to your storage mount points need the iSCSI disks to be available containerd is the container runtime that manages all your containers and images - it needs its storage (/var/lib/containerd) to be mounted before it can start kubelet is the kubernetes node agent that talks to containerd to actually run pods - it depends on containerd being healthy and also needs its own storage (/var/lib/kubelet) for things like pod volumes and metadata basically, kubelet is like the manager that tells containerd “hey, run this container,” and containerd is the worker that actually does it. but if containerd can’t access its storage, it can’t manage any containers, and then kubelet just sits there confused.\nconfigure containerd to wait for everything it needs:\nsudo mkdir -p /etc/systemd/system/containerd.service.d sudo nano /etc/systemd/system/containerd.service.d/override.conf [Unit] After=iscsi.service iscsid.service open-iscsi.service RequiresMountsFor=/var/lib/containerd /var/lib/kubelet /var/log/pods [Service] Restart=on-failure RestartSec=5 configure kubelet to wait for iSCSI and containerd:\nsudo mkdir -p /etc/systemd/system/kubelet.service.d sudo nano /etc/systemd/system/kubelet.service.d/override.conf [Unit] After=iscsi.service iscsid.service open-iscsi.service containerd.service RequiresMountsFor=/var/lib/kubelet /var/lib/containerd /var/log/pods [Service] Restart=on-failure RestartSec=5 time to test with a reboot sudo reboot after rebooting, you should see the iSCSI connection established on your NAS, and df -h should show all your disks properly mounted.\nwrapping this up honestly, these steps should be automated. my current kubernetes setup is based on kubernetes-the-hard-way, and during that installation i wrote ansible playbooks to automate most of it. so i’m definitely going to add one more ansible playbook for these iSCSI steps too.\njust in case you’re doing something similar, i’d actually recommend considering kubespray instead. it’s doing pretty much the same thing - automating kubernetes setup with ansible on bare metal. so if you’re just starting this journey of building your own kubernetes cluster on bare metal, definitely check out kubespray.\nbut of course, it all depends on what you’re trying to achieve. sometimes the hard way teaches you more! ☕\n",
+  "wordCount" : "742",
+  "inLanguage": "en",
+  "datePublished": "2025-06-08T00:30:58+02:00",
+  "dateModified": "2025-06-08T00:30:58+02:00",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://juliakostrikova.com/posts/homelab/iscasi-autoconnect/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Yuliia Kostrikova",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://juliakostrikova.com/favicon.ico"
+    }
+  }
+}
+</script>
+    
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://juliakostrikova.com" accesskey="h" title="Yuliia Kostrikova (Alt + H)">Yuliia Kostrikova</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://juliakostrikova.com/archives/" title="Archive">
+                    <span>Archive</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://juliakostrikova.com/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://juliakostrikova.com/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://juliakostrikova.com">Home</a>&nbsp;»&nbsp;<a href="https://juliakostrikova.com/posts/">Posts</a></div>
+    <h1 class="post-title">
+      HowTo: Fix iSCSI mounts after reboot
+    </h1>
+    <div class="post-description">
+      a follow-up to my previous article on PXE/iSCSI setup, addressing the annoying issue of iSCSI auto-mounting failure
+    </div>
+    <div class="post-meta"><span title='2025-06-08 00:30:58 +0200 CEST'>June 8, 2025</span>&nbsp;·&nbsp;4 min
+
+</div>
+  </header> <div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#the-problem" aria-label="the problem">the problem</a><ul>
+                        
+                <li>
+                    <a href="#what-went-wrong" aria-label="what went wrong">what went wrong</a></li>
+                <li>
+                    <a href="#kubernetes-node-going-haywire" aria-label="kubernetes node going haywire">kubernetes node going haywire</a></li>
+                <li>
+                    <a href="#step-by-step-fix" aria-label="step-by-step fix">step-by-step fix</a></li>
+                <li>
+                    <a href="#step-1-fix-iscsi-auto-connection" aria-label="step 1: fix iSCSI auto-connection">step 1: fix iSCSI auto-connection</a></li>
+                <li>
+                    <a href="#step-2-mount-the-disks" aria-label="step 2: mount the disks">step 2: mount the disks</a></li>
+                <li>
+                    <a href="#step-4-set-up-service-dependencies" aria-label="step 4: set up service dependencies">step 4: set up service dependencies</a></li>
+                <li>
+                    <a href="#time-to-test-with-a-reboot" aria-label="time to test with a reboot">time to test with a reboot</a></li></ul>
+                </li>
+                <li>
+                    <a href="#wrapping-this-up" aria-label="wrapping this up">wrapping this up</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h2 id="the-problem">the problem<a hidden class="anchor" aria-hidden="true" href="#the-problem">#</a></h2>
+<p>so i was working on my <a href="https://juliakostrikova.com/posts/homelab/iscsi_pxe_mount/">PXE boot with iSCSI storage setup</a>, and everything seemed perfect. but there were some things that were missed to make it work after system reboot.</p>
+<h3 id="what-went-wrong">what went wrong<a hidden class="anchor" aria-hidden="true" href="#what-went-wrong">#</a></h3>
+<ul>
+<li>container services refusing to start</li>
+<li>kubernetes nodes stuck in <code>NotReady</code> state</li>
+<li>having to manually fix things after every single reboot</li>
+</ul>
+<p>if you&rsquo;re dealing with a similar mess where your PXE/iSCSI setup works until you reboot, this guide should help you out. the issue usually boils down to timing problems between iSCSI connections, mount points, and when services try to start up.</p>
+<h3 id="kubernetes-node-going-haywire">kubernetes node going haywire<a hidden class="anchor" aria-hidden="true" href="#kubernetes-node-going-haywire">#</a></h3>
+<p>here&rsquo;s what happened during what should have been a simple reboot of my kubernetes node:</p>
+<figure>
+    <img loading="lazy" src="/homelab/pxe/iscasi_mount_failed.png"/> 
+</figure>
+
+<p><strong>boot log:</strong></p>
+<pre tabindex="0"><code>[FAILED] Failed to mount var-lib-containerd.mount - /var/lib/containerd
+[DEPEND] Dependency failed for containerd.service - containerd container runtime
+[DEPEND] Dependency failed for kubelet.service - Kubernetes Kubelet
+</code></pre><p><strong>system state:</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ sudo systemctl --failed
+</span></span><span class="line"><span class="cl">  UNIT                          LOAD   ACTIVE SUB    DESCRIPTION
+</span></span><span class="line"><span class="cl">● var-lib-containerd.mount      loaded failed failed /var/lib/containerd
+</span></span><span class="line"><span class="cl">● containerd.service            loaded failed failed containerd container runtime
+</span></span><span class="line"><span class="cl">● kubelet.service               loaded failed failed Kubernetes Kubelet
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">$ df -h <span class="p">|</span> grep -E <span class="s2">&#34;(containerd|kubelet|pods)&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># No output - nothing mounted</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">$ kubectl get nodes
+</span></span><span class="line"><span class="cl">NAME    STATUS     ROLES           AGE   VERSION
+</span></span><span class="line"><span class="cl">node1   NotReady   control-plane   45d   v1.28.2
+</span></span></code></pre></div><h3 id="step-by-step-fix">step-by-step fix<a hidden class="anchor" aria-hidden="true" href="#step-by-step-fix">#</a></h3>
+<p>here&rsquo;s how to actually solve this mess:</p>
+<ol>
+<li>setting iSCSI to auto-connect</li>
+<li>fixing the mount configuration</li>
+<li>setting up proper service dependencies (the crucial part!)</li>
+</ol>
+<h3 id="step-1-fix-iscsi-auto-connection">step 1: fix iSCSI auto-connection<a hidden class="anchor" aria-hidden="true" href="#step-1-fix-iscsi-auto-connection">#</a></h3>
+<p>first, make sure your iSCSI target actually reconnects when you boot:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo iscsiadm -m node -T iqn.2000-01.com.synology:nas.Target-node1 <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --op update -n node.startup -v automatic
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">sudo iscsiadm -m node -T iqn.2000-01.com.synology:nas.Target-node1 <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --show <span class="p">|</span> grep node.startup
+</span></span><span class="line"><span class="cl"><span class="c1"># Should output: node.startup = automatic</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">sudo systemctl <span class="nb">enable</span> iscsid
+</span></span><span class="line"><span class="cl">sudo systemctl <span class="nb">enable</span> open-iscsi
+</span></span></code></pre></div><h3 id="step-2-mount-the-disks">step 2: mount the disks<a hidden class="anchor" aria-hidden="true" href="#step-2-mount-the-disks">#</a></h3>
+<p>after establishing the iSCSI connection, you should see 3 disks:</p>
+<pre tabindex="0"><code>lsblk
+NAME MAJ:MIN RM SIZE RO TYPE MOUNTPOINTS
+sda    8:0    0  10G  0 disk 
+sdb    8:16   0  11G  0 disk 
+sdc    8:32   0   5G  0 disk
+</code></pre><p>format them:</p>
+<pre tabindex="0"><code>mkfs.ext4 -L containerd /dev/sda
+mkfs.ext4 -L logs /dev/sdb
+mkfs.ext4 -L kubelet /dev/sdc
+</code></pre><p>mount them where they belong:</p>
+<pre tabindex="0"><code>sudo mount /dev/sdc /var/lib/containerd
+sudo mount /dev/sda /var/lib/kubelet
+sudo mount /dev/sdb /var/log/pods
+</code></pre><p>now edit <code>/etc/fstab</code> and add these lines (replace UUIDs with your actual values):</p>
+<p>make sure to set the <code>_netdev</code> option because this is network storage:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">UUID</span><span class="o">=</span>c911f6ed-52d2-4e04-a18a-cb026ed86aeb /var/lib/containerd ext4 defaults,_netdev <span class="m">0</span> <span class="m">2</span>
+</span></span><span class="line"><span class="cl"><span class="nv">UUID</span><span class="o">=</span>317346de-f632-4f5d-9ec0-90770f56938d /var/lib/kubelet ext4 defaults,_netdev <span class="m">0</span> <span class="m">2</span>
+</span></span><span class="line"><span class="cl"><span class="nv">UUID</span><span class="o">=</span>d35111a5-f56a-4bde-a731-87e630fa0aed /var/log/pods ext4 defaults,_netdev <span class="m">0</span> <span class="m">2</span>
+</span></span></code></pre></div><h3 id="step-4-set-up-service-dependencies">step 4: set up service dependencies<a hidden class="anchor" aria-hidden="true" href="#step-4-set-up-service-dependencies">#</a></h3>
+<p>here&rsquo;s the crucial part. we need services to start in the right order: iSCSI first, then mounts, then containerd, then kubelet.</p>
+<p><strong>why this order matters:</strong></p>
+<ul>
+<li><strong>iSCSI services</strong> need to establish the network connection to your storage</li>
+<li><strong>mount points</strong> need the iSCSI disks to be available</li>
+<li><strong>containerd</strong> is the container runtime that manages all your containers and images - it needs its storage (<code>/var/lib/containerd</code>) to be mounted before it can start</li>
+<li><strong>kubelet</strong> is the kubernetes node agent that talks to containerd to actually run pods - it depends on containerd being healthy and also needs its own storage (<code>/var/lib/kubelet</code>) for things like pod volumes and metadata</li>
+</ul>
+<p>basically, kubelet is like the manager that tells containerd &ldquo;hey, run this container,&rdquo; and containerd is the worker that actually does it. but if containerd can&rsquo;t access its storage, it can&rsquo;t manage any containers, and then kubelet just sits there confused.</p>
+<p><strong>configure containerd to wait for everything it needs:</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo mkdir -p /etc/systemd/system/containerd.service.d
+</span></span><span class="line"><span class="cl">sudo nano /etc/systemd/system/containerd.service.d/override.conf
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ini" data-lang="ini"><span class="line"><span class="cl"><span class="k">[Unit]</span>
+</span></span><span class="line"><span class="cl"><span class="na">After</span><span class="o">=</span><span class="s">iscsi.service iscsid.service open-iscsi.service</span>
+</span></span><span class="line"><span class="cl"><span class="na">RequiresMountsFor</span><span class="o">=</span><span class="s">/var/lib/containerd /var/lib/kubelet /var/log/pods</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">[Service]</span>
+</span></span><span class="line"><span class="cl"><span class="na">Restart</span><span class="o">=</span><span class="s">on-failure</span>
+</span></span><span class="line"><span class="cl"><span class="na">RestartSec</span><span class="o">=</span><span class="s">5</span>
+</span></span></code></pre></div><p><strong>configure kubelet to wait for iSCSI and containerd:</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo mkdir -p /etc/systemd/system/kubelet.service.d
+</span></span><span class="line"><span class="cl">sudo nano /etc/systemd/system/kubelet.service.d/override.conf
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ini" data-lang="ini"><span class="line"><span class="cl"><span class="k">[Unit]</span>
+</span></span><span class="line"><span class="cl"><span class="na">After</span><span class="o">=</span><span class="s">iscsi.service iscsid.service open-iscsi.service containerd.service</span>
+</span></span><span class="line"><span class="cl"><span class="na">RequiresMountsFor</span><span class="o">=</span><span class="s">/var/lib/kubelet /var/lib/containerd /var/log/pods</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">[Service]</span>
+</span></span><span class="line"><span class="cl"><span class="na">Restart</span><span class="o">=</span><span class="s">on-failure</span>
+</span></span><span class="line"><span class="cl"><span class="na">RestartSec</span><span class="o">=</span><span class="s">5</span>
+</span></span></code></pre></div><h3 id="time-to-test-with-a-reboot">time to test with a reboot<a hidden class="anchor" aria-hidden="true" href="#time-to-test-with-a-reboot">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo reboot
+</span></span></code></pre></div><p>after rebooting, you should see the iSCSI connection established on your NAS, and <code>df -h</code> should show all your disks properly mounted.</p>
+<h2 id="wrapping-this-up">wrapping this up<a hidden class="anchor" aria-hidden="true" href="#wrapping-this-up">#</a></h2>
+<p>honestly, these steps should be automated. my current kubernetes setup is based on <a href="https://github.com/kelseyhightower/kubernetes-the-hard-way">kubernetes-the-hard-way</a>, and during that installation i wrote ansible playbooks to automate most of it. so i&rsquo;m definitely going to add one more ansible playbook for these iSCSI steps too.</p>
+<p>just in case you&rsquo;re doing something similar, i&rsquo;d actually recommend considering <a href="https://github.com/kubernetes-sigs/kubespray">kubespray</a> instead. it&rsquo;s doing pretty much the same thing - automating kubernetes setup with ansible on bare metal. so if you&rsquo;re just starting this journey of building your own kubernetes cluster on bare metal, definitely check out kubespray.</p>
+<p>but of course, it all depends on what you&rsquo;re trying to achieve. sometimes the hard way teaches you more! ☕</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://juliakostrikova.com/tags/kubernetes/">kubernetes</a></li>
+      <li><a href="https://juliakostrikova.com/tags/raspberrypi5/">raspberryPI5</a></li>
+      <li><a href="https://juliakostrikova.com/tags/iscsi/">iSCSI</a></li>
+      <li><a href="https://juliakostrikova.com/tags/homelab/">homelab</a></li>
+      <li><a href="https://juliakostrikova.com/tags/nfs/">nfs</a></li>
+      <li><a href="https://juliakostrikova.com/tags/pxe-boot/">pxe boot</a></li>
+      <li><a href="https://juliakostrikova.com/tags/linux/">linux</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="next" href="https://juliakostrikova.com/posts/homelab/iscsi_pxe_mount/">
+    <span class="title">Next »</span>
+    <br>
+    <span>k8s cluster on Raspberry PI&#39;s with iSCSI block storage</span>
+  </a>
+</nav>
+
+  </footer><script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
+<script>
+  kofiWidgetOverlay.draw('yuklia', {
+    'type': 'floating-chat',
+    'floating-chat.donateButton.text': '',
+    'floating-chat.donateButton.background-color': '#ffffff',
+    'floating-chat.donateButton.text-color': '#323842'
+  });
+</script>
+
+
+
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2025 <a href="https://juliakostrikova.com">Yuliia Kostrikova</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

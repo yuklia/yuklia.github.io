@@ -171,79 +171,27 @@ if (!doNotTrack) {
 
 <article class="post-entry"> 
   <header class="entry-header">
-    <h2>HowTo: Fix iSCSI mounts after reboot
+    <h2>
     </h2>
   </header>
   <div class="entry-content">
-    <p>the problem so i was working on my PXE boot with iSCSI storage setup, and everything seemed perfect. but there were some things that were missed to make it work after system reboot.
-what went wrong container services refusing to start kubernetes nodes stuck in NotReady state having to manually fix things after every single reboot if you’re dealing with a similar mess where your PXE/iSCSI setup works until you reboot, this guide should help you out....</p>
+    <p>kubeconfig file used to rganize cluster access info about clusters, users,namespaces, auth.
+kubectl USES kubeconfig to fund info it neds to choose a cluster and communicate via api server.
+kubeconfig file. organzeing access to cluster. who or what creates this file?
+how to choose a file.
+kubecatl –kubeconfig or export KUBECONFIG= or default is: $HOME/.kube/config
+Supporting multiple clusters, clusters, auth types
+kubeconfig file has CONTEXT
+context:
+cluster namespace user kubectl config use-context...</p>
   </div>
-  <footer class="entry-footer"><span title='2025-06-08 00:30:58 +0200 CEST'>June 8, 2025</span>&nbsp;·&nbsp;4 min</footer>
-  <a class="entry-link" aria-label="post link to HowTo: Fix iSCSI mounts after reboot" href="https://juliakostrikova.com/posts/homelab/iscasi-autoconnect/"></a>
-</article>
-
-<article class="post-entry"> 
-<figure class="entry-cover"><img loading="lazy" src="https://juliakostrikova.com/homelab/k8s/Toba_On_Server_Rack.png" alt="">
-</figure>
-  <header class="entry-header">
-    <h2>k8s cluster on Raspberry PI&#39;s with iSCSI block storage
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Toba Meet Toba the cat, the latest security shield model, equipped with 24/7 surveillance mode and an aggressive defense mechanism when unauthorized movement is detected. 🚨😼
-Any attempt to relocate this elite guardian from the server rack results in immediate resistance, accompanied by sharp glares and indignant meows. 🛑🐾
-Plan to Host Mastodon on 4 × Raspberry Pis In my current homelab project, I am building a bare-metal Kubernetes cluster to host ~10–50 containers per node....</p>
-  </div>
-  <footer class="entry-footer"><span title='2025-02-09 00:30:58 +0200 +0200'>February 9, 2025</span>&nbsp;·&nbsp;7 min</footer>
-  <a class="entry-link" aria-label="post link to k8s cluster on Raspberry PI&#39;s with iSCSI block storage" href="https://juliakostrikova.com/posts/homelab/iscsi_pxe_mount/"></a>
-</article>
-
-<article class="post-entry"> 
-<figure class="entry-cover"><img loading="lazy" src="https://juliakostrikova.com/homelab/pxe/author_julia_kostrikova_pxe_boot_process.png" alt="">
-</figure>
-  <header class="entry-header">
-    <h2>Detailed HowTo: PXE boot multiple RPi (Birthday Edition 🍰)
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>introduction I’ve always been intrigued by the idea of creating a home data center with Raspberry PIs as a computable instances. However, managing individuals node with SD cards is not fun 😼. So decided to try PXE (Preboot Execution Environment) booting. Instead of dealing with each SD card individually, PXE protocol lets me manage all my RPis from one central server, making updates and further patches easier. In this post, I’ll share how you can set up PXE booting for your RPi fleet and enjoy these benefits to :)...</p>
-  </div>
-  <footer class="entry-footer"><span title='2024-08-06 11:28:58 +0200 CEST'>August 6, 2024</span>&nbsp;·&nbsp;6 min</footer>
-  <a class="entry-link" aria-label="post link to Detailed HowTo: PXE boot multiple RPi (Birthday Edition 🍰)" href="https://juliakostrikova.com/posts/homelab/pxe-boot/"></a>
-</article>
-
-<article class="post-entry"> 
-<figure class="entry-cover"><img loading="lazy" src="https://juliakostrikova.com/chatGPT/author_julia_kostrikova_cat_dhcp_server.jpg" alt="">
-</figure>
-  <header class="entry-header">
-    <h2>Setting Up a DHCP Server on Synology NAS in a UniFi Dream Machine SE Subnet
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>UniFi Dream Machine In this blog post, I’ll guide you through the process of setting up a DHCP server on your Synology NAS within a subnet created on a UniFi Dream Machine Special Edition (UDM SE).
-Synology NAS Prerequisites Before we start, ensure you have the following:
-UDM SE: UniFi Dream Machine Special Edition. Synology NAS: Network Attached Storage device from Synology. Raspberry Pi: Any model will suffice. Ethernet cables: To connect your devices....</p>
-  </div>
-  <footer class="entry-footer"><span title='2024-06-19 11:28:58 +0200 CEST'>June 19, 2024</span>&nbsp;·&nbsp;3 min</footer>
-  <a class="entry-link" aria-label="post link to Setting Up a DHCP Server on Synology NAS in a UniFi Dream Machine SE Subnet" href="https://juliakostrikova.com/posts/homelab/dhcp-nas/"></a>
-</article>
-
-<article class="post-entry"> 
-<figure class="entry-cover"><img loading="lazy" src="https://juliakostrikova.com/chatGPT/author_julia_kostrikova_rpi_iphone_connection.jpg" alt="">
-</figure>
-  <header class="entry-header">
-    <h2>RPI 5 on Ubuntu 24.04 (Headless): Connect to WiFi / Mobile Hotspot
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>RPI 5 on Ubuntu 24.04 (headless): Connect to WiFi / Mobile Hotspot Introduction In my free time, I enjoy tinkering with my home lab, exploring new projects and challenges. Recently, I decided to connect my Raspberry Pi 5 to a mobile hotspot—a seemingly straightforward task. However, it turned out not so smooth. In this post, I’ll walk you through how I resolved the error brcmfmac: brcmf_set_channel: set chanspec fail, reason -52 and successfully connected Raspberry Pi to a mobile hotspot....</p>
-  </div>
-  <footer class="entry-footer"><span title='2024-05-25 11:28:58 +0200 CEST'>May 25, 2024</span>&nbsp;·&nbsp;3 min</footer>
-  <a class="entry-link" aria-label="post link to RPI 5 on Ubuntu 24.04 (Headless): Connect to WiFi / Mobile Hotspot" href="https://juliakostrikova.com/posts/homelab/mobile-hotspot-on-rpi5/"></a>
+  <footer class="entry-footer">1 min</footer>
+  <a class="entry-link" aria-label="post link to " href="https://juliakostrikova.com/posts/kubernetes/cka/org_cluster_access/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
-    <a class="next" href="https://juliakostrikova.com/posts/page/2/">Next&nbsp;&nbsp;»
+    <a class="prev" href="https://juliakostrikova.com/posts/page/3/">
+      «&nbsp;Prev&nbsp;
     </a>
   </nav>
 </footer>

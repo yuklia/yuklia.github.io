@@ -155,120 +155,30 @@ if (!doNotTrack) {
     </nav>
 </header>
 <main class="main"> 
-<article class="first-entry home-info">
-    <header class="entry-header">
-        <h1><a href="https://fontmeme.com/pixel-fonts/"><img src="https://fontmeme.com/permalink/230809/516e97245bf1f8453cf6d4925202b2f9.png" alt="pixel-fonts" border="0"></a></h1>
-    </header>
-    <div class="entry-content">
-        to &ldquo;Second Brain&rdquo; - the resource for detailed notes, how-to guides, and technical tutorials.
-    </div>
-    <footer class="entry-footer">
-        <div class="social-icons">
-    <a href="https://www.linkedin.com/in/yulia-kostrikova-67268585/" target="_blank" rel="noopener noreferrer me" title="Linkedin">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-    stroke-linecap="round" stroke-linejoin="round">
-    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-    <rect x="2" y="9" width="4" height="12"></rect>
-    <circle cx="4" cy="4" r="2"></circle>
-</svg>
-    </a>
-    <a href="https://medium.com/@yuliakostrikova" target="_blank" rel="noopener noreferrer me" title="Medium">
-        <svg version="1.0" xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke-width="2"
-    viewBox="0 0 76.000000 76.000000" preserveAspectRatio="xMidYMid meet">
-    <g transform="translate(0.000000,76.000000) scale(0.100000,-0.100000)">
-        <path
-            d="M0 380 l0 -380 380 0 380 0 0 380 0 380 -380 0 -380 0 0 -380z m334 85 c30 -63 57 -115 59 -115 2 0 16 30 31 68 15 37 37 88 49 115 l20 47 76 0 76 -1 -27 -20 -28 -21 0 -151 c0 -150 0 -151 27 -179 l27 -28 -109 0 -109 0 27 28 c26 27 27 32 26 143 0 131 3 134 -71 -58 -24 -62 -48 -113 -53 -113 -6 0 -17 16 -24 35 -7 19 -36 83 -64 142 l-52 108 -3 -98 c-3 -97 -2 -99 28 -133 16 -19 30 -39 30 -44 0 -6 -31 -10 -70 -10 -45 0 -70 4 -70 11 0 6 14 27 30 46 30 33 30 35 30 151 0 116 0 118 -31 155 l-30 37 75 0 76 0 54 -115z" />
-    </g>
-</svg>
-    </a>
-    <a href="https://ko-fi.com/yuklia" target="_blank" rel="noopener noreferrer me" title="KoFi">
-        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid meet"
-    viewBox="0 -3 23 27" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
-    stroke-linejoin="round">
-    <path
-        d="M23.881 8.948c-.773-4.085-4.859-4.593-4.859-4.593H.723c-.604 0-.679.798-.679.798s-.082 7.324-.022 11.822c.164 2.424 2.586 2.672 2.586 2.672s8.267-.023 11.966-.049c2.438-.426 2.683-2.566 2.658-3.734c4.352.24 7.422-2.831 6.649-6.916zm-11.062 3.511c-1.246 1.453-4.011 3.976-4.011 3.976s-.121.119-.31.023c-.076-.057-.108-.09-.108-.09c-.443-.441-3.368-3.049-4.034-3.954c-.709-.965-1.041-2.7-.091-3.71c.951-1.01 3.005-1.086 4.363.407c0 0 1.565-1.782 3.468-.963c1.904.82 1.832 3.011.723 4.311zm6.173.478c-.928.116-1.682.028-1.682.028V7.284h1.77s1.971.551 1.971 2.638c0 1.913-.985 2.667-2.059 3.015z" />
-</svg>
-    </a>
-</div>
-
-    </footer>
-</article>
 
 <article class="post-entry"> 
   <header class="entry-header">
-    <h2>HowTo: Fix iSCSI mounts after reboot
+    <h2>
     </h2>
   </header>
   <div class="entry-content">
-    <p>the problem so i was working on my PXE boot with iSCSI storage setup, and everything seemed perfect. but there were some things that were missed to make it work after system reboot.
-what went wrong container services refusing to start kubernetes nodes stuck in NotReady state having to manually fix things after every single reboot if you’re dealing with a similar mess where your PXE/iSCSI setup works until you reboot, this guide should help you out....</p>
+    <p>kubeconfig file used to rganize cluster access info about clusters, users,namespaces, auth.
+kubectl USES kubeconfig to fund info it neds to choose a cluster and communicate via api server.
+kubeconfig file. organzeing access to cluster. who or what creates this file?
+how to choose a file.
+kubecatl –kubeconfig or export KUBECONFIG= or default is: $HOME/.kube/config
+Supporting multiple clusters, clusters, auth types
+kubeconfig file has CONTEXT
+context:
+cluster namespace user kubectl config use-context...</p>
   </div>
-  <footer class="entry-footer"><span title='2025-06-08 00:30:58 +0200 CEST'>June 8, 2025</span>&nbsp;·&nbsp;4 min</footer>
-  <a class="entry-link" aria-label="post link to HowTo: Fix iSCSI mounts after reboot" href="https://juliakostrikova.com/posts/homelab/iscasi-autoconnect/"></a>
-</article>
-
-<article class="post-entry"> 
-<figure class="entry-cover"><img loading="lazy" src="https://juliakostrikova.com/homelab/k8s/Toba_On_Server_Rack.png" alt="">
-</figure>
-  <header class="entry-header">
-    <h2>k8s cluster on Raspberry PI&#39;s with iSCSI block storage
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Toba Meet Toba the cat, the latest security shield model, equipped with 24/7 surveillance mode and an aggressive defense mechanism when unauthorized movement is detected. 🚨😼
-Any attempt to relocate this elite guardian from the server rack results in immediate resistance, accompanied by sharp glares and indignant meows. 🛑🐾
-Plan to Host Mastodon on 4 × Raspberry Pis In my current homelab project, I am building a bare-metal Kubernetes cluster to host ~10–50 containers per node....</p>
-  </div>
-  <footer class="entry-footer"><span title='2025-02-09 00:30:58 +0200 +0200'>February 9, 2025</span>&nbsp;·&nbsp;7 min</footer>
-  <a class="entry-link" aria-label="post link to k8s cluster on Raspberry PI&#39;s with iSCSI block storage" href="https://juliakostrikova.com/posts/homelab/iscsi_pxe_mount/"></a>
-</article>
-
-<article class="post-entry"> 
-<figure class="entry-cover"><img loading="lazy" src="https://juliakostrikova.com/homelab/pxe/author_julia_kostrikova_pxe_boot_process.png" alt="">
-</figure>
-  <header class="entry-header">
-    <h2>Detailed HowTo: PXE boot multiple RPi (Birthday Edition 🍰)
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>introduction I’ve always been intrigued by the idea of creating a home data center with Raspberry PIs as a computable instances. However, managing individuals node with SD cards is not fun 😼. So decided to try PXE (Preboot Execution Environment) booting. Instead of dealing with each SD card individually, PXE protocol lets me manage all my RPis from one central server, making updates and further patches easier. In this post, I’ll share how you can set up PXE booting for your RPi fleet and enjoy these benefits to :)...</p>
-  </div>
-  <footer class="entry-footer"><span title='2024-08-06 11:28:58 +0200 CEST'>August 6, 2024</span>&nbsp;·&nbsp;6 min</footer>
-  <a class="entry-link" aria-label="post link to Detailed HowTo: PXE boot multiple RPi (Birthday Edition 🍰)" href="https://juliakostrikova.com/posts/homelab/pxe-boot/"></a>
-</article>
-
-<article class="post-entry"> 
-<figure class="entry-cover"><img loading="lazy" src="https://juliakostrikova.com/chatGPT/author_julia_kostrikova_cat_dhcp_server.jpg" alt="">
-</figure>
-  <header class="entry-header">
-    <h2>Setting Up a DHCP Server on Synology NAS in a UniFi Dream Machine SE Subnet
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>UniFi Dream Machine In this blog post, I’ll guide you through the process of setting up a DHCP server on your Synology NAS within a subnet created on a UniFi Dream Machine Special Edition (UDM SE).
-Synology NAS Prerequisites Before we start, ensure you have the following:
-UDM SE: UniFi Dream Machine Special Edition. Synology NAS: Network Attached Storage device from Synology. Raspberry Pi: Any model will suffice. Ethernet cables: To connect your devices....</p>
-  </div>
-  <footer class="entry-footer"><span title='2024-06-19 11:28:58 +0200 CEST'>June 19, 2024</span>&nbsp;·&nbsp;3 min</footer>
-  <a class="entry-link" aria-label="post link to Setting Up a DHCP Server on Synology NAS in a UniFi Dream Machine SE Subnet" href="https://juliakostrikova.com/posts/homelab/dhcp-nas/"></a>
-</article>
-
-<article class="post-entry"> 
-<figure class="entry-cover"><img loading="lazy" src="https://juliakostrikova.com/chatGPT/author_julia_kostrikova_rpi_iphone_connection.jpg" alt="">
-</figure>
-  <header class="entry-header">
-    <h2>RPI 5 on Ubuntu 24.04 (Headless): Connect to WiFi / Mobile Hotspot
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>RPI 5 on Ubuntu 24.04 (headless): Connect to WiFi / Mobile Hotspot Introduction In my free time, I enjoy tinkering with my home lab, exploring new projects and challenges. Recently, I decided to connect my Raspberry Pi 5 to a mobile hotspot—a seemingly straightforward task. However, it turned out not so smooth. In this post, I’ll walk you through how I resolved the error brcmfmac: brcmf_set_channel: set chanspec fail, reason -52 and successfully connected Raspberry Pi to a mobile hotspot....</p>
-  </div>
-  <footer class="entry-footer"><span title='2024-05-25 11:28:58 +0200 CEST'>May 25, 2024</span>&nbsp;·&nbsp;3 min</footer>
-  <a class="entry-link" aria-label="post link to RPI 5 on Ubuntu 24.04 (Headless): Connect to WiFi / Mobile Hotspot" href="https://juliakostrikova.com/posts/homelab/mobile-hotspot-on-rpi5/"></a>
+  <footer class="entry-footer">1 min</footer>
+  <a class="entry-link" aria-label="post link to " href="https://juliakostrikova.com/posts/kubernetes/cka/org_cluster_access/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
-    <a class="next" href="https://juliakostrikova.com/page/2/">Next&nbsp;&nbsp;»
+    <a class="prev" href="https://juliakostrikova.com/page/3/">
+      «&nbsp;Prev&nbsp;
     </a>
   </nav>
 </footer>

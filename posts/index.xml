@@ -147,22 +147,5 @@ I’ve spend decent amount of time in order to figure out that I don’t need an
       <description>How to guide: Configure remote debugging with XDebug for php docker container on macOS</description>
     </item>
     
-    <item>
-      <title></title>
-      <link>https://juliakostrikova.com/posts/kubernetes/cka/org_cluster_access/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://juliakostrikova.com/posts/kubernetes/cka/org_cluster_access/</guid>
-      <description>kubeconfig file used to rganize cluster access info about clusters, users,namespaces, auth.
-kubectl USES kubeconfig to fund info it neds to choose a cluster and communicate via api server.
-kubeconfig file. organzeing access to cluster. who or what creates this file?
-how to choose a file.
-kubecatl &amp;ndash;kubeconfig or export KUBECONFIG= or default is: $HOME/.kube/config
-Supporting multiple clusters, clusters, auth types
-kubeconfig file has CONTEXT
-context:
-cluster namespace user kubectl config use-context</description>
-    </item>
-    
   </channel>
 </rss>

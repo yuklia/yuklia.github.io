@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>home automation on Yuliia Kostrikova</title>
+    <title>Home Automation on Yuliia Kostrikova</title>
     <link>https://juliakostrikova.com/tags/home-automation/</link>
-    <description>Recent content in home automation on Yuliia Kostrikova</description>
+    <description>Recent content in Home Automation on Yuliia Kostrikova</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
     <lastBuildDate>Wed, 19 Jun 2024 11:28:58 +0200</lastBuildDate><atom:link href="https://juliakostrikova.com/tags/home-automation/index.xml" rel="self" type="application/rss+xml" />
@@ -11,21 +11,61 @@
       <title>Setting Up a DHCP Server on Synology NAS in a UniFi Dream Machine SE Subnet</title>
       <link>https://juliakostrikova.com/posts/homelab/dhcp-nas/</link>
       <pubDate>Wed, 19 Jun 2024 11:28:58 +0200</pubDate>
-      
       <guid>https://juliakostrikova.com/posts/homelab/dhcp-nas/</guid>
-      <description>UniFi Dream Machine In this blog post, I&amp;rsquo;ll guide you through the process of setting up a DHCP server on your Synology NAS within a subnet created on a UniFi Dream Machine Special Edition (UDM SE).
-Synology NAS Prerequisites Before we start, ensure you have the following:
-UDM SE: UniFi Dream Machine Special Edition. Synology NAS: Network Attached Storage device from Synology. Raspberry Pi: Any model will suffice. Ethernet cables: To connect your devices.</description>
+      <description>&lt;figure&gt;
+    &lt;img loading=&#34;lazy&#34; src=&#34;https://juliakostrikova.com/homelab/pxe/udm_se_copy.png&#34;/&gt; &lt;figcaption&gt;
+            UniFi Dream Machine
+        &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;In this blog post, I&amp;rsquo;ll guide you through the process of setting up a DHCP server on your Synology NAS within a subnet created on a UniFi Dream Machine Special Edition (UDM SE).&lt;/p&gt;
+&lt;figure&gt;
+    &lt;img loading=&#34;lazy&#34; src=&#34;https://juliakostrikova.com/homelab/pxe/nas_front.png&#34;/&gt; &lt;figcaption&gt;
+            Synology NAS
+        &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h2 id=&#34;prerequisites&#34;&gt;Prerequisites&lt;/h2&gt;
+&lt;p&gt;Before we start, ensure you have the following:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;UDM SE&lt;/strong&gt;: UniFi Dream Machine Special Edition.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Synology NAS&lt;/strong&gt;: Network Attached Storage device from Synology.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Raspberry Pi&lt;/strong&gt;: Any model will suffice.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Ethernet cables&lt;/strong&gt;: To connect your devices.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;step-by-step-guide&#34;&gt;Step-by-Step Guide&lt;/h2&gt;
+&lt;h3 id=&#34;1-create-a-subnet-on-udm-se&#34;&gt;1. Create a Subnet on UDM SE&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Log in to your UniFi Router&lt;/strong&gt;: Access your UDM SE via the UniFi Network application.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>How to Mount Synology NAS to RaspberryPi via NFS</title>
       <link>https://juliakostrikova.com/posts/homelab/ovderride-provider/</link>
       <pubDate>Sat, 23 Sep 2023 11:28:58 +0200</pubDate>
-      
       <guid>https://juliakostrikova.com/posts/homelab/ovderride-provider/</guid>
-      <description>My Use case To establish a seamless synchronization of project files between a MacBook (working station) and a Raspberry Pi (hosting server), allowing for automatic updates and accessibility of the project from both devices.
-device/tool version DS420+ DSM 7.2-64570 Raspberry PI 400 The user begins working on the project using the IDE on the MacBook, editing and updating project files within the synchronized folder. As changes are made, they are automatically reflected in the synchronized folder and accessible on the Raspberry Pi in read-only mode.</description>
+      <description>&lt;h3 id=&#34;my-use-case&#34;&gt;My Use case&lt;/h3&gt;
+&lt;p&gt;To establish a seamless synchronization of project files between a MacBook (working station) and a Raspberry Pi (hosting server), allowing for automatic updates and accessibility of the project from both devices.&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;device/tool&lt;/th&gt;
+          &lt;th&gt;version&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;DS420+&lt;/td&gt;
+          &lt;td&gt;DSM 7.2-64570&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;Raspberry PI&lt;/td&gt;
+          &lt;td&gt;400&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;The user begins working on the project using the IDE on the MacBook, editing and updating project files within the synchronized folder. As changes are made, they are automatically reflected in the synchronized folder and accessible on the Raspberry Pi in read-only mode.&lt;/p&gt;</description>
     </item>
     
   </channel>

@@ -9,7 +9,9 @@
 
 
 <meta name="keywords" content="bare-metal, homelab, raspberryPI5, wifi, ubuntu24.04">
-<meta name="description" content="RPI 5 on Ubuntu 24.04 (headless): Connect to WiFi / Mobile Hotspot Introduction In my free time, I enjoy tinkering with my home lab, exploring new projects and challenges. Recently, I decided to connect my Raspberry Pi 5 to a mobile hotspot—a seemingly straightforward task. However, it turned out not so smooth. In this post, I&rsquo;ll walk you through how I resolved the error brcmfmac: brcmf_set_channel: set chanspec fail, reason -52 and successfully connected Raspberry Pi to a mobile hotspot.">
+<meta name="description" content="RPI 5 on Ubuntu 24.04 (headless): Connect to WiFi / Mobile Hotspot
+Introduction
+In my free time, I enjoy tinkering with my home lab, exploring new projects and challenges. Recently, I decided to connect my Raspberry Pi 5 to a mobile hotspot—a seemingly straightforward task. However, it turned out not so smooth. In this post, I&rsquo;ll walk you through how I resolved the error brcmfmac: brcmf_set_channel: set chanspec fail, reason -52 and successfully connected Raspberry Pi to a mobile hotspot.">
 <meta name="author" content="">
 <link rel="canonical" href="https://juliakostrikova.com/posts/homelab/mobile-hotspot-on-rpi5/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.7140587df96a2b1a49eb723fa7063dc0c641a6cb638f3140e8d3beb4deae4f5c.css" integrity="sha256-cUBYfflqKxpJ63I/pwY9wMZBpstjjzFA6NO&#43;tN6uT1w=" rel="preload stylesheet" as="style">
@@ -21,6 +23,7 @@
 <link rel="icon" type="image/svg+xml"  href="https://juliakostrikova.com/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://juliakostrikova.com/posts/homelab/mobile-hotspot-on-rpi5/">
 <noscript>
     <style>
         #theme-toggle,
@@ -58,18 +61,23 @@
 
     </style>
 </noscript>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-BR19XD52CV"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-BR19XD52CV', { 'anonymize_ip': false });
-}
-</script>
-<meta property="og:title" content="RPI 5 on Ubuntu 24.04 (Headless): Connect to WiFi / Mobile Hotspot" />
-<meta property="og:description" content="RPI 5 on Ubuntu 24.04 (headless): Connect to WiFi / Mobile Hotspot Introduction In my free time, I enjoy tinkering with my home lab, exploring new projects and challenges. Recently, I decided to connect my Raspberry Pi 5 to a mobile hotspot—a seemingly straightforward task. However, it turned out not so smooth. In this post, I&rsquo;ll walk you through how I resolved the error brcmfmac: brcmf_set_channel: set chanspec fail, reason -52 and successfully connected Raspberry Pi to a mobile hotspot." />
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-BR19XD52CV"></script>
+      <script>
+        var doNotTrack = false;
+        if ( true ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-BR19XD52CV');
+        }
+      </script><meta property="og:title" content="RPI 5 on Ubuntu 24.04 (Headless): Connect to WiFi / Mobile Hotspot" />
+<meta property="og:description" content="RPI 5 on Ubuntu 24.04 (headless): Connect to WiFi / Mobile Hotspot
+Introduction
+In my free time, I enjoy tinkering with my home lab, exploring new projects and challenges. Recently, I decided to connect my Raspberry Pi 5 to a mobile hotspot—a seemingly straightforward task. However, it turned out not so smooth. In this post, I&rsquo;ll walk you through how I resolved the error brcmfmac: brcmf_set_channel: set chanspec fail, reason -52 and successfully connected Raspberry Pi to a mobile hotspot." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://juliakostrikova.com/posts/homelab/mobile-hotspot-on-rpi5/" />
 <meta property="og:image" content="https://juliakostrikova.com/chatGPT/author_julia_kostrikova_rpi_iphone_connection.jpg" /><meta property="article:section" content="posts" />
@@ -79,23 +87,25 @@ if (!doNotTrack) {
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://juliakostrikova.com/chatGPT/author_julia_kostrikova_rpi_iphone_connection.jpg" />
 <meta name="twitter:title" content="RPI 5 on Ubuntu 24.04 (Headless): Connect to WiFi / Mobile Hotspot"/>
-<meta name="twitter:description" content="RPI 5 on Ubuntu 24.04 (headless): Connect to WiFi / Mobile Hotspot Introduction In my free time, I enjoy tinkering with my home lab, exploring new projects and challenges. Recently, I decided to connect my Raspberry Pi 5 to a mobile hotspot—a seemingly straightforward task. However, it turned out not so smooth. In this post, I&rsquo;ll walk you through how I resolved the error brcmfmac: brcmf_set_channel: set chanspec fail, reason -52 and successfully connected Raspberry Pi to a mobile hotspot."/>
+<meta name="twitter:description" content="RPI 5 on Ubuntu 24.04 (headless): Connect to WiFi / Mobile Hotspot
+Introduction
+In my free time, I enjoy tinkering with my home lab, exploring new projects and challenges. Recently, I decided to connect my Raspberry Pi 5 to a mobile hotspot—a seemingly straightforward task. However, it turned out not so smooth. In this post, I&rsquo;ll walk you through how I resolved the error brcmfmac: brcmf_set_channel: set chanspec fail, reason -52 and successfully connected Raspberry Pi to a mobile hotspot."/>
 
 
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
-  "itemListElement": [, 
+  "itemListElement": [
     {
       "@type": "ListItem",
-      "position":  2 ,
+      "position":  1 ,
       "name": "Posts",
       "item": "https://juliakostrikova.com/posts/"
     }, 
     {
       "@type": "ListItem",
-      "position":  3 ,
+      "position":  2 ,
       "name": "RPI 5 on Ubuntu 24.04 (Headless): Connect to WiFi / Mobile Hotspot",
       "item": "https://juliakostrikova.com/posts/homelab/mobile-hotspot-on-rpi5/"
     }
@@ -108,7 +118,7 @@ if (!doNotTrack) {
   "@type": "BlogPosting",
   "headline": "RPI 5 on Ubuntu 24.04 (Headless): Connect to WiFi / Mobile Hotspot",
   "name": "RPI 5 on Ubuntu 24.04 (Headless): Connect to WiFi \/ Mobile Hotspot",
-  "description": "RPI 5 on Ubuntu 24.04 (headless): Connect to WiFi / Mobile Hotspot Introduction In my free time, I enjoy tinkering with my home lab, exploring new projects and challenges. Recently, I decided to connect my Raspberry Pi 5 to a mobile hotspot—a seemingly straightforward task. However, it turned out not so smooth. In this post, I\u0026rsquo;ll walk you through how I resolved the error brcmfmac: brcmf_set_channel: set chanspec fail, reason -52 and successfully connected Raspberry Pi to a mobile hotspot.",
+  "description": "RPI 5 on Ubuntu 24.04 (headless): Connect to WiFi / Mobile Hotspot Introduction In my free time, I enjoy tinkering with my home lab, exploring new projects and challenges. Recently, I decided to connect my Raspberry Pi 5 to a mobile hotspot—a seemingly straightforward task. However, it turned out not so smooth. In this post, I\u0026rsquo;ll walk you through how I resolved the error brcmfmac: brcmf_set_channel: set chanspec fail, reason -52 and successfully connected Raspberry Pi to a mobile hotspot.\n",
   "keywords": [
     "bare-metal", "homelab", "raspberryPI5", "wifi", "ubuntu24.04"
   ],
@@ -149,7 +159,7 @@ if (!doNotTrack) {
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://juliakostrikova.com" accesskey="h" title="Yuliia Kostrikova (Alt + H)">Yuliia Kostrikova</a>
+            <a href="https://juliakostrikova.com/" accesskey="h" title="Yuliia Kostrikova (Alt + H)">Yuliia Kostrikova</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -196,7 +206,7 @@ if (!doNotTrack) {
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="https://juliakostrikova.com">Home</a>&nbsp;»&nbsp;<a href="https://juliakostrikova.com/posts/">Posts</a></div>
+    <div class="breadcrumbs"><a href="https://juliakostrikova.com/">Home</a>&nbsp;»&nbsp;<a href="https://juliakostrikova.com/posts/">Posts</a></div>
     <h1 class="post-title">
       RPI 5 on Ubuntu 24.04 (Headless): Connect to WiFi / Mobile Hotspot
     </h1>
@@ -341,10 +351,10 @@ reboot
   <footer class="post-footer">
     <ul class="post-tags">
       <li><a href="https://juliakostrikova.com/tags/bare-metal/">Bare Metal</a></li>
-      <li><a href="https://juliakostrikova.com/tags/homelab/">homelab</a></li>
-      <li><a href="https://juliakostrikova.com/tags/raspberrypi5/">raspberryPI5</a></li>
-      <li><a href="https://juliakostrikova.com/tags/wifi/">wifi</a></li>
-      <li><a href="https://juliakostrikova.com/tags/ubuntu24.04/">ubuntu24.04</a></li>
+      <li><a href="https://juliakostrikova.com/tags/homelab/">Homelab</a></li>
+      <li><a href="https://juliakostrikova.com/tags/raspberrypi5/">RaspberryPI5</a></li>
+      <li><a href="https://juliakostrikova.com/tags/wifi/">Wifi</a></li>
+      <li><a href="https://juliakostrikova.com/tags/ubuntu24.04/">Ubuntu24.04</a></li>
     </ul>
 <nav class="paginav">
   <a class="prev" href="https://juliakostrikova.com/posts/homelab/dhcp-nas/">
@@ -375,7 +385,7 @@ reboot
     </main>
     
 <footer class="footer">
-    <span>&copy; 2025 <a href="https://juliakostrikova.com">Yuliia Kostrikova</a></span>
+    <span>&copy; 2026 <a href="https://juliakostrikova.com/">Yuliia Kostrikova</a></span>
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

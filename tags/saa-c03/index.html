@@ -22,6 +22,7 @@
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
 <link rel="alternate" type="application/rss+xml" href="https://juliakostrikova.com/tags/saa-c03/index.xml">
+<link rel="alternate" hreflang="en" href="https://juliakostrikova.com/tags/saa-c03/">
 <noscript>
     <style>
         #theme-toggle,
@@ -59,17 +60,20 @@
 
     </style>
 </noscript>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-BR19XD52CV"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-BR19XD52CV', { 'anonymize_ip': false });
-}
-</script>
-<meta property="og:title" content="SAA-C03" />
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-BR19XD52CV"></script>
+      <script>
+        var doNotTrack = false;
+        if ( true ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-BR19XD52CV');
+        }
+      </script><meta property="og:title" content="SAA-C03" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://juliakostrikova.com/tags/saa-c03/" />
@@ -96,7 +100,7 @@ if (!doNotTrack) {
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://juliakostrikova.com" accesskey="h" title="Yuliia Kostrikova (Alt + H)">Yuliia Kostrikova</a>
+            <a href="https://juliakostrikova.com/" accesskey="h" title="Yuliia Kostrikova (Alt + H)">Yuliia Kostrikova</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -140,7 +144,7 @@ if (!doNotTrack) {
     </nav>
 </header>
 <main class="main"> 
-<header class="page-header"><div class="breadcrumbs"><a href="https://juliakostrikova.com">Home</a>&nbsp;»&nbsp;<a href="https://juliakostrikova.com/tags/">Tags</a></div>
+<header class="page-header"><div class="breadcrumbs"><a href="https://juliakostrikova.com/">Home</a>&nbsp;»&nbsp;<a href="https://juliakostrikova.com/tags/">Tags</a></div>
   <h1>
     SAA-C03
     <a href="/tags/saa-c03/index.xml" title="RSS" aria-label="RSS">
@@ -164,10 +168,11 @@ if (!doNotTrack) {
 Mission Critical 🟢 production workloads. designed for mission critical workloads
 🟢 highly available. automatically replicated within a single AZ to protect against hardware failures.
 🟢 scalable. dynamically increase capacity and chnage the volume type with no downtime or performance impact to your live systems.
-EBS Volume Types: Solid State Disk General Purpose SSD (gp2) - legacy 3 IOPS per GiB, up to maximum of 16,000 IOPS per volume regardless of how large the volume is, the maximum number of input/output operations the storage system can handle for that volume is 16,000 per second....</p>
+EBS Volume Types: Solid State Disk General Purpose SSD (gp2) - legacy 3 IOPS per GiB, up to maximum of 16,000 IOPS per volume regardless of how large the volume is, the maximum number of input/output operations the storage system can handle for that volume is 16,000 per second. this is the upper limit on the performance you can expect from the volume.
+...</p>
   </div>
   <footer class="entry-footer"><span title='2024-01-20 19:35:26 +0200 +0200'>January 20, 2024</span>&nbsp;·&nbsp;4 min</footer>
-  <a class="entry-link" aria-label="post link to SAA-C03:: AWS Storage. EBS &amp; EFS" href="https://juliakostrikova.com/posts/saa-c03/ebs_efs/"></a>
+  <a class="entry-link" aria-label="post link to SAA-C03:: AWS Storage. EBS & EFS" href="https://juliakostrikova.com/posts/saa-c03/ebs_efs/"></a>
 </article>
 
 <article class="post-entry tag-entry"> 
@@ -177,7 +182,8 @@ EBS Volume Types: Solid State Disk General Purpose SSD (gp2) - legacy 3 IOPS per
   </header>
   <div class="entry-content">
     <p>S3 is Object-Based Storage Manages data as objects rather then in file systmes or data blocks.
-Upload any file type you can think of to S3. Examples include photos, videos, code, documents, and text files. Cannot be used to run an OS or DB. S3 Basics Unlimited storage. The total amount of data and the number of objects you can store is unlimited. Objects up to 5 TB in Size. S3 objects can range in size from a minimum of 0 bytes to a maximum of 5 TB....</p>
+Upload any file type you can think of to S3. Examples include photos, videos, code, documents, and text files. Cannot be used to run an OS or DB. S3 Basics Unlimited storage. The total amount of data and the number of objects you can store is unlimited. Objects up to 5 TB in Size. S3 objects can range in size from a minimum of 0 bytes to a maximum of 5 TB. S3 Buckets. Store files in buckets (similar to folders). Tired Storage. Offers a range of storage classes designed for different use cases. Lifecycle Management. Defines automatically transition objects to a cheaper tier or delete objects that are no longer required after a set of period of time. Versioning. All versions of an object are stored and can be retrived, including deleted objects. Once enabled, versioning cannot be disabled - only suspended. Supports MFA, so you need to procced with 2-factor in order to delete an object. If you enabled public access to versioned objects, old versions will not be accessible. Working with S3 Buckets Universal Namespace. All AWS accounts share the S3 namespace. Each S3 bucket name is globally unique.
+...</p>
   </div>
   <footer class="entry-footer"><span title='2024-01-16 15:35:26 +0200 +0200'>January 16, 2024</span>&nbsp;·&nbsp;9 min</footer>
   <a class="entry-link" aria-label="post link to SAA-C03:: Simple Storage Service (S3)" href="https://juliakostrikova.com/posts/saa-c03/s3/"></a>
@@ -190,7 +196,8 @@ Upload any file type you can think of to S3. Examples include photos, videos, co
   </header>
   <div class="entry-content">
     <p>Virtualization The technology that lies at the core of all cloud operations is virtualization. Virtualization lets you divide the hardware resources of a single physical server into smaller units. That physical server could therefore host multiple virtual machines (VMs) running their own complete operating systems, each with its own memory, storage, and network access.
-a virtual machine host Cloud Computing Major cloud providers like AWS have enormous server farms where hundreds of thousands of servers and disk drives are maintained along with the network cabling necessary to connect them....</p>
+a virtual machine host Cloud Computing Major cloud providers like AWS have enormous server farms where hundreds of thousands of servers and disk drives are maintained along with the network cabling necessary to connect them. A well-built virtualized environment could provide a virtual server using storage, memory, compute cycles, and network bandwidth collected from the most efficient mix of available sources it can find. A cloud computing platform offers on-demand, self-service access to pooled compute resources where your usage is metered and billed according to the volume you consume. Cloud computing systems allow for precise billing models, sometimes involving fractions of a penny for an hour of consumption.
+...</p>
   </div>
   <footer class="entry-footer"><span title='2024-01-03 19:35:26 +0200 +0200'>January 3, 2024</span>&nbsp;·&nbsp;14 min</footer>
   <a class="entry-link" aria-label="post link to SAA-C03:: Introduction to Cloud Computing and AWS" href="https://juliakostrikova.com/posts/saa-c03/aws-fundamentals/"></a>
@@ -198,7 +205,7 @@ a virtual machine host Cloud Computing Major cloud providers like AWS have enorm
     </main>
     
 <footer class="footer">
-    <span>&copy; 2025 <a href="https://juliakostrikova.com">Yuliia Kostrikova</a></span>
+    <span>&copy; 2026 <a href="https://juliakostrikova.com/">Yuliia Kostrikova</a></span>
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

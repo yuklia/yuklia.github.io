@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head><meta charset="utf-8">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
@@ -9,26 +9,38 @@
 
 
 <meta name="keywords" content="">
-<meta name="description" content="kubeconfig file used to rganize cluster access info about clusters, users,namespaces, auth.
+<meta name="description" content="kubeconfig file used to rganize cluster access
+info about clusters, users,namespaces, auth.
 kubectl USES kubeconfig to fund info it neds to choose a cluster and communicate via api server.
-kubeconfig file. organzeing access to cluster. who or what creates this file?
+kubeconfig file. organzeing access to cluster.
+who or what creates this file?
 how to choose a file.
-kubecatl &ndash;kubeconfig or export KUBECONFIG= or default is: $HOME/.kube/config
+kubecatl &ndash;kubeconfig
+or
+export KUBECONFIG=
+or
+default is: $HOME/.kube/config
 Supporting multiple clusters, clusters, auth types
 kubeconfig file has CONTEXT
 context:
-cluster namespace user kubectl config use-context">
+
+cluster
+namespace
+user
+
+kubectl config use-context">
 <meta name="author" content="">
-<link rel="canonical" href="https://juliakostrikova.com/posts/kubernetes/cka/org_cluster_access/">
+<link rel="canonical" href="http://localhost:1313/posts/kubernetes/cka/org_cluster_access/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.7140587df96a2b1a49eb723fa7063dc0c641a6cb638f3140e8d3beb4deae4f5c.css" integrity="sha256-cUBYfflqKxpJ63I/pwY9wMZBpstjjzFA6NO&#43;tN6uT1w=" rel="preload stylesheet" as="style">
-<link rel="icon" href="https://juliakostrikova.com/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="https://juliakostrikova.com/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://juliakostrikova.com/favicon-32x32.png">
-<link rel="manifest" href="https://juliakostrikova.com/site.webmanifest">
-<link rel="apple-touch-icon" href="https://juliakostrikova.com/apple-touch-icon.png">
-<link rel="icon" type="image/svg+xml"  href="https://juliakostrikova.com/safari-pinned-tab.svg">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="manifest" href="http://localhost:1313/site.webmanifest">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml"  href="http://localhost:1313/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/posts/kubernetes/cka/org_cluster_access/">
 <noscript>
     <style>
         #theme-toggle,
@@ -66,60 +78,85 @@ cluster namespace user kubectl config use-context">
 
     </style>
 </noscript>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-BR19XD52CV"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-BR19XD52CV', { 'anonymize_ip': false });
-}
-</script>
-<meta property="og:title" content="" />
-<meta property="og:description" content="kubeconfig file used to rganize cluster access info about clusters, users,namespaces, auth.
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-BR19XD52CV"></script>
+      <script>
+        var doNotTrack = false;
+        if ( true ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-BR19XD52CV');
+        }
+      </script><meta property="og:title" content="" />
+<meta property="og:description" content="kubeconfig file used to rganize cluster access
+info about clusters, users,namespaces, auth.
 kubectl USES kubeconfig to fund info it neds to choose a cluster and communicate via api server.
-kubeconfig file. organzeing access to cluster. who or what creates this file?
+kubeconfig file. organzeing access to cluster.
+who or what creates this file?
 how to choose a file.
-kubecatl &ndash;kubeconfig or export KUBECONFIG= or default is: $HOME/.kube/config
+kubecatl &ndash;kubeconfig
+or
+export KUBECONFIG=
+or
+default is: $HOME/.kube/config
 Supporting multiple clusters, clusters, auth types
 kubeconfig file has CONTEXT
 context:
-cluster namespace user kubectl config use-context" />
+
+cluster
+namespace
+user
+
+kubectl config use-context" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://juliakostrikova.com/posts/kubernetes/cka/org_cluster_access/" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="http://localhost:1313/posts/kubernetes/cka/org_cluster_access/" /><meta property="article:section" content="posts" />
 
 
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content=""/>
-<meta name="twitter:description" content="kubeconfig file used to rganize cluster access info about clusters, users,namespaces, auth.
+<meta name="twitter:description" content="kubeconfig file used to rganize cluster access
+info about clusters, users,namespaces, auth.
 kubectl USES kubeconfig to fund info it neds to choose a cluster and communicate via api server.
-kubeconfig file. organzeing access to cluster. who or what creates this file?
+kubeconfig file. organzeing access to cluster.
+who or what creates this file?
 how to choose a file.
-kubecatl &ndash;kubeconfig or export KUBECONFIG= or default is: $HOME/.kube/config
+kubecatl &ndash;kubeconfig
+or
+export KUBECONFIG=
+or
+default is: $HOME/.kube/config
 Supporting multiple clusters, clusters, auth types
 kubeconfig file has CONTEXT
 context:
-cluster namespace user kubectl config use-context"/>
+
+cluster
+namespace
+user
+
+kubectl config use-context"/>
 
 
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
-  "itemListElement": [, 
+  "itemListElement": [
     {
       "@type": "ListItem",
-      "position":  2 ,
+      "position":  1 ,
       "name": "Posts",
-      "item": "https://juliakostrikova.com/posts/"
+      "item": "http://localhost:1313/posts/"
     }, 
     {
       "@type": "ListItem",
-      "position":  3 ,
+      "position":  2 ,
       "name": "",
-      "item": "https://juliakostrikova.com/posts/kubernetes/cka/org_cluster_access/"
+      "item": "http://localhost:1313/posts/kubernetes/cka/org_cluster_access/"
     }
   ]
 }
@@ -130,7 +167,7 @@ cluster namespace user kubectl config use-context"/>
   "@type": "BlogPosting",
   "headline": "",
   "name": "",
-  "description": "kubeconfig file used to rganize cluster access info about clusters, users,namespaces, auth.\nkubectl USES kubeconfig to fund info it neds to choose a cluster and communicate via api server.\nkubeconfig file. organzeing access to cluster. who or what creates this file?\nhow to choose a file.\nkubecatl \u0026ndash;kubeconfig or export KUBECONFIG= or default is: $HOME/.kube/config\nSupporting multiple clusters, clusters, auth types\nkubeconfig file has CONTEXT\ncontext:\ncluster namespace user kubectl config use-context",
+  "description": "kubeconfig file used to rganize cluster access info about clusters, users,namespaces, auth.\nkubectl USES kubeconfig to fund info it neds to choose a cluster and communicate via api server.\nkubeconfig file. organzeing access to cluster. who or what creates this file?\nhow to choose a file.\nkubecatl \u0026ndash;kubeconfig or export KUBECONFIG= or default is: $HOME/.kube/config\nSupporting multiple clusters, clusters, auth types\nkubeconfig file has CONTEXT\ncontext:\ncluster namespace user kubectl config use-context\n",
   "keywords": [
     
   ],
@@ -141,14 +178,14 @@ cluster namespace user kubectl config use-context"/>
   "dateModified": "0001-01-01T00:00:00Z",
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://juliakostrikova.com/posts/kubernetes/cka/org_cluster_access/"
+    "@id": "http://localhost:1313/posts/kubernetes/cka/org_cluster_access/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "Yuliia Kostrikova",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://juliakostrikova.com/favicon.ico"
+      "url": "http://localhost:1313/favicon.ico"
     }
   }
 }
@@ -171,7 +208,7 @@ cluster namespace user kubectl config use-context"/>
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://juliakostrikova.com" accesskey="h" title="Yuliia Kostrikova (Alt + H)">Yuliia Kostrikova</a>
+            <a href="http://localhost:1313/" accesskey="h" title="Yuliia Kostrikova (Alt + H)">Yuliia Kostrikova</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -193,21 +230,23 @@ cluster namespace user kubectl config use-context"/>
                         <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
                     </svg>
                 </button>
+                <ul class="lang-switch"><li>|</li>
+                </ul>
             </div>
         </div>
         <ul id="menu">
             <li>
-                <a href="https://juliakostrikova.com/archives/" title="Archive">
+                <a href="http://localhost:1313/archives/" title="Archive">
                     <span>Archive</span>
                 </a>
             </li>
             <li>
-                <a href="https://juliakostrikova.com/tags/" title="Tags">
+                <a href="http://localhost:1313/tags/" title="Tags">
                     <span>Tags</span>
                 </a>
             </li>
             <li>
-                <a href="https://juliakostrikova.com/search/" title="Search (Alt &#43; /)" accesskey=/>
+                <a href="http://localhost:1313/search/" title="Search (Alt &#43; /)" accesskey=/>
                     <span>Search</span>
                 </a>
             </li>
@@ -218,7 +257,7 @@ cluster namespace user kubectl config use-context"/>
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="https://juliakostrikova.com">Home</a>&nbsp;»&nbsp;<a href="https://juliakostrikova.com/posts/">Posts</a></div>
+    <div class="breadcrumbs"><a href="http://localhost:1313/">Home</a>&nbsp;»&nbsp;<a href="http://localhost:1313/posts/">Posts</a></div>
     <h1 class="post-title">
       
     </h1>
@@ -266,10 +305,15 @@ kubeconfig setup.</p>
     <ul class="post-tags">
     </ul>
 <nav class="paginav">
-  <a class="prev" href="https://juliakostrikova.com/posts/php/xdebug-macos/">
+  <a class="prev" href="http://localhost:1313/posts/php/xdebug-macos/">
     <span class="title">« Prev</span>
     <br>
     <span>XDebug for PHP docker container on macOS</span>
+  </a>
+  <a class="next" href="http://localhost:1313/posts/kubernetes/cka/troubleshoot/">
+    <span class="title">Next »</span>
+    <br>
+    <span></span>
   </a>
 </nav>
 
@@ -289,7 +333,7 @@ kubeconfig setup.</p>
     </main>
     
 <footer class="footer">
-    <span>&copy; 2025 <a href="https://juliakostrikova.com">Yuliia Kostrikova</a></span>
+    <span>&copy; 2026 <a href="http://localhost:1313/">Yuliia Kostrikova</a></span>
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

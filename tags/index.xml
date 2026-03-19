@@ -6,120 +6,139 @@
     <description>Recent content in Tags on Yuliia Kostrikova</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Sun, 08 Jun 2025 00:30:58 +0200</lastBuildDate><atom:link href="https://juliakostrikova.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 08 Mar 2026 09:23:03 +0100</lastBuildDate><atom:link href="https://juliakostrikova.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Ai</title>
+      <link>https://juliakostrikova.com/tags/ai/</link>
+      <pubDate>Sun, 08 Mar 2026 09:23:03 +0100</pubDate>
+      <guid>https://juliakostrikova.com/tags/ai/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Aws</title>
+      <link>https://juliakostrikova.com/tags/aws/</link>
+      <pubDate>Sun, 08 Mar 2026 09:23:03 +0100</pubDate>
+      <guid>https://juliakostrikova.com/tags/aws/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Infrastructure</title>
+      <link>https://juliakostrikova.com/tags/infrastructure/</link>
+      <pubDate>Sun, 08 Mar 2026 09:23:03 +0100</pubDate>
+      <guid>https://juliakostrikova.com/tags/infrastructure/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Terraform</title>
+      <link>https://juliakostrikova.com/tags/terraform/</link>
+      <pubDate>Sun, 08 Mar 2026 09:23:03 +0100</pubDate>
+      <guid>https://juliakostrikova.com/tags/terraform/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>Bare Metal</title>
       <link>https://juliakostrikova.com/tags/bare-metal/</link>
       <pubDate>Sun, 08 Jun 2025 00:30:58 +0200</pubDate>
-      
       <guid>https://juliakostrikova.com/tags/bare-metal/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>homelab</title>
+      <title>Homelab</title>
       <link>https://juliakostrikova.com/tags/homelab/</link>
       <pubDate>Sun, 08 Jun 2025 00:30:58 +0200</pubDate>
-      
       <guid>https://juliakostrikova.com/tags/homelab/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>howto</title>
+      <title>Howto</title>
       <link>https://juliakostrikova.com/tags/howto/</link>
       <pubDate>Sun, 08 Jun 2025 00:30:58 +0200</pubDate>
-      
       <guid>https://juliakostrikova.com/tags/howto/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>iSCSI</title>
+      <title>ISCSI</title>
       <link>https://juliakostrikova.com/tags/iscsi/</link>
       <pubDate>Sun, 08 Jun 2025 00:30:58 +0200</pubDate>
-      
       <guid>https://juliakostrikova.com/tags/iscsi/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>kubernetes</title>
+      <title>Kubernetes</title>
       <link>https://juliakostrikova.com/tags/kubernetes/</link>
       <pubDate>Sun, 08 Jun 2025 00:30:58 +0200</pubDate>
-      
       <guid>https://juliakostrikova.com/tags/kubernetes/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>linux</title>
+      <title>Linux</title>
       <link>https://juliakostrikova.com/tags/linux/</link>
       <pubDate>Sun, 08 Jun 2025 00:30:58 +0200</pubDate>
-      
       <guid>https://juliakostrikova.com/tags/linux/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>nfs</title>
+      <title>Nfs</title>
       <link>https://juliakostrikova.com/tags/nfs/</link>
       <pubDate>Sun, 08 Jun 2025 00:30:58 +0200</pubDate>
-      
       <guid>https://juliakostrikova.com/tags/nfs/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>pxe boot</title>
+      <title>PXE Boot</title>
       <link>https://juliakostrikova.com/tags/pxe-boot/</link>
       <pubDate>Sun, 08 Jun 2025 00:30:58 +0200</pubDate>
-      
       <guid>https://juliakostrikova.com/tags/pxe-boot/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>raspberryPI5</title>
+      <title>RaspberryPI5</title>
       <link>https://juliakostrikova.com/tags/raspberrypi5/</link>
       <pubDate>Sun, 08 Jun 2025 00:30:58 +0200</pubDate>
-      
       <guid>https://juliakostrikova.com/tags/raspberrypi5/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>debian</title>
+      <title>Debian</title>
       <link>https://juliakostrikova.com/tags/debian/</link>
       <pubDate>Tue, 06 Aug 2024 11:28:58 +0200</pubDate>
-      
       <guid>https://juliakostrikova.com/tags/debian/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>home automation</title>
+      <title>Home Automation</title>
       <link>https://juliakostrikova.com/tags/home-automation/</link>
       <pubDate>Wed, 19 Jun 2024 11:28:58 +0200</pubDate>
-      
       <guid>https://juliakostrikova.com/tags/home-automation/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>ubuntu24.04</title>
+      <title>Ubuntu24.04</title>
       <link>https://juliakostrikova.com/tags/ubuntu24.04/</link>
       <pubDate>Sat, 25 May 2024 11:28:58 +0200</pubDate>
-      
       <guid>https://juliakostrikova.com/tags/ubuntu24.04/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>wifi</title>
+      <title>Wifi</title>
       <link>https://juliakostrikova.com/tags/wifi/</link>
       <pubDate>Sat, 25 May 2024 11:28:58 +0200</pubDate>
-      
       <guid>https://juliakostrikova.com/tags/wifi/</guid>
       <description></description>
     </item>
@@ -128,34 +147,22 @@
       <title>ChatGPT</title>
       <link>https://juliakostrikova.com/tags/chatgpt/</link>
       <pubDate>Sun, 28 Jan 2024 13:05:09 +0100</pubDate>
-      
       <guid>https://juliakostrikova.com/tags/chatgpt/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>system design</title>
+      <title>System Design</title>
       <link>https://juliakostrikova.com/tags/system-design/</link>
       <pubDate>Sun, 28 Jan 2024 13:05:09 +0100</pubDate>
-      
       <guid>https://juliakostrikova.com/tags/system-design/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>aws</title>
-      <link>https://juliakostrikova.com/tags/aws/</link>
-      <pubDate>Sat, 20 Jan 2024 19:35:26 +0200</pubDate>
-      
-      <guid>https://juliakostrikova.com/tags/aws/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>cloud</title>
+      <title>Cloud</title>
       <link>https://juliakostrikova.com/tags/cloud/</link>
       <pubDate>Sat, 20 Jan 2024 19:35:26 +0200</pubDate>
-      
       <guid>https://juliakostrikova.com/tags/cloud/</guid>
       <description></description>
     </item>
@@ -164,43 +171,38 @@
       <title>SAA-C03</title>
       <link>https://juliakostrikova.com/tags/saa-c03/</link>
       <pubDate>Sat, 20 Jan 2024 19:35:26 +0200</pubDate>
-      
       <guid>https://juliakostrikova.com/tags/saa-c03/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>raspberryPI400</title>
+      <title>RaspberryPI400</title>
       <link>https://juliakostrikova.com/tags/raspberrypi400/</link>
       <pubDate>Sat, 23 Sep 2023 11:28:58 +0200</pubDate>
-      
       <guid>https://juliakostrikova.com/tags/raspberrypi400/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>traefik</title>
+      <title>Traefik</title>
       <link>https://juliakostrikova.com/tags/traefik/</link>
       <pubDate>Sat, 17 Oct 2020 18:02:25 +0300</pubDate>
-      
       <guid>https://juliakostrikova.com/tags/traefik/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>docker</title>
+      <title>Docker</title>
       <link>https://juliakostrikova.com/tags/docker/</link>
       <pubDate>Fri, 16 Oct 2020 18:02:25 +0300</pubDate>
-      
       <guid>https://juliakostrikova.com/tags/docker/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>swarm</title>
+      <title>Swarm</title>
       <link>https://juliakostrikova.com/tags/swarm/</link>
       <pubDate>Fri, 16 Oct 2020 18:02:25 +0300</pubDate>
-      
       <guid>https://juliakostrikova.com/tags/swarm/</guid>
       <description></description>
     </item>
@@ -209,7 +211,6 @@
       <title>Algorithms</title>
       <link>https://juliakostrikova.com/tags/algorithms/</link>
       <pubDate>Thu, 10 Sep 2020 15:35:26 +0200</pubDate>
-      
       <guid>https://juliakostrikova.com/tags/algorithms/</guid>
       <description></description>
     </item>
@@ -218,34 +219,30 @@
       <title>Math</title>
       <link>https://juliakostrikova.com/tags/math/</link>
       <pubDate>Thu, 10 Sep 2020 15:35:26 +0200</pubDate>
-      
       <guid>https://juliakostrikova.com/tags/math/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>python</title>
+      <title>Python</title>
       <link>https://juliakostrikova.com/tags/python/</link>
       <pubDate>Thu, 10 Sep 2020 15:35:26 +0200</pubDate>
-      
       <guid>https://juliakostrikova.com/tags/python/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>php</title>
+      <title>Php</title>
       <link>https://juliakostrikova.com/tags/php/</link>
       <pubDate>Fri, 10 Jul 2020 18:56:57 +0300</pubDate>
-      
       <guid>https://juliakostrikova.com/tags/php/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>xdebug</title>
+      <title>Xdebug</title>
       <link>https://juliakostrikova.com/tags/xdebug/</link>
       <pubDate>Fri, 10 Jul 2020 18:56:57 +0300</pubDate>
-      
       <guid>https://juliakostrikova.com/tags/xdebug/</guid>
       <description></description>
     </item>

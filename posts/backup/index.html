@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>the dangerous detour | Yuliia Kostrikova</title>
+
+
+<meta name="keywords" content="aws, terraform, infrastructure, ai">
+<meta name="description" content="Why agentic AI has no place running your IaC — and what 9 years with Terraform taught me about professional responsibility.">
+<meta name="author" content="">
+<link rel="canonical" href="https://juliakostrikova.com/posts/backup/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.7140587df96a2b1a49eb723fa7063dc0c641a6cb638f3140e8d3beb4deae4f5c.css" integrity="sha256-cUBYfflqKxpJ63I/pwY9wMZBpstjjzFA6NO&#43;tN6uT1w=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://juliakostrikova.com/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://juliakostrikova.com/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://juliakostrikova.com/favicon-32x32.png">
+<link rel="manifest" href="https://juliakostrikova.com/site.webmanifest">
+<link rel="apple-touch-icon" href="https://juliakostrikova.com/apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml"  href="https://juliakostrikova.com/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://juliakostrikova.com/posts/backup/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-BR19XD52CV"></script>
+      <script>
+        var doNotTrack = false;
+        if ( true ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-BR19XD52CV');
+        }
+      </script><meta property="og:title" content="the dangerous detour" />
+<meta property="og:description" content="Why agentic AI has no place running your IaC — and what 9 years with Terraform taught me about professional responsibility." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://juliakostrikova.com/posts/backup/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2026-03-08T09:23:03+01:00" />
+<meta property="article:modified_time" content="2026-03-08T09:23:03+01:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="the dangerous detour"/>
+<meta name="twitter:description" content="Why agentic AI has no place running your IaC — and what 9 years with Terraform taught me about professional responsibility."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://juliakostrikova.com/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "the dangerous detour",
+      "item": "https://juliakostrikova.com/posts/backup/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "the dangerous detour",
+  "name": "the dangerous detour",
+  "description": "Why agentic AI has no place running your IaC — and what 9 years with Terraform taught me about professional responsibility.",
+  "keywords": [
+    "aws", "terraform", "infrastructure", "ai"
+  ],
+  "articleBody": "it is 8 am Sunday morning. i was about to open “Zen and the Art of Motorcycle Maintenance” — a book with one simple truth: if you truly care to understand something, you go slow. that’s not laziness. that’s how you avoid breaking things you can’t fix.\ni didn’t get to the book. let me tell you why.\n[OPENING: the power outage — narrative, first-person, slow pace]\nmid-week, power cut in my building. everything stopped — laptop, internet, work. i sat there useless. and something settled in: this is what invisible infrastructure feels like when it’s gone. i work in cloud. i don’t touch bare metal. but right then, i felt it in the most physical way possible.\nthat feeling stayed with me. and it connected to something else i’d been thinking about.\n[THE HORROR STORY — keep the momentum, connect to the power outage feeling]\nbecause this week i also saw a post from an infrastructure engineer. they let an agentic AI tool run terraform apply on their behalf. production database — gone. no rollback. no plan to recover. just gone.\nreading that felt exactly like sitting in my dark apartment. that same sudden, total stop.\nexcept this time, it wasn’t weather. it was a choice someone made.\n[THE ANALOGY — build it as a thought experiment, not a lecture]\nhere’s what i keep thinking about.\na city’s electrical grid and a multi-account AWS architecture are the same system wearing different clothes.\nboth start with a central hub — a substation, a Transit Gateway — and fan out through distribution layers into isolated zones. both have a monitoring plane: SCADA watches telemetry and triggers breakers; CloudWatch and GuardDuty do the same. both use isolation as protection: protection relays cut off a faulty segment; Security Groups and NACLs do the same for compromised workloads.\na city of 25,000 people needs 300–800 distribution transformers. each one has its own protection scheme, its own metering, its own load profile. a 100-account AWS org has thousands of security group rules, route table entries, IAM bindings. each one is a potential blast radius.\nboth systems fail the same way: not because one component breaks, but because relationships between components break. a misconfigured relay cascades into a district blackout. a missing Transit Gateway route silently black-holes traffic for an entire business unit.\nnow: would you let an AI autonomously manage the city power grid?\n[THE RED BUTTON — precise terraform metaphors, concrete examples]\nin terraform, the blast radius isn’t abstract.\nlifecycle { prevent_destroy = true } is your circuit breaker — the guard that stops the current. module optionality — the ability to conditionally enable or disable a module — is your protection relay. your modules themselves are the substations: foundational, structural, load-bearing.\none innocent line:\nenable = false\nin your centralized backup module — and you’ve silently removed the data safety net for your entire organisation.\nterraform apply doesn’t ask if you’re sure. it does what you told it to do.\nthe neurosurgeon doesn’t hand over the drill because AI could finish the operation in 30 minutes instead of six hours. speed is not the measure. consequence is.\n[PROFESSIONAL RESPONSIBILITY — 9 years of evidence, Murphy’s Law]\ni’ve worked with terraform for about nine years. here’s what that experience actually teaches you:\nplan output is not a guarantee of what apply will produce. sometimes apply fails after a perfectly clean plan. network is unreliable by definition. asynchronous operations may be inconsistent with state.\nthis isn’t a criticism of terraform. it’s how complex systems work. Murphy’s Law doesn’t care about your CI/CD pipeline. everything that can go wrong, will go wrong.\nthe platform engineer, like the grid operator, is invisible infrastructure. you’re what enables everyone else’s work. you only become visible when something breaks.\n[CLOSE + TEASER — connected, not bolted on]\nso what does this mean for AI?\nit doesn’t mean don’t use it. it means: don’t relinquish the switch.\nthe primary directive is simple: disable autonomous terraform apply in any agentic mode. plan output requires human eyes before apply runs. always. that one constraint eliminates most of the blast radius.\nthere are workflows where AI genuinely helps in infrastructure work — code generation, plan review, module scaffolding, drift detection analysis. none of them require autonomous execution.\ni’ll go into specifics in the next post: what those workflows look like, and how to structure the boundaries.\nbut the rule of thumb fits on one line: AI reads and suggests. humans decide and apply.\nbecause if you call yourself an infrastructure engineer, you carry the weight of the grid. act like it.\n",
+  "wordCount" : "767",
+  "inLanguage": "en",
+  "datePublished": "2026-03-08T09:23:03+01:00",
+  "dateModified": "2026-03-08T09:23:03+01:00",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://juliakostrikova.com/posts/backup/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Yuliia Kostrikova",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://juliakostrikova.com/favicon.ico"
+    }
+  }
+}
+</script>
+    
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://juliakostrikova.com/" accesskey="h" title="Yuliia Kostrikova (Alt + H)">Yuliia Kostrikova</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://juliakostrikova.com/archives/" title="Archive">
+                    <span>Archive</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://juliakostrikova.com/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://juliakostrikova.com/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://juliakostrikova.com/">Home</a>&nbsp;»&nbsp;<a href="https://juliakostrikova.com/posts/">Posts</a></div>
+    <h1 class="post-title">
+      the dangerous detour
+    </h1>
+    <div class="post-description">
+      Why agentic AI has no place running your IaC — and what 9 years with Terraform taught me about professional responsibility.
+    </div>
+    <div class="post-meta"><span title='2026-03-08 09:23:03 +0100 CET'>March 8, 2026</span>&nbsp;·&nbsp;4 min
+
+</div>
+  </header> 
+
+  <div class="post-content"><p>it is 8 am Sunday morning. i was about to open &ldquo;Zen and the Art of Motorcycle Maintenance&rdquo; —
+a book with one simple truth: if you truly care to understand something, you go slow.
+that&rsquo;s not laziness. that&rsquo;s how you avoid breaking things you can&rsquo;t fix.</p>
+<p>i didn&rsquo;t get to the book. let me tell you why.</p>
+<hr>
+<p>[OPENING: the power outage — narrative, first-person, slow pace]</p>
+<p>mid-week, power cut in my building. everything stopped — laptop, internet, work. i sat there useless.
+and something settled in: this is what invisible infrastructure feels like when it&rsquo;s gone.
+i work in cloud. i don&rsquo;t touch bare metal. but right then, i felt it in the most physical way possible.</p>
+<p>that feeling stayed with me. and it connected to something else i&rsquo;d been thinking about.</p>
+<hr>
+<p>[THE HORROR STORY — keep the momentum, connect to the power outage feeling]</p>
+<p>because this week i also saw a post from an infrastructure engineer.
+they let an agentic AI tool run <code>terraform apply</code> on their behalf. production database — gone.
+no rollback. no plan to recover. just gone.</p>
+<p>reading that felt exactly like sitting in my dark apartment. that same sudden, total stop.</p>
+<p>except this time, it wasn&rsquo;t weather. it was a choice someone made.</p>
+<hr>
+<p>[THE ANALOGY — build it as a thought experiment, not a lecture]</p>
+<p>here&rsquo;s what i keep thinking about.</p>
+<p>a city&rsquo;s electrical grid and a multi-account AWS architecture are the same system wearing different clothes.</p>
+<p>both start with a central hub — a substation, a Transit Gateway — and fan out through distribution layers into isolated zones.
+both have a monitoring plane: SCADA watches telemetry and triggers breakers; CloudWatch and GuardDuty do the same.
+both use isolation as protection: protection relays cut off a faulty segment; Security Groups and NACLs do the same for compromised workloads.</p>
+<p>a city of 25,000 people needs 300–800 distribution transformers. each one has its own protection scheme, its own metering, its own load profile.
+a 100-account AWS org has thousands of security group rules, route table entries, IAM bindings. each one is a potential blast radius.</p>
+<p>both systems fail the same way: not because one component breaks, but because relationships between components break.
+a misconfigured relay cascades into a district blackout.
+a missing Transit Gateway route silently black-holes traffic for an entire business unit.</p>
+<p>now: would you let an AI autonomously manage the city power grid?</p>
+<hr>
+<p>[THE RED BUTTON — precise terraform metaphors, concrete examples]</p>
+<p>in terraform, the blast radius isn&rsquo;t abstract.</p>
+<p><code>lifecycle { prevent_destroy = true }</code> is your circuit breaker — the guard that stops the current.
+module optionality — the ability to conditionally enable or disable a module — is your protection relay.
+your modules themselves are the substations: foundational, structural, load-bearing.</p>
+<p>one innocent line:</p>
+<p>enable = false</p>
+<p>in your centralized backup module — and you&rsquo;ve silently removed the data safety net for your entire organisation.</p>
+<p><code>terraform apply</code> doesn&rsquo;t ask if you&rsquo;re sure. it does what you told it to do.</p>
+<p>the neurosurgeon doesn&rsquo;t hand over the drill because AI could finish the operation in 30 minutes instead of six hours. speed is not the measure. consequence is.</p>
+<hr>
+<p>[PROFESSIONAL RESPONSIBILITY — 9 years of evidence, Murphy&rsquo;s Law]</p>
+<p>i&rsquo;ve worked with terraform for about nine years. here&rsquo;s what that experience actually teaches you:</p>
+<p><code>plan</code> output is not a guarantee of what <code>apply</code> will produce.
+sometimes apply fails after a perfectly clean plan.
+network is unreliable by definition.
+asynchronous operations may be inconsistent with state.</p>
+<p>this isn&rsquo;t a criticism of terraform. it&rsquo;s how complex systems work.
+Murphy&rsquo;s Law doesn&rsquo;t care about your CI/CD pipeline. <em>everything that can go wrong, will go wrong.</em></p>
+<p>the platform engineer, like the grid operator, is invisible infrastructure.
+you&rsquo;re what enables everyone else&rsquo;s work.
+you only become visible when something breaks.</p>
+<hr>
+<p>[CLOSE + TEASER — connected, not bolted on]</p>
+<p>so what does this mean for AI?</p>
+<p>it doesn&rsquo;t mean don&rsquo;t use it. it means: don&rsquo;t relinquish the switch.</p>
+<p>the primary directive is simple: disable autonomous <code>terraform apply</code> in any agentic mode.
+<code>plan</code> output requires human eyes before <code>apply</code> runs. always.
+that one constraint eliminates most of the blast radius.</p>
+<p>there are workflows where AI genuinely helps in infrastructure work — code generation, plan review, module scaffolding, drift detection analysis.
+none of them require autonomous execution.</p>
+<p>i&rsquo;ll go into specifics in the next post: what those workflows look like, and how to structure the boundaries.</p>
+<p>but the rule of thumb fits on one line:
+<em>AI reads and suggests. humans decide and apply.</em></p>
+<p>because if you call yourself an infrastructure engineer, you carry the weight of the grid.
+act like it.</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://juliakostrikova.com/tags/aws/">Aws</a></li>
+      <li><a href="https://juliakostrikova.com/tags/terraform/">Terraform</a></li>
+      <li><a href="https://juliakostrikova.com/tags/infrastructure/">Infrastructure</a></li>
+      <li><a href="https://juliakostrikova.com/tags/ai/">Ai</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="next" href="https://juliakostrikova.com/posts/my-first-post/">
+    <span class="title">Next »</span>
+    <br>
+    <span>the dangerous detour</span>
+  </a>
+</nav>
+
+  </footer><script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
+<script>
+  kofiWidgetOverlay.draw('yuklia', {
+    'type': 'floating-chat',
+    'floating-chat.donateButton.text': '',
+    'floating-chat.donateButton.background-color': '#ffffff',
+    'floating-chat.donateButton.text-color': '#323842'
+  });
+</script>
+
+
+
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2026 <a href="https://juliakostrikova.com/">Yuliia Kostrikova</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

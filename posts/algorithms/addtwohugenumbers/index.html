@@ -22,6 +22,7 @@ I’ve spend decent amount of time in order to figure out that I don’t need an
 <link rel="icon" type="image/svg+xml"  href="https://juliakostrikova.com/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://juliakostrikova.com/posts/algorithms/addtwohugenumbers/">
 <noscript>
     <style>
         #theme-toggle,
@@ -59,17 +60,20 @@ I’ve spend decent amount of time in order to figure out that I don’t need an
 
     </style>
 </noscript>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-BR19XD52CV"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-BR19XD52CV', { 'anonymize_ip': false });
-}
-</script>
-<meta property="og:title" content="Solution for CodeSignal: addTwoHugeNumbers (Linked List part 👯)" />
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-BR19XD52CV"></script>
+      <script>
+        var doNotTrack = false;
+        if ( true ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-BR19XD52CV');
+        }
+      </script><meta property="og:title" content="Solution for CodeSignal: addTwoHugeNumbers (Linked List part 👯)" />
 <meta property="og:description" content="Task description on Codesignal
 I’ve spend decent amount of time in order to figure out that I don’t need any string manipulation in this task 😅. My first try was adding missing zeros to the beginning of number slot, convert int to str and back, then the resulting string split by 4 but no luck … It turned out that is simple math 😀 I wanna share my solution with detailed comments ⬇️ (Time complexity O(n) )" />
 <meta property="og:type" content="article" />
@@ -87,16 +91,16 @@ I’ve spend decent amount of time in order to figure out that I don’t need an
 {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
-  "itemListElement": [, 
+  "itemListElement": [
     {
       "@type": "ListItem",
-      "position":  2 ,
+      "position":  1 ,
       "name": "Posts",
       "item": "https://juliakostrikova.com/posts/"
     }, 
     {
       "@type": "ListItem",
-      "position":  3 ,
+      "position":  2 ,
       "name": "Solution for CodeSignal: addTwoHugeNumbers (Linked List part 👯)",
       "item": "https://juliakostrikova.com/posts/algorithms/addtwohugenumbers/"
     }
@@ -109,7 +113,7 @@ I’ve spend decent amount of time in order to figure out that I don’t need an
   "@type": "BlogPosting",
   "headline": "Solution for CodeSignal: addTwoHugeNumbers (Linked List part 👯)",
   "name": "Solution for CodeSignal: addTwoHugeNumbers (Linked List part 👯)",
-  "description": "Task description on Codesignal\nI’ve spend decent amount of time in order to figure out that I don’t need any string manipulation in this task 😅. My first try was adding missing zeros to the beginning of number slot, convert int to str and back, then the resulting string split by 4 but no luck … It turned out that is simple math 😀 I wanna share my solution with detailed comments ⬇️ (Time complexity O(n) )",
+  "description": "Task description on Codesignal\nI’ve spend decent amount of time in order to figure out that I don’t need any string manipulation in this task 😅. My first try was adding missing zeros to the beginning of number slot, convert int to str and back, then the resulting string split by 4 but no luck … It turned out that is simple math 😀 I wanna share my solution with detailed comments ⬇️ (Time complexity O(n) )\n",
   "keywords": [
     "Algorithms", "python", "Math"
   ],
@@ -150,7 +154,7 @@ I’ve spend decent amount of time in order to figure out that I don’t need an
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://juliakostrikova.com" accesskey="h" title="Yuliia Kostrikova (Alt + H)">Yuliia Kostrikova</a>
+            <a href="https://juliakostrikova.com/" accesskey="h" title="Yuliia Kostrikova (Alt + H)">Yuliia Kostrikova</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -197,7 +201,7 @@ I’ve spend decent amount of time in order to figure out that I don’t need an
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="https://juliakostrikova.com">Home</a>&nbsp;»&nbsp;<a href="https://juliakostrikova.com/posts/">Posts</a></div>
+    <div class="breadcrumbs"><a href="https://juliakostrikova.com/">Home</a>&nbsp;»&nbsp;<a href="https://juliakostrikova.com/posts/">Posts</a></div>
     <h1 class="post-title">
       Solution for CodeSignal: addTwoHugeNumbers (Linked List part 👯)
     </h1>
@@ -341,7 +345,7 @@ print(linked_to_array(result))
   <footer class="post-footer">
     <ul class="post-tags">
       <li><a href="https://juliakostrikova.com/tags/algorithms/">Algorithms</a></li>
-      <li><a href="https://juliakostrikova.com/tags/python/">python</a></li>
+      <li><a href="https://juliakostrikova.com/tags/python/">Python</a></li>
       <li><a href="https://juliakostrikova.com/tags/math/">Math</a></li>
     </ul>
 <nav class="paginav">
@@ -373,7 +377,7 @@ print(linked_to_array(result))
     </main>
     
 <footer class="footer">
-    <span>&copy; 2025 <a href="https://juliakostrikova.com">Yuliia Kostrikova</a></span>
+    <span>&copy; 2026 <a href="https://juliakostrikova.com/">Yuliia Kostrikova</a></span>
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

@@ -10,7 +10,36 @@
 
 <meta name="keywords" content="traefik, cloud, aws">
 <meta name="description" content="Traefik v1.7 is running within a Docker Swarm, functioning as a global service. Consequently, an instance of Traefik is deployed for each host within our Docker Swarm cluster. It is important to note that the Swarm&rsquo;s routing mesh is not employed in this setup. Instead, the port mode is configured as &ldquo;host,&rdquo; allowing the port to be attached to the host&rsquo;s network.
-traefik: image: ${REGISTRY}/traefik:1.6 build: ./traefik volumes: - /var/run/docker.sock:/var/run/docker.sock networks: - traefik environment: - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} - AWS_REGION=${AWS_REGION} - AWS_HOSTED_ZONE_ID=${AWS_HOSTED_ZONE_ID} ports: - target: 80 published: 80 protocol: tcp mode: host - target: 443 published: 443 mode: host protocol: tcp - target: 8080 published: 8080 mode: host protocol: tcp deploy: mode: global restart_policy: condition: on-failure Docker Swarm deployed to AWS and lives behind internal/external load balancers (Classic type).">
+traefik:
+  image: ${REGISTRY}/traefik:1.6
+  build: ./traefik
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+  networks:
+    - traefik
+  environment:
+    - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+    - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+    - AWS_REGION=${AWS_REGION}
+    - AWS_HOSTED_ZONE_ID=${AWS_HOSTED_ZONE_ID}
+  ports:
+    - target: 80
+      published: 80
+      protocol: tcp
+      mode: host
+    - target: 443
+      published: 443
+      mode: host
+      protocol: tcp
+    - target: 8080
+      published: 8080
+      mode: host
+      protocol: tcp
+  deploy:
+    mode: global
+    restart_policy:
+      condition: on-failure
+Docker Swarm deployed to AWS and lives behind internal/external load balancers (Classic type).">
 <meta name="author" content="">
 <link rel="canonical" href="https://juliakostrikova.com/posts/cloud/traefik-x-forwarded-for/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.7140587df96a2b1a49eb723fa7063dc0c641a6cb638f3140e8d3beb4deae4f5c.css" integrity="sha256-cUBYfflqKxpJ63I/pwY9wMZBpstjjzFA6NO&#43;tN6uT1w=" rel="preload stylesheet" as="style">
@@ -22,6 +51,7 @@ traefik: image: ${REGISTRY}/traefik:1.6 build: ./traefik volumes: - /var/run/doc
 <link rel="icon" type="image/svg+xml"  href="https://juliakostrikova.com/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://juliakostrikova.com/posts/cloud/traefik-x-forwarded-for/">
 <noscript>
     <style>
         #theme-toggle,
@@ -59,19 +89,51 @@ traefik: image: ${REGISTRY}/traefik:1.6 build: ./traefik volumes: - /var/run/doc
 
     </style>
 </noscript>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-BR19XD52CV"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-BR19XD52CV', { 'anonymize_ip': false });
-}
-</script>
-<meta property="og:title" content="Traefik behind AWS ELB. X-Forwarded-For header" />
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-BR19XD52CV"></script>
+      <script>
+        var doNotTrack = false;
+        if ( true ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-BR19XD52CV');
+        }
+      </script><meta property="og:title" content="Traefik behind AWS ELB. X-Forwarded-For header" />
 <meta property="og:description" content="Traefik v1.7 is running within a Docker Swarm, functioning as a global service. Consequently, an instance of Traefik is deployed for each host within our Docker Swarm cluster. It is important to note that the Swarm&rsquo;s routing mesh is not employed in this setup. Instead, the port mode is configured as &ldquo;host,&rdquo; allowing the port to be attached to the host&rsquo;s network.
-traefik: image: ${REGISTRY}/traefik:1.6 build: ./traefik volumes: - /var/run/docker.sock:/var/run/docker.sock networks: - traefik environment: - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} - AWS_REGION=${AWS_REGION} - AWS_HOSTED_ZONE_ID=${AWS_HOSTED_ZONE_ID} ports: - target: 80 published: 80 protocol: tcp mode: host - target: 443 published: 443 mode: host protocol: tcp - target: 8080 published: 8080 mode: host protocol: tcp deploy: mode: global restart_policy: condition: on-failure Docker Swarm deployed to AWS and lives behind internal/external load balancers (Classic type)." />
+traefik:
+  image: ${REGISTRY}/traefik:1.6
+  build: ./traefik
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+  networks:
+    - traefik
+  environment:
+    - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+    - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+    - AWS_REGION=${AWS_REGION}
+    - AWS_HOSTED_ZONE_ID=${AWS_HOSTED_ZONE_ID}
+  ports:
+    - target: 80
+      published: 80
+      protocol: tcp
+      mode: host
+    - target: 443
+      published: 443
+      mode: host
+      protocol: tcp
+    - target: 8080
+      published: 8080
+      mode: host
+      protocol: tcp
+  deploy:
+    mode: global
+    restart_policy:
+      condition: on-failure
+Docker Swarm deployed to AWS and lives behind internal/external load balancers (Classic type)." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://juliakostrikova.com/posts/cloud/traefik-x-forwarded-for/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-10-17T18:02:25+03:00" />
@@ -80,23 +142,52 @@ traefik: image: ${REGISTRY}/traefik:1.6 build: ./traefik volumes: - /var/run/doc
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Traefik behind AWS ELB. X-Forwarded-For header"/>
 <meta name="twitter:description" content="Traefik v1.7 is running within a Docker Swarm, functioning as a global service. Consequently, an instance of Traefik is deployed for each host within our Docker Swarm cluster. It is important to note that the Swarm&rsquo;s routing mesh is not employed in this setup. Instead, the port mode is configured as &ldquo;host,&rdquo; allowing the port to be attached to the host&rsquo;s network.
-traefik: image: ${REGISTRY}/traefik:1.6 build: ./traefik volumes: - /var/run/docker.sock:/var/run/docker.sock networks: - traefik environment: - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} - AWS_REGION=${AWS_REGION} - AWS_HOSTED_ZONE_ID=${AWS_HOSTED_ZONE_ID} ports: - target: 80 published: 80 protocol: tcp mode: host - target: 443 published: 443 mode: host protocol: tcp - target: 8080 published: 8080 mode: host protocol: tcp deploy: mode: global restart_policy: condition: on-failure Docker Swarm deployed to AWS and lives behind internal/external load balancers (Classic type)."/>
+traefik:
+  image: ${REGISTRY}/traefik:1.6
+  build: ./traefik
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+  networks:
+    - traefik
+  environment:
+    - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+    - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+    - AWS_REGION=${AWS_REGION}
+    - AWS_HOSTED_ZONE_ID=${AWS_HOSTED_ZONE_ID}
+  ports:
+    - target: 80
+      published: 80
+      protocol: tcp
+      mode: host
+    - target: 443
+      published: 443
+      mode: host
+      protocol: tcp
+    - target: 8080
+      published: 8080
+      mode: host
+      protocol: tcp
+  deploy:
+    mode: global
+    restart_policy:
+      condition: on-failure
+Docker Swarm deployed to AWS and lives behind internal/external load balancers (Classic type)."/>
 
 
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
-  "itemListElement": [, 
+  "itemListElement": [
     {
       "@type": "ListItem",
-      "position":  2 ,
+      "position":  1 ,
       "name": "Posts",
       "item": "https://juliakostrikova.com/posts/"
     }, 
     {
       "@type": "ListItem",
-      "position":  3 ,
+      "position":  2 ,
       "name": "Traefik behind AWS ELB. X-Forwarded-For header",
       "item": "https://juliakostrikova.com/posts/cloud/traefik-x-forwarded-for/"
     }
@@ -109,7 +200,7 @@ traefik: image: ${REGISTRY}/traefik:1.6 build: ./traefik volumes: - /var/run/doc
   "@type": "BlogPosting",
   "headline": "Traefik behind AWS ELB. X-Forwarded-For header",
   "name": "Traefik behind AWS ELB. X-Forwarded-For header",
-  "description": "Traefik v1.7 is running within a Docker Swarm, functioning as a global service. Consequently, an instance of Traefik is deployed for each host within our Docker Swarm cluster. It is important to note that the Swarm\u0026rsquo;s routing mesh is not employed in this setup. Instead, the port mode is configured as \u0026ldquo;host,\u0026rdquo; allowing the port to be attached to the host\u0026rsquo;s network.\ntraefik: image: ${REGISTRY}/traefik:1.6 build: ./traefik volumes: - /var/run/docker.sock:/var/run/docker.sock networks: - traefik environment: - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} - AWS_REGION=${AWS_REGION} - AWS_HOSTED_ZONE_ID=${AWS_HOSTED_ZONE_ID} ports: - target: 80 published: 80 protocol: tcp mode: host - target: 443 published: 443 mode: host protocol: tcp - target: 8080 published: 8080 mode: host protocol: tcp deploy: mode: global restart_policy: condition: on-failure Docker Swarm deployed to AWS and lives behind internal/external load balancers (Classic type).",
+  "description": "Traefik v1.7 is running within a Docker Swarm, functioning as a global service. Consequently, an instance of Traefik is deployed for each host within our Docker Swarm cluster. It is important to note that the Swarm\u0026rsquo;s routing mesh is not employed in this setup. Instead, the port mode is configured as \u0026ldquo;host,\u0026rdquo; allowing the port to be attached to the host\u0026rsquo;s network.\ntraefik: image: ${REGISTRY}/traefik:1.6 build: ./traefik volumes: - /var/run/docker.sock:/var/run/docker.sock networks: - traefik environment: - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} - AWS_REGION=${AWS_REGION} - AWS_HOSTED_ZONE_ID=${AWS_HOSTED_ZONE_ID} ports: - target: 80 published: 80 protocol: tcp mode: host - target: 443 published: 443 mode: host protocol: tcp - target: 8080 published: 8080 mode: host protocol: tcp deploy: mode: global restart_policy: condition: on-failure Docker Swarm deployed to AWS and lives behind internal/external load balancers (Classic type).\n",
   "keywords": [
     "traefik", "cloud", "aws"
   ],
@@ -150,7 +241,7 @@ traefik: image: ${REGISTRY}/traefik:1.6 build: ./traefik volumes: - /var/run/doc
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://juliakostrikova.com" accesskey="h" title="Yuliia Kostrikova (Alt + H)">Yuliia Kostrikova</a>
+            <a href="https://juliakostrikova.com/" accesskey="h" title="Yuliia Kostrikova (Alt + H)">Yuliia Kostrikova</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -197,7 +288,7 @@ traefik: image: ${REGISTRY}/traefik:1.6 build: ./traefik volumes: - /var/run/doc
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="https://juliakostrikova.com">Home</a>&nbsp;»&nbsp;<a href="https://juliakostrikova.com/posts/">Posts</a></div>
+    <div class="breadcrumbs"><a href="https://juliakostrikova.com/">Home</a>&nbsp;»&nbsp;<a href="https://juliakostrikova.com/posts/">Posts</a></div>
     <h1 class="post-title">
       Traefik behind AWS ELB. X-Forwarded-For header
     </h1>
@@ -332,9 +423,9 @@ X-Forwarded-Proto: https
 
   <footer class="post-footer">
     <ul class="post-tags">
-      <li><a href="https://juliakostrikova.com/tags/traefik/">traefik</a></li>
-      <li><a href="https://juliakostrikova.com/tags/cloud/">cloud</a></li>
-      <li><a href="https://juliakostrikova.com/tags/aws/">aws</a></li>
+      <li><a href="https://juliakostrikova.com/tags/traefik/">Traefik</a></li>
+      <li><a href="https://juliakostrikova.com/tags/cloud/">Cloud</a></li>
+      <li><a href="https://juliakostrikova.com/tags/aws/">Aws</a></li>
     </ul>
 <nav class="paginav">
   <a class="prev" href="https://juliakostrikova.com/posts/homelab/ovderride-provider/">
@@ -365,7 +456,7 @@ X-Forwarded-Proto: https
     </main>
     
 <footer class="footer">
-    <span>&copy; 2025 <a href="https://juliakostrikova.com">Yuliia Kostrikova</a></span>
+    <span>&copy; 2026 <a href="https://juliakostrikova.com/">Yuliia Kostrikova</a></span>
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

@@ -21,6 +21,7 @@
 <link rel="icon" type="image/svg+xml"  href="https://juliakostrikova.com/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://juliakostrikova.com/posts/saa-c03/ebs_efs/">
 <noscript>
     <style>
         #theme-toggle,
@@ -58,17 +59,20 @@
 
     </style>
 </noscript>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-BR19XD52CV"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-BR19XD52CV', { 'anonymize_ip': false });
-}
-</script>
-<meta property="og:title" content="SAA-C03:: AWS Storage. EBS &amp; EFS" />
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-BR19XD52CV"></script>
+      <script>
+        var doNotTrack = false;
+        if ( true ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-BR19XD52CV');
+        }
+      </script><meta property="og:title" content="SAA-C03:: AWS Storage. EBS &amp; EFS" />
 <meta property="og:description" content="Study Notes" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://juliakostrikova.com/posts/saa-c03/ebs_efs/" /><meta property="article:section" content="posts" />
@@ -84,16 +88,16 @@ if (!doNotTrack) {
 {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
-  "itemListElement": [, 
+  "itemListElement": [
     {
       "@type": "ListItem",
-      "position":  2 ,
+      "position":  1 ,
       "name": "Posts",
       "item": "https://juliakostrikova.com/posts/"
     }, 
     {
       "@type": "ListItem",
-      "position":  3 ,
+      "position":  2 ,
       "name": "SAA-C03:: AWS Storage. EBS \u0026 EFS",
       "item": "https://juliakostrikova.com/posts/saa-c03/ebs_efs/"
     }
@@ -147,7 +151,7 @@ if (!doNotTrack) {
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://juliakostrikova.com" accesskey="h" title="Yuliia Kostrikova (Alt + H)">Yuliia Kostrikova</a>
+            <a href="https://juliakostrikova.com/" accesskey="h" title="Yuliia Kostrikova (Alt + H)">Yuliia Kostrikova</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -194,7 +198,7 @@ if (!doNotTrack) {
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="https://juliakostrikova.com">Home</a>&nbsp;»&nbsp;<a href="https://juliakostrikova.com/posts/">Posts</a></div>
+    <div class="breadcrumbs"><a href="https://juliakostrikova.com/">Home</a>&nbsp;»&nbsp;<a href="https://juliakostrikova.com/posts/">Posts</a></div>
     <h1 class="post-title">
       SAA-C03:: AWS Storage. EBS &amp; EFS
     </h1>
@@ -368,30 +372,30 @@ if (!doNotTrack) {
 <p>❕ cannot be a boot volume</p>
 <h3 id="iops-vs-throughput">IOPS vs Throughput<a hidden class="anchor" aria-hidden="true" href="#iops-vs-throughput">#</a></h3>
 <table>
-<thead>
-<tr>
-<th><strong>IOPS</strong></th>
-<th><strong>Throughput</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>measures the number of read and write operations per second</td>
-<td>measures the number of bits read or written per second (MB/s)</td>
-</tr>
-<tr>
-<td>important metric for qwick transations, low-latency apps, transactional workloads</td>
-<td>important metricfor large datasets, large I/O sizes, complex queries</td>
-</tr>
-<tr>
-<td>the ability to action reads and writes very qwickly</td>
-<td>the ability to deal with large datasets</td>
-</tr>
-<tr>
-<td>choose Provisioned SSD (io1 or io2)</td>
-<td>choose Throughput Optimized HDD (st1)</td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th><strong>IOPS</strong></th>
+          <th><strong>Throughput</strong></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>measures the number of read and write operations per second</td>
+          <td>measures the number of bits read or written per second (MB/s)</td>
+      </tr>
+      <tr>
+          <td>important metric for qwick transations, low-latency apps, transactional workloads</td>
+          <td>important metricfor large datasets, large I/O sizes, complex queries</td>
+      </tr>
+      <tr>
+          <td>the ability to action reads and writes very qwickly</td>
+          <td>the ability to deal with large datasets</td>
+      </tr>
+      <tr>
+          <td>choose Provisioned SSD (io1 or io2)</td>
+          <td>choose Throughput Optimized HDD (st1)</td>
+      </tr>
+  </tbody>
 </table>
 <h2 id="volumes-and-snapshots">Volumes and Snapshots<a hidden class="anchor" aria-hidden="true" href="#volumes-and-snapshots">#</a></h2>
 <h3 id="what-are-volumes">What are Volumes?<a hidden class="anchor" aria-hidden="true" href="#what-are-volumes">#</a></h3>
@@ -438,9 +442,9 @@ if (!doNotTrack) {
 
   <footer class="post-footer">
     <ul class="post-tags">
-      <li><a href="https://juliakostrikova.com/tags/aws/">aws</a></li>
+      <li><a href="https://juliakostrikova.com/tags/aws/">Aws</a></li>
       <li><a href="https://juliakostrikova.com/tags/saa-c03/">SAA-C03</a></li>
-      <li><a href="https://juliakostrikova.com/tags/cloud/">cloud</a></li>
+      <li><a href="https://juliakostrikova.com/tags/cloud/">Cloud</a></li>
     </ul>
 <nav class="paginav">
   <a class="prev" href="https://juliakostrikova.com/posts/chatgpt/plantuml/">
@@ -471,7 +475,7 @@ if (!doNotTrack) {
     </main>
     
 <footer class="footer">
-    <span>&copy; 2025 <a href="https://juliakostrikova.com">Yuliia Kostrikova</a></span>
+    <span>&copy; 2026 <a href="https://juliakostrikova.com/">Yuliia Kostrikova</a></span>
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

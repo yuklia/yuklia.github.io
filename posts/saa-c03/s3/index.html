@@ -21,6 +21,7 @@
 <link rel="icon" type="image/svg+xml"  href="https://juliakostrikova.com/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://juliakostrikova.com/posts/saa-c03/s3/">
 <noscript>
     <style>
         #theme-toggle,
@@ -58,17 +59,20 @@
 
     </style>
 </noscript>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-BR19XD52CV"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-BR19XD52CV', { 'anonymize_ip': false });
-}
-</script>
-<meta property="og:title" content="SAA-C03:: Simple Storage Service (S3)" />
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-BR19XD52CV"></script>
+      <script>
+        var doNotTrack = false;
+        if ( true ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-BR19XD52CV');
+        }
+      </script><meta property="og:title" content="SAA-C03:: Simple Storage Service (S3)" />
 <meta property="og:description" content="Study Notes" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://juliakostrikova.com/posts/saa-c03/s3/" /><meta property="article:section" content="posts" />
@@ -84,16 +88,16 @@ if (!doNotTrack) {
 {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
-  "itemListElement": [, 
+  "itemListElement": [
     {
       "@type": "ListItem",
-      "position":  2 ,
+      "position":  1 ,
       "name": "Posts",
       "item": "https://juliakostrikova.com/posts/"
     }, 
     {
       "@type": "ListItem",
-      "position":  3 ,
+      "position":  2 ,
       "name": "SAA-C03:: Simple Storage Service (S3)",
       "item": "https://juliakostrikova.com/posts/saa-c03/s3/"
     }
@@ -147,7 +151,7 @@ if (!doNotTrack) {
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://juliakostrikova.com" accesskey="h" title="Yuliia Kostrikova (Alt + H)">Yuliia Kostrikova</a>
+            <a href="https://juliakostrikova.com/" accesskey="h" title="Yuliia Kostrikova (Alt + H)">Yuliia Kostrikova</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -194,7 +198,7 @@ if (!doNotTrack) {
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="https://juliakostrikova.com">Home</a>&nbsp;»&nbsp;<a href="https://juliakostrikova.com/posts/">Posts</a></div>
+    <div class="breadcrumbs"><a href="https://juliakostrikova.com/">Home</a>&nbsp;»&nbsp;<a href="https://juliakostrikova.com/posts/">Posts</a></div>
     <h1 class="post-title">
       SAA-C03:: Simple Storage Service (S3)
     </h1>
@@ -446,262 +450,262 @@ x-amz-server-side-encryption: AES256
 <p>cheapest storage class and designed for customers that retain data sests for 7-10 years or longer to meet customer needs and regulatory compliance requirements. the standard retrieval time is 12 hours and the bulk retrieval time is 48 hours.</p>
 <h2 id="performance-across-the-s3-storage-classes">Performance across the S3 Storage Classes<a hidden class="anchor" aria-hidden="true" href="#performance-across-the-s3-storage-classes">#</a></h2>
 <table>
-<thead>
-<tr>
-<th></th>
-<th>S3 Standard</th>
-<th>S3 Intelligent-Tiering</th>
-<th>S3 Standard-IA</th>
-<th>S3 One Zone-IA+</th>
-<th>S3 Glacier Instant Retrieval</th>
-<th>S3 Glacier Flexible Retrieval</th>
-<th>S3 Glacier Deep Archive</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Designed for Durability</td>
-<td>99.999999999% (11 9&rsquo;s)</td>
-<td>99.999999999% (11 9&rsquo;s)</td>
-<td>99.999999999% (11 9&rsquo;s)</td>
-<td>99.999999999% (11 9&rsquo;s)</td>
-<td>99.999999999% (11 9&rsquo;s)</td>
-<td>99.999999999% (11 9&rsquo;s)</td>
-<td>99.999999999% (11 9&rsquo;s)</td>
-</tr>
-<tr>
-<td>Designed for Availability</td>
-<td>99.99%</td>
-<td>99.90%</td>
-<td>99.90%</td>
-<td>99.50%</td>
-<td>99.99%</td>
-<td>99.99%</td>
-<td>99.99%</td>
-</tr>
-<tr>
-<td>Availability SLA</td>
-<td>99.90%</td>
-<td>99%</td>
-<td>99%</td>
-<td>99%</td>
-<td>99.90%</td>
-<td>99.90%</td>
-<td>99.90%</td>
-</tr>
-<tr>
-<td>AZs</td>
-<td>&gt;=3</td>
-<td>&gt;=3</td>
-<td>&gt;=3</td>
-<td>1</td>
-<td>&gt;=3</td>
-<td>&gt;=3</td>
-<td>&gt;=3</td>
-</tr>
-<tr>
-<td>Min Capacity charge per Object</td>
-<td>n/a</td>
-<td>n/a</td>
-<td>128KB</td>
-<td>128KB</td>
-<td>128KB</td>
-<td>40KB</td>
-<td>40KB</td>
-</tr>
-<tr>
-<td>Min Storage duration charge</td>
-<td>n/a</td>
-<td>30 days</td>
-<td>30 days</td>
-<td>30 days</td>
-<td>90 days</td>
-<td>90 days</td>
-<td>180 days</td>
-</tr>
-<tr>
-<td>Retrieval Fee</td>
-<td>n/a</td>
-<td>n/a</td>
-<td>Per GB retrieved</td>
-<td>Per GB retrieved</td>
-<td>Per GB retrieved</td>
-<td>Per GB retrieved</td>
-<td>Per GB retrieved</td>
-</tr>
-<tr>
-<td>Storage Type</td>
-<td>Object</td>
-<td>Object</td>
-<td>Object</td>
-<td>Object</td>
-<td>Object</td>
-<td>Object</td>
-<td>Object</td>
-</tr>
-<tr>
-<td>Lifecycle Transitions</td>
-<td>Yes</td>
-<td>Yes</td>
-<td>Yes</td>
-<td>Yes</td>
-<td>Yes</td>
-<td>Yes</td>
-<td>Yes</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th></th>
+          <th>S3 Standard</th>
+          <th>S3 Intelligent-Tiering</th>
+          <th>S3 Standard-IA</th>
+          <th>S3 One Zone-IA+</th>
+          <th>S3 Glacier Instant Retrieval</th>
+          <th>S3 Glacier Flexible Retrieval</th>
+          <th>S3 Glacier Deep Archive</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Designed for Durability</td>
+          <td>99.999999999% (11 9&rsquo;s)</td>
+          <td>99.999999999% (11 9&rsquo;s)</td>
+          <td>99.999999999% (11 9&rsquo;s)</td>
+          <td>99.999999999% (11 9&rsquo;s)</td>
+          <td>99.999999999% (11 9&rsquo;s)</td>
+          <td>99.999999999% (11 9&rsquo;s)</td>
+          <td>99.999999999% (11 9&rsquo;s)</td>
+      </tr>
+      <tr>
+          <td>Designed for Availability</td>
+          <td>99.99%</td>
+          <td>99.90%</td>
+          <td>99.90%</td>
+          <td>99.50%</td>
+          <td>99.99%</td>
+          <td>99.99%</td>
+          <td>99.99%</td>
+      </tr>
+      <tr>
+          <td>Availability SLA</td>
+          <td>99.90%</td>
+          <td>99%</td>
+          <td>99%</td>
+          <td>99%</td>
+          <td>99.90%</td>
+          <td>99.90%</td>
+          <td>99.90%</td>
+      </tr>
+      <tr>
+          <td>AZs</td>
+          <td>&gt;=3</td>
+          <td>&gt;=3</td>
+          <td>&gt;=3</td>
+          <td>1</td>
+          <td>&gt;=3</td>
+          <td>&gt;=3</td>
+          <td>&gt;=3</td>
+      </tr>
+      <tr>
+          <td>Min Capacity charge per Object</td>
+          <td>n/a</td>
+          <td>n/a</td>
+          <td>128KB</td>
+          <td>128KB</td>
+          <td>128KB</td>
+          <td>40KB</td>
+          <td>40KB</td>
+      </tr>
+      <tr>
+          <td>Min Storage duration charge</td>
+          <td>n/a</td>
+          <td>30 days</td>
+          <td>30 days</td>
+          <td>30 days</td>
+          <td>90 days</td>
+          <td>90 days</td>
+          <td>180 days</td>
+      </tr>
+      <tr>
+          <td>Retrieval Fee</td>
+          <td>n/a</td>
+          <td>n/a</td>
+          <td>Per GB retrieved</td>
+          <td>Per GB retrieved</td>
+          <td>Per GB retrieved</td>
+          <td>Per GB retrieved</td>
+          <td>Per GB retrieved</td>
+      </tr>
+      <tr>
+          <td>Storage Type</td>
+          <td>Object</td>
+          <td>Object</td>
+          <td>Object</td>
+          <td>Object</td>
+          <td>Object</td>
+          <td>Object</td>
+          <td>Object</td>
+      </tr>
+      <tr>
+          <td>Lifecycle Transitions</td>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>Yes</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+  </tbody>
 </table>
 <h3 id="storage-classes---costs-">Storage Classes - Costs 💵<a hidden class="anchor" aria-hidden="true" href="#storage-classes---costs-">#</a></h3>
 <h4 id="s3-standard-1">S3 Standard<a hidden class="anchor" aria-hidden="true" href="#s3-standard-1">#</a></h4>
 <p><em>general-purpose for any type of data, typically used for frequent access</em></p>
 <table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>First 50 TB / Month</td>
-<td>0.023$ per GB</td>
-</tr>
-<tr>
-<td>Next 450 TB / Month</td>
-<td>0.022$ per GB</td>
-</tr>
-<tr>
-<td>Over 500 TB / Month</td>
-<td>0.021$ per GB</td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th></th>
+          <th></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>First 50 TB / Month</td>
+          <td>0.023$ per GB</td>
+      </tr>
+      <tr>
+          <td>Next 450 TB / Month</td>
+          <td>0.022$ per GB</td>
+      </tr>
+      <tr>
+          <td>Over 500 TB / Month</td>
+          <td>0.021$ per GB</td>
+      </tr>
+  </tbody>
 </table>
 <h4 id="s3-intelligent-tiering-1">S3 Intelligent-Tiering<a hidden class="anchor" aria-hidden="true" href="#s3-intelligent-tiering-1">#</a></h4>
 <p><em>cost saving strategies applied for data with unknown or changing access patterns</em></p>
 <p>no min storage duration</p>
 <table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>First 50 TB / Month</td>
-<td>0.023$ per GB</td>
-</tr>
-<tr>
-<td>Next 450 TB / Month</td>
-<td>0.022$ per GB</td>
-</tr>
-<tr>
-<td>Over 500 TB / Month</td>
-<td>0.021$ per GB</td>
-</tr>
-<tr>
-<td>All Storage / Month</td>
-<td>0.0025$ per GB</td>
-</tr>
-<tr>
-<td>Monitoring and Automation, All Storage / Month</td>
-<td>0.0025$ per 1000 Objects</td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th></th>
+          <th></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>First 50 TB / Month</td>
+          <td>0.023$ per GB</td>
+      </tr>
+      <tr>
+          <td>Next 450 TB / Month</td>
+          <td>0.022$ per GB</td>
+      </tr>
+      <tr>
+          <td>Over 500 TB / Month</td>
+          <td>0.021$ per GB</td>
+      </tr>
+      <tr>
+          <td>All Storage / Month</td>
+          <td>0.0025$ per GB</td>
+      </tr>
+      <tr>
+          <td>Monitoring and Automation, All Storage / Month</td>
+          <td>0.0025$ per 1000 Objects</td>
+      </tr>
+  </tbody>
 </table>
 <h4 id="s3-standard-infrequent-access">S3 Standard Infrequent Access<a hidden class="anchor" aria-hidden="true" href="#s3-standard-infrequent-access">#</a></h4>
 <p><em>long-lived but infrequently accessed data (once a month) that needs milliseconds access</em>
 30 days min storage duration</p>
 <table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>All Storage / Month</td>
-<td>0.0125$ per GB</td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th></th>
+          <th></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>All Storage / Month</td>
+          <td>0.0125$ per GB</td>
+      </tr>
+  </tbody>
 </table>
 <h4 id="s3-one-zone-infrequent-access-1">S3 One Zone-Infrequent Access<a hidden class="anchor" aria-hidden="true" href="#s3-one-zone-infrequent-access-1">#</a></h4>
 <p><em>re-creatable infrequently accessed data that needs milliseconds access</em>
 30 days min storage duration</p>
 <table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>All Storage / Month</td>
-<td>0.01$ per GB</td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th></th>
+          <th></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>All Storage / Month</td>
+          <td>0.01$ per GB</td>
+      </tr>
+  </tbody>
 </table>
 <h4 id="s3-glacier">S3 Glacier<a hidden class="anchor" aria-hidden="true" href="#s3-glacier">#</a></h4>
 <p><em>long-lived archived data accssed once a quarter with instant retrieval in milliseconds</em></p>
 <table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>All Storage / Month</td>
-<td>0.004$ per GB</td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th></th>
+          <th></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>All Storage / Month</td>
+          <td>0.004$ per GB</td>
+      </tr>
+  </tbody>
 </table>
 <h4 id="s3-glacier-flexible-retrieval">S3 Glacier Flexible Retrieval<a hidden class="anchor" aria-hidden="true" href="#s3-glacier-flexible-retrieval">#</a></h4>
 <p><em>archived data that does not require immediate access but needs the flexibility to retrieve large sets of data at no cost. retrieval time: can be minutes or up to 12 hours</em>
 90 days min storage duration</p>
 <table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>All Storage / Month</td>
-<td>0.0036$ per GB</td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th></th>
+          <th></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>All Storage / Month</td>
+          <td>0.0036$ per GB</td>
+      </tr>
+  </tbody>
 </table>
 <h4 id="s3-glacier-deep-archive">S3 Glacier Deep Archive<a hidden class="anchor" aria-hidden="true" href="#s3-glacier-deep-archive">#</a></h4>
 <p><em>designed to retain data sets for 7-10 years or longer. retrieval time: 12 hours and the bulk is 48 hours</em>
 180 days min storage duration</p>
 <table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>All Storage / Month</td>
-<td>0.00099$ per GB</td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th></th>
+          <th></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>All Storage / Month</td>
+          <td>0.00099$ per GB</td>
+      </tr>
+  </tbody>
 </table>
 <hr>
 <h2 id="lifecycle-management">Lifecycle Management<a hidden class="anchor" aria-hidden="true" href="#lifecycle-management">#</a></h2>
@@ -797,9 +801,9 @@ for example, 2 prefixes gives you 11,000 rps; 4 prefixes = 22,000; etc.</p>
 
   <footer class="post-footer">
     <ul class="post-tags">
-      <li><a href="https://juliakostrikova.com/tags/aws/">aws</a></li>
+      <li><a href="https://juliakostrikova.com/tags/aws/">Aws</a></li>
       <li><a href="https://juliakostrikova.com/tags/saa-c03/">SAA-C03</a></li>
-      <li><a href="https://juliakostrikova.com/tags/cloud/">cloud</a></li>
+      <li><a href="https://juliakostrikova.com/tags/cloud/">Cloud</a></li>
     </ul>
 <nav class="paginav">
   <a class="prev" href="https://juliakostrikova.com/posts/saa-c03/ebs_efs/">
@@ -830,7 +834,7 @@ for example, 2 prefixes gives you 11,000 rps; 4 prefixes = 22,000; etc.</p>
     </main>
     
 <footer class="footer">
-    <span>&copy; 2025 <a href="https://juliakostrikova.com">Yuliia Kostrikova</a></span>
+    <span>&copy; 2026 <a href="https://juliakostrikova.com/">Yuliia Kostrikova</a></span>
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

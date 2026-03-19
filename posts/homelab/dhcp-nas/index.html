@@ -9,9 +9,32 @@
 
 
 <meta name="keywords" content="UDM SE subnet setup, Synology NAS DHCP server, VLAN configuration UDM SE, Set up DHCP on Synology NAS, UDM SE VLAN tutorial, Synology NAS network configuration, Raspberry Pi DHCP client setup, UniFi Dream Machine Special Edition VLAN, Home lab network configuration, Synology DSM DHCP setup, Static IP configuration Synology NAS, UniFi network controller VLAN setup, Synology NAS DHCP server installation, Advanced network configuration UDM SE, DHCP server application Synology, Synology NAS VLAN setup guide, UniFi Dream Machine VLAN assignment, Raspberry Pi network setup VLAN, Synology NAS DHCP logs, Small office network configuration">
-<meta name="description" content="UniFi Dream Machine In this blog post, I&rsquo;ll guide you through the process of setting up a DHCP server on your Synology NAS within a subnet created on a UniFi Dream Machine Special Edition (UDM SE).
-Synology NAS Prerequisites Before we start, ensure you have the following:
-UDM SE: UniFi Dream Machine Special Edition. Synology NAS: Network Attached Storage device from Synology. Raspberry Pi: Any model will suffice. Ethernet cables: To connect your devices.">
+<meta name="description" content="
+     
+            UniFi Dream Machine
+        
+
+
+In this blog post, I&rsquo;ll guide you through the process of setting up a DHCP server on your Synology NAS within a subnet created on a UniFi Dream Machine Special Edition (UDM SE).
+
+     
+            Synology NAS
+        
+
+
+Prerequisites
+Before we start, ensure you have the following:
+
+UDM SE: UniFi Dream Machine Special Edition.
+Synology NAS: Network Attached Storage device from Synology.
+Raspberry Pi: Any model will suffice.
+Ethernet cables: To connect your devices.
+
+Step-by-Step Guide
+1. Create a Subnet on UDM SE
+
+
+Log in to your UniFi Router: Access your UDM SE via the UniFi Network application.">
 <meta name="author" content="">
 <link rel="canonical" href="https://juliakostrikova.com/posts/homelab/dhcp-nas/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.7140587df96a2b1a49eb723fa7063dc0c641a6cb638f3140e8d3beb4deae4f5c.css" integrity="sha256-cUBYfflqKxpJ63I/pwY9wMZBpstjjzFA6NO&#43;tN6uT1w=" rel="preload stylesheet" as="style">
@@ -23,6 +46,7 @@ UDM SE: UniFi Dream Machine Special Edition. Synology NAS: Network Attached Stor
 <link rel="icon" type="image/svg+xml"  href="https://juliakostrikova.com/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://juliakostrikova.com/posts/homelab/dhcp-nas/">
 <noscript>
     <style>
         #theme-toggle,
@@ -60,20 +84,46 @@ UDM SE: UniFi Dream Machine Special Edition. Synology NAS: Network Attached Stor
 
     </style>
 </noscript>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-BR19XD52CV"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-BR19XD52CV', { 'anonymize_ip': false });
-}
-</script>
-<meta property="og:title" content="Setting Up a DHCP Server on Synology NAS in a UniFi Dream Machine SE Subnet" />
-<meta property="og:description" content="UniFi Dream Machine In this blog post, I&rsquo;ll guide you through the process of setting up a DHCP server on your Synology NAS within a subnet created on a UniFi Dream Machine Special Edition (UDM SE).
-Synology NAS Prerequisites Before we start, ensure you have the following:
-UDM SE: UniFi Dream Machine Special Edition. Synology NAS: Network Attached Storage device from Synology. Raspberry Pi: Any model will suffice. Ethernet cables: To connect your devices." />
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-BR19XD52CV"></script>
+      <script>
+        var doNotTrack = false;
+        if ( true ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-BR19XD52CV');
+        }
+      </script><meta property="og:title" content="Setting Up a DHCP Server on Synology NAS in a UniFi Dream Machine SE Subnet" />
+<meta property="og:description" content="
+     
+            UniFi Dream Machine
+        
+
+
+In this blog post, I&rsquo;ll guide you through the process of setting up a DHCP server on your Synology NAS within a subnet created on a UniFi Dream Machine Special Edition (UDM SE).
+
+     
+            Synology NAS
+        
+
+
+Prerequisites
+Before we start, ensure you have the following:
+
+UDM SE: UniFi Dream Machine Special Edition.
+Synology NAS: Network Attached Storage device from Synology.
+Raspberry Pi: Any model will suffice.
+Ethernet cables: To connect your devices.
+
+Step-by-Step Guide
+1. Create a Subnet on UDM SE
+
+
+Log in to your UniFi Router: Access your UDM SE via the UniFi Network application." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://juliakostrikova.com/posts/homelab/dhcp-nas/" />
 <meta property="og:image" content="https://juliakostrikova.com/chatGPT/author_julia_kostrikova_cat_dhcp_server.jpg" /><meta property="article:section" content="posts" />
@@ -83,25 +133,48 @@ UDM SE: UniFi Dream Machine Special Edition. Synology NAS: Network Attached Stor
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://juliakostrikova.com/chatGPT/author_julia_kostrikova_cat_dhcp_server.jpg" />
 <meta name="twitter:title" content="Setting Up a DHCP Server on Synology NAS in a UniFi Dream Machine SE Subnet"/>
-<meta name="twitter:description" content="UniFi Dream Machine In this blog post, I&rsquo;ll guide you through the process of setting up a DHCP server on your Synology NAS within a subnet created on a UniFi Dream Machine Special Edition (UDM SE).
-Synology NAS Prerequisites Before we start, ensure you have the following:
-UDM SE: UniFi Dream Machine Special Edition. Synology NAS: Network Attached Storage device from Synology. Raspberry Pi: Any model will suffice. Ethernet cables: To connect your devices."/>
+<meta name="twitter:description" content="
+     
+            UniFi Dream Machine
+        
+
+
+In this blog post, I&rsquo;ll guide you through the process of setting up a DHCP server on your Synology NAS within a subnet created on a UniFi Dream Machine Special Edition (UDM SE).
+
+     
+            Synology NAS
+        
+
+
+Prerequisites
+Before we start, ensure you have the following:
+
+UDM SE: UniFi Dream Machine Special Edition.
+Synology NAS: Network Attached Storage device from Synology.
+Raspberry Pi: Any model will suffice.
+Ethernet cables: To connect your devices.
+
+Step-by-Step Guide
+1. Create a Subnet on UDM SE
+
+
+Log in to your UniFi Router: Access your UDM SE via the UniFi Network application."/>
 
 
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
-  "itemListElement": [, 
+  "itemListElement": [
     {
       "@type": "ListItem",
-      "position":  2 ,
+      "position":  1 ,
       "name": "Posts",
       "item": "https://juliakostrikova.com/posts/"
     }, 
     {
       "@type": "ListItem",
-      "position":  3 ,
+      "position":  2 ,
       "name": "Setting Up a DHCP Server on Synology NAS in a UniFi Dream Machine SE Subnet",
       "item": "https://juliakostrikova.com/posts/homelab/dhcp-nas/"
     }
@@ -114,7 +187,7 @@ UDM SE: UniFi Dream Machine Special Edition. Synology NAS: Network Attached Stor
   "@type": "BlogPosting",
   "headline": "Setting Up a DHCP Server on Synology NAS in a UniFi Dream Machine SE Subnet",
   "name": "Setting Up a DHCP Server on Synology NAS in a UniFi Dream Machine SE Subnet",
-  "description": "UniFi Dream Machine In this blog post, I\u0026rsquo;ll guide you through the process of setting up a DHCP server on your Synology NAS within a subnet created on a UniFi Dream Machine Special Edition (UDM SE).\nSynology NAS Prerequisites Before we start, ensure you have the following:\nUDM SE: UniFi Dream Machine Special Edition. Synology NAS: Network Attached Storage device from Synology. Raspberry Pi: Any model will suffice. Ethernet cables: To connect your devices.",
+  "description": " UniFi Dream Machine In this blog post, I\u0026rsquo;ll guide you through the process of setting up a DHCP server on your Synology NAS within a subnet created on a UniFi Dream Machine Special Edition (UDM SE).\nSynology NAS Prerequisites Before we start, ensure you have the following:\nUDM SE: UniFi Dream Machine Special Edition. Synology NAS: Network Attached Storage device from Synology. Raspberry Pi: Any model will suffice. Ethernet cables: To connect your devices. Step-by-Step Guide 1. Create a Subnet on UDM SE Log in to your UniFi Router: Access your UDM SE via the UniFi Network application.\n",
   "keywords": [
     "UDM SE subnet setup", "Synology NAS DHCP server", "VLAN configuration UDM SE", "Set up DHCP on Synology NAS", "UDM SE VLAN tutorial", "Synology NAS network configuration", "Raspberry Pi DHCP client setup", "UniFi Dream Machine Special Edition VLAN", "Home lab network configuration", "Synology DSM DHCP setup", "Static IP configuration Synology NAS", "UniFi network controller VLAN setup", "Synology NAS DHCP server installation", "Advanced network configuration UDM SE", "DHCP server application Synology", "Synology NAS VLAN setup guide", "UniFi Dream Machine VLAN assignment", "Raspberry Pi network setup VLAN", "Synology NAS DHCP logs", "Small office network configuration"
   ],
@@ -155,7 +228,7 @@ UDM SE: UniFi Dream Machine Special Edition. Synology NAS: Network Attached Stor
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://juliakostrikova.com" accesskey="h" title="Yuliia Kostrikova (Alt + H)">Yuliia Kostrikova</a>
+            <a href="https://juliakostrikova.com/" accesskey="h" title="Yuliia Kostrikova (Alt + H)">Yuliia Kostrikova</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -202,7 +275,7 @@ UDM SE: UniFi Dream Machine Special Edition. Synology NAS: Network Attached Stor
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="https://juliakostrikova.com">Home</a>&nbsp;»&nbsp;<a href="https://juliakostrikova.com/posts/">Posts</a></div>
+    <div class="breadcrumbs"><a href="https://juliakostrikova.com/">Home</a>&nbsp;»&nbsp;<a href="https://juliakostrikova.com/posts/">Posts</a></div>
     <h1 class="post-title">
       Setting Up a DHCP Server on Synology NAS in a UniFi Dream Machine SE Subnet
     </h1>
@@ -403,9 +476,9 @@ If you encounter any issues, ensure all settings are correctly applied and consu
 
   <footer class="post-footer">
     <ul class="post-tags">
-      <li><a href="https://juliakostrikova.com/tags/howto/">howto</a></li>
-      <li><a href="https://juliakostrikova.com/tags/home-automation/">home automation</a></li>
-      <li><a href="https://juliakostrikova.com/tags/homelab/">homelab</a></li>
+      <li><a href="https://juliakostrikova.com/tags/howto/">Howto</a></li>
+      <li><a href="https://juliakostrikova.com/tags/home-automation/">Home Automation</a></li>
+      <li><a href="https://juliakostrikova.com/tags/homelab/">Homelab</a></li>
       <li><a href="https://juliakostrikova.com/tags/bare-metal/">Bare Metal</a></li>
     </ul>
 <nav class="paginav">
@@ -437,7 +510,7 @@ If you encounter any issues, ensure all settings are correctly applied and consu
     </main>
     
 <footer class="footer">
-    <span>&copy; 2025 <a href="https://juliakostrikova.com">Yuliia Kostrikova</a></span>
+    <span>&copy; 2026 <a href="https://juliakostrikova.com/">Yuliia Kostrikova</a></span>
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

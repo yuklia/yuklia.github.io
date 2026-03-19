@@ -11,7 +11,6 @@
       <title>HowTo: Fix iSCSI mounts after reboot</title>
       <link>https://juliakostrikova.com/posts/homelab/iscasi-autoconnect/</link>
       <pubDate>Sun, 08 Jun 2025 00:30:58 +0200</pubDate>
-      
       <guid>https://juliakostrikova.com/posts/homelab/iscasi-autoconnect/</guid>
       <description>a follow-up to my previous article on PXE/iSCSI setup, addressing the annoying issue of iSCSI auto-mounting failure</description>
     </item>
@@ -20,7 +19,6 @@
       <title>Detailed HowTo: PXE boot multiple RPi (Birthday Edition 🍰)</title>
       <link>https://juliakostrikova.com/posts/homelab/pxe-boot/</link>
       <pubDate>Tue, 06 Aug 2024 11:28:58 +0200</pubDate>
-      
       <guid>https://juliakostrikova.com/posts/homelab/pxe-boot/</guid>
       <description>PXE (Preboot eXecution Environment) is a client-server environment which makes possible to boot and install operating systems without the need of physical media.</description>
     </item>
@@ -29,20 +27,43 @@
       <title>Setting Up a DHCP Server on Synology NAS in a UniFi Dream Machine SE Subnet</title>
       <link>https://juliakostrikova.com/posts/homelab/dhcp-nas/</link>
       <pubDate>Wed, 19 Jun 2024 11:28:58 +0200</pubDate>
-      
       <guid>https://juliakostrikova.com/posts/homelab/dhcp-nas/</guid>
-      <description>UniFi Dream Machine In this blog post, I&amp;rsquo;ll guide you through the process of setting up a DHCP server on your Synology NAS within a subnet created on a UniFi Dream Machine Special Edition (UDM SE).
-Synology NAS Prerequisites Before we start, ensure you have the following:
-UDM SE: UniFi Dream Machine Special Edition. Synology NAS: Network Attached Storage device from Synology. Raspberry Pi: Any model will suffice. Ethernet cables: To connect your devices.</description>
+      <description>&lt;figure&gt;
+    &lt;img loading=&#34;lazy&#34; src=&#34;https://juliakostrikova.com/homelab/pxe/udm_se_copy.png&#34;/&gt; &lt;figcaption&gt;
+            UniFi Dream Machine
+        &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;In this blog post, I&amp;rsquo;ll guide you through the process of setting up a DHCP server on your Synology NAS within a subnet created on a UniFi Dream Machine Special Edition (UDM SE).&lt;/p&gt;
+&lt;figure&gt;
+    &lt;img loading=&#34;lazy&#34; src=&#34;https://juliakostrikova.com/homelab/pxe/nas_front.png&#34;/&gt; &lt;figcaption&gt;
+            Synology NAS
+        &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h2 id=&#34;prerequisites&#34;&gt;Prerequisites&lt;/h2&gt;
+&lt;p&gt;Before we start, ensure you have the following:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;UDM SE&lt;/strong&gt;: UniFi Dream Machine Special Edition.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Synology NAS&lt;/strong&gt;: Network Attached Storage device from Synology.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Raspberry Pi&lt;/strong&gt;: Any model will suffice.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Ethernet cables&lt;/strong&gt;: To connect your devices.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;step-by-step-guide&#34;&gt;Step-by-Step Guide&lt;/h2&gt;
+&lt;h3 id=&#34;1-create-a-subnet-on-udm-se&#34;&gt;1. Create a Subnet on UDM SE&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Log in to your UniFi Router&lt;/strong&gt;: Access your UDM SE via the UniFi Network application.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>RPI 5 on Ubuntu 24.04 (Headless): Connect to WiFi / Mobile Hotspot</title>
       <link>https://juliakostrikova.com/posts/homelab/mobile-hotspot-on-rpi5/</link>
       <pubDate>Sat, 25 May 2024 11:28:58 +0200</pubDate>
-      
       <guid>https://juliakostrikova.com/posts/homelab/mobile-hotspot-on-rpi5/</guid>
-      <description>RPI 5 on Ubuntu 24.04 (headless): Connect to WiFi / Mobile Hotspot Introduction In my free time, I enjoy tinkering with my home lab, exploring new projects and challenges. Recently, I decided to connect my Raspberry Pi 5 to a mobile hotspot—a seemingly straightforward task. However, it turned out not so smooth. In this post, I&amp;rsquo;ll walk you through how I resolved the error brcmfmac: brcmf_set_channel: set chanspec fail, reason -52 and successfully connected Raspberry Pi to a mobile hotspot.</description>
+      <description>&lt;h2 id=&#34;rpi-5-on-ubuntu-2404-headless-connect-to-wifi--mobile-hotspot&#34;&gt;RPI 5 on Ubuntu 24.04 (headless): Connect to WiFi / Mobile Hotspot&lt;/h2&gt;
+&lt;h3 id=&#34;introduction&#34;&gt;Introduction&lt;/h3&gt;
+&lt;p&gt;In my free time, I enjoy tinkering with my home lab, exploring new projects and challenges. Recently, I decided to connect my Raspberry Pi 5 to a mobile hotspot—a seemingly straightforward task. However, it turned out not so smooth. In this post, I&amp;rsquo;ll walk you through how I resolved the error &lt;code&gt;brcmfmac: brcmf_set_channel: set chanspec fail, reason -52&lt;/code&gt; and successfully connected Raspberry Pi to a mobile hotspot.&lt;/p&gt;</description>
     </item>
     
   </channel>

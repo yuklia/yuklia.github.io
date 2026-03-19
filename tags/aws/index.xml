@@ -1,17 +1,32 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>aws on Yuliia Kostrikova</title>
+    <title>Aws on Yuliia Kostrikova</title>
     <link>https://juliakostrikova.com/tags/aws/</link>
-    <description>Recent content in aws on Yuliia Kostrikova</description>
+    <description>Recent content in Aws on Yuliia Kostrikova</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Sat, 20 Jan 2024 19:35:26 +0200</lastBuildDate><atom:link href="https://juliakostrikova.com/tags/aws/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 08 Mar 2026 09:23:03 +0100</lastBuildDate><atom:link href="https://juliakostrikova.com/tags/aws/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>the dangerous detour</title>
+      <link>https://juliakostrikova.com/posts/backup/</link>
+      <pubDate>Sun, 08 Mar 2026 09:23:03 +0100</pubDate>
+      <guid>https://juliakostrikova.com/posts/backup/</guid>
+      <description>Why agentic AI has no place running your IaC — and what 9 years with Terraform taught me about professional responsibility.</description>
+    </item>
+    
+    <item>
+      <title>the dangerous detour</title>
+      <link>https://juliakostrikova.com/posts/my-first-post/</link>
+      <pubDate>Sun, 08 Mar 2026 09:23:03 +0100</pubDate>
+      <guid>https://juliakostrikova.com/posts/my-first-post/</guid>
+      <description>Why agentic AI has no place running your IaC — and what 9 years with Terraform taught me about professional responsibility.</description>
+    </item>
+    
     <item>
       <title>SAA-C03:: AWS Storage. EBS &amp; EFS</title>
       <link>https://juliakostrikova.com/posts/saa-c03/ebs_efs/</link>
       <pubDate>Sat, 20 Jan 2024 19:35:26 +0200</pubDate>
-      
       <guid>https://juliakostrikova.com/posts/saa-c03/ebs_efs/</guid>
       <description>Study Notes</description>
     </item>
@@ -20,7 +35,6 @@
       <title>SAA-C03:: Simple Storage Service (S3)</title>
       <link>https://juliakostrikova.com/posts/saa-c03/s3/</link>
       <pubDate>Tue, 16 Jan 2024 15:35:26 +0200</pubDate>
-      
       <guid>https://juliakostrikova.com/posts/saa-c03/s3/</guid>
       <description>Study Notes</description>
     </item>
@@ -29,7 +43,6 @@
       <title>SAA-C03:: Introduction to Cloud Computing and AWS</title>
       <link>https://juliakostrikova.com/posts/saa-c03/aws-fundamentals/</link>
       <pubDate>Wed, 03 Jan 2024 19:35:26 +0200</pubDate>
-      
       <guid>https://juliakostrikova.com/posts/saa-c03/aws-fundamentals/</guid>
       <description>Study Notes</description>
     </item>
@@ -38,10 +51,38 @@
       <title>Traefik behind AWS ELB. X-Forwarded-For header</title>
       <link>https://juliakostrikova.com/posts/cloud/traefik-x-forwarded-for/</link>
       <pubDate>Sat, 17 Oct 2020 18:02:25 +0300</pubDate>
-      
       <guid>https://juliakostrikova.com/posts/cloud/traefik-x-forwarded-for/</guid>
-      <description>Traefik v1.7 is running within a Docker Swarm, functioning as a global service. Consequently, an instance of Traefik is deployed for each host within our Docker Swarm cluster. It is important to note that the Swarm&amp;rsquo;s routing mesh is not employed in this setup. Instead, the port mode is configured as &amp;ldquo;host,&amp;rdquo; allowing the port to be attached to the host&amp;rsquo;s network.
-traefik: image: ${REGISTRY}/traefik:1.6 build: ./traefik volumes: - /var/run/docker.sock:/var/run/docker.sock networks: - traefik environment: - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} - AWS_REGION=${AWS_REGION} - AWS_HOSTED_ZONE_ID=${AWS_HOSTED_ZONE_ID} ports: - target: 80 published: 80 protocol: tcp mode: host - target: 443 published: 443 mode: host protocol: tcp - target: 8080 published: 8080 mode: host protocol: tcp deploy: mode: global restart_policy: condition: on-failure Docker Swarm deployed to AWS and lives behind internal/external load balancers (Classic type).</description>
+      <description>&lt;p&gt;Traefik v1.7 is running within a Docker Swarm, functioning as a global service. Consequently, an instance of Traefik is deployed for each host within our Docker Swarm cluster. It is important to note that the Swarm&amp;rsquo;s routing mesh is not employed in this setup. Instead, the port mode is configured as &amp;ldquo;host,&amp;rdquo; allowing the port to be attached to the host&amp;rsquo;s network.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;traefik:
+  image: ${REGISTRY}/traefik:1.6
+  build: ./traefik
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+  networks:
+    - traefik
+  environment:
+    - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+    - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+    - AWS_REGION=${AWS_REGION}
+    - AWS_HOSTED_ZONE_ID=${AWS_HOSTED_ZONE_ID}
+  ports:
+    - target: 80
+      published: 80
+      protocol: tcp
+      mode: host
+    - target: 443
+      published: 443
+      mode: host
+      protocol: tcp
+    - target: 8080
+      published: 8080
+      mode: host
+      protocol: tcp
+  deploy:
+    mode: global
+    restart_policy:
+      condition: on-failure
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Docker Swarm deployed to AWS and lives behind internal/external load balancers (Classic type).&lt;/p&gt;</description>
     </item>
     
   </channel>

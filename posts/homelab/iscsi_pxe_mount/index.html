@@ -21,6 +21,7 @@
 <link rel="icon" type="image/svg+xml"  href="https://juliakostrikova.com/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://juliakostrikova.com/posts/homelab/iscsi_pxe_mount/">
 <noscript>
     <style>
         #theme-toggle,
@@ -58,17 +59,20 @@
 
     </style>
 </noscript>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-BR19XD52CV"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-BR19XD52CV', { 'anonymize_ip': false });
-}
-</script>
-<meta property="og:title" content="k8s cluster on Raspberry PI&#39;s with iSCSI block storage" />
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-BR19XD52CV"></script>
+      <script>
+        var doNotTrack = false;
+        if ( true ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-BR19XD52CV');
+        }
+      </script><meta property="og:title" content="k8s cluster on Raspberry PI&#39;s with iSCSI block storage" />
 <meta property="og:description" content="exploring the challenges of running a k8s cluster on Raspberry PI&#39;s with PXE network boot and overcoming containerd storage limitations using iSCSI" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://juliakostrikova.com/posts/homelab/iscsi_pxe_mount/" />
@@ -86,16 +90,16 @@ if (!doNotTrack) {
 {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
-  "itemListElement": [, 
+  "itemListElement": [
     {
       "@type": "ListItem",
-      "position":  2 ,
+      "position":  1 ,
       "name": "Posts",
       "item": "https://juliakostrikova.com/posts/"
     }, 
     {
       "@type": "ListItem",
-      "position":  3 ,
+      "position":  2 ,
       "name": "k8s cluster on Raspberry PI's with iSCSI block storage",
       "item": "https://juliakostrikova.com/posts/homelab/iscsi_pxe_mount/"
     }
@@ -149,7 +153,7 @@ if (!doNotTrack) {
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://juliakostrikova.com" accesskey="h" title="Yuliia Kostrikova (Alt + H)">Yuliia Kostrikova</a>
+            <a href="https://juliakostrikova.com/" accesskey="h" title="Yuliia Kostrikova (Alt + H)">Yuliia Kostrikova</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -196,7 +200,7 @@ if (!doNotTrack) {
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="https://juliakostrikova.com">Home</a>&nbsp;»&nbsp;<a href="https://juliakostrikova.com/posts/">Posts</a></div>
+    <div class="breadcrumbs"><a href="https://juliakostrikova.com/">Home</a>&nbsp;»&nbsp;<a href="https://juliakostrikova.com/posts/">Posts</a></div>
     <h1 class="post-title">
       k8s cluster on Raspberry PI&#39;s with iSCSI block storage
     </h1>
@@ -440,12 +444,12 @@ nginx-54f87867d6-9tbgl   1/1     Running   0          3h13m
 
   <footer class="post-footer">
     <ul class="post-tags">
-      <li><a href="https://juliakostrikova.com/tags/kubernetes/">kubernetes</a></li>
-      <li><a href="https://juliakostrikova.com/tags/raspberrypi5/">raspberryPI5</a></li>
-      <li><a href="https://juliakostrikova.com/tags/iscsi/">iSCSI</a></li>
-      <li><a href="https://juliakostrikova.com/tags/homelab/">homelab</a></li>
-      <li><a href="https://juliakostrikova.com/tags/nfs/">nfs</a></li>
-      <li><a href="https://juliakostrikova.com/tags/pxe-boot/">pxe boot</a></li>
+      <li><a href="https://juliakostrikova.com/tags/kubernetes/">Kubernetes</a></li>
+      <li><a href="https://juliakostrikova.com/tags/raspberrypi5/">RaspberryPI5</a></li>
+      <li><a href="https://juliakostrikova.com/tags/iscsi/">ISCSI</a></li>
+      <li><a href="https://juliakostrikova.com/tags/homelab/">Homelab</a></li>
+      <li><a href="https://juliakostrikova.com/tags/nfs/">Nfs</a></li>
+      <li><a href="https://juliakostrikova.com/tags/pxe-boot/">PXE Boot</a></li>
     </ul>
 <nav class="paginav">
   <a class="prev" href="https://juliakostrikova.com/posts/homelab/iscasi-autoconnect/">
@@ -476,7 +480,7 @@ nginx-54f87867d6-9tbgl   1/1     Running   0          3h13m
     </main>
     
 <footer class="footer">
-    <span>&copy; 2025 <a href="https://juliakostrikova.com">Yuliia Kostrikova</a></span>
+    <span>&copy; 2026 <a href="https://juliakostrikova.com/">Yuliia Kostrikova</a></span>
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

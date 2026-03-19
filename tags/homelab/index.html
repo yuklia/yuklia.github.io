@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
-<title>homelab | Yuliia Kostrikova</title>
+<title>Homelab | Yuliia Kostrikova</title>
 
 
 <meta name="keywords" content="">
@@ -22,6 +22,7 @@
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
 <link rel="alternate" type="application/rss+xml" href="https://juliakostrikova.com/tags/homelab/index.xml">
+<link rel="alternate" hreflang="en" href="https://juliakostrikova.com/tags/homelab/">
 <noscript>
     <style>
         #theme-toggle,
@@ -59,23 +60,26 @@
 
     </style>
 </noscript>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-BR19XD52CV"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-BR19XD52CV', { 'anonymize_ip': false });
-}
-</script>
-<meta property="og:title" content="homelab" />
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-BR19XD52CV"></script>
+      <script>
+        var doNotTrack = false;
+        if ( true ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-BR19XD52CV');
+        }
+      </script><meta property="og:title" content="Homelab" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://juliakostrikova.com/tags/homelab/" />
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="homelab"/>
+<meta name="twitter:title" content="Homelab"/>
 <meta name="twitter:description" content=""/>
 
     
@@ -96,7 +100,7 @@ if (!doNotTrack) {
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://juliakostrikova.com" accesskey="h" title="Yuliia Kostrikova (Alt + H)">Yuliia Kostrikova</a>
+            <a href="https://juliakostrikova.com/" accesskey="h" title="Yuliia Kostrikova (Alt + H)">Yuliia Kostrikova</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -140,9 +144,9 @@ if (!doNotTrack) {
     </nav>
 </header>
 <main class="main"> 
-<header class="page-header"><div class="breadcrumbs"><a href="https://juliakostrikova.com">Home</a>&nbsp;»&nbsp;<a href="https://juliakostrikova.com/tags/">Tags</a></div>
+<header class="page-header"><div class="breadcrumbs"><a href="https://juliakostrikova.com/">Home</a>&nbsp;»&nbsp;<a href="https://juliakostrikova.com/tags/">Tags</a></div>
   <h1>
-    homelab
+    Homelab
     <a href="/tags/homelab/index.xml" title="RSS" aria-label="RSS">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
         stroke-linecap="round" stroke-linejoin="round" height="23">
@@ -161,7 +165,8 @@ if (!doNotTrack) {
   </header>
   <div class="entry-content">
     <p>the problem so i was working on my PXE boot with iSCSI storage setup, and everything seemed perfect. but there were some things that were missed to make it work after system reboot.
-what went wrong container services refusing to start kubernetes nodes stuck in NotReady state having to manually fix things after every single reboot if you’re dealing with a similar mess where your PXE/iSCSI setup works until you reboot, this guide should help you out....</p>
+what went wrong container services refusing to start kubernetes nodes stuck in NotReady state having to manually fix things after every single reboot if you’re dealing with a similar mess where your PXE/iSCSI setup works until you reboot, this guide should help you out. the issue usually boils down to timing problems between iSCSI connections, mount points, and when services try to start up.
+...</p>
   </div>
   <footer class="entry-footer"><span title='2025-06-08 00:30:58 +0200 CEST'>June 8, 2025</span>&nbsp;·&nbsp;4 min</footer>
   <a class="entry-link" aria-label="post link to HowTo: Fix iSCSI mounts after reboot" href="https://juliakostrikova.com/posts/homelab/iscasi-autoconnect/"></a>
@@ -177,7 +182,8 @@ what went wrong container services refusing to start kubernetes nodes stuck in N
   <div class="entry-content">
     <p>Toba Meet Toba the cat, the latest security shield model, equipped with 24/7 surveillance mode and an aggressive defense mechanism when unauthorized movement is detected. 🚨😼
 Any attempt to relocate this elite guardian from the server rack results in immediate resistance, accompanied by sharp glares and indignant meows. 🛑🐾
-Plan to Host Mastodon on 4 × Raspberry Pis In my current homelab project, I am building a bare-metal Kubernetes cluster to host ~10–50 containers per node....</p>
+Plan to Host Mastodon on 4 × Raspberry Pis In my current homelab project, I am building a bare-metal Kubernetes cluster to host ~10–50 containers per node. What app will run there? Well, I’ll figure that out along the way, but I’m considering hosting Mastodon. (For those who don’t know, Mastodon is a decentralized microblogging platform.)
+...</p>
   </div>
   <footer class="entry-footer"><span title='2025-02-09 00:30:58 +0200 +0200'>February 9, 2025</span>&nbsp;·&nbsp;7 min</footer>
   <a class="entry-link" aria-label="post link to k8s cluster on Raspberry PI&#39;s with iSCSI block storage" href="https://juliakostrikova.com/posts/homelab/iscsi_pxe_mount/"></a>
@@ -191,7 +197,8 @@ Plan to Host Mastodon on 4 × Raspberry Pis In my current homelab project, I am 
     </h2>
   </header>
   <div class="entry-content">
-    <p>introduction I’ve always been intrigued by the idea of creating a home data center with Raspberry PIs as a computable instances. However, managing individuals node with SD cards is not fun 😼. So decided to try PXE (Preboot Execution Environment) booting. Instead of dealing with each SD card individually, PXE protocol lets me manage all my RPis from one central server, making updates and further patches easier. In this post, I’ll share how you can set up PXE booting for your RPi fleet and enjoy these benefits to :)...</p>
+    <p>introduction I’ve always been intrigued by the idea of creating a home data center with Raspberry PIs as a computable instances. However, managing individuals node with SD cards is not fun 😼. So decided to try PXE (Preboot Execution Environment) booting. Instead of dealing with each SD card individually, PXE protocol lets me manage all my RPis from one central server, making updates and further patches easier. In this post, I’ll share how you can set up PXE booting for your RPi fleet and enjoy these benefits to :)
+...</p>
   </div>
   <footer class="entry-footer"><span title='2024-08-06 11:28:58 +0200 CEST'>August 6, 2024</span>&nbsp;·&nbsp;6 min</footer>
   <a class="entry-link" aria-label="post link to Detailed HowTo: PXE boot multiple RPi (Birthday Edition 🍰)" href="https://juliakostrikova.com/posts/homelab/pxe-boot/"></a>
@@ -205,9 +212,10 @@ Plan to Host Mastodon on 4 × Raspberry Pis In my current homelab project, I am 
     </h2>
   </header>
   <div class="entry-content">
-    <p>UniFi Dream Machine In this blog post, I’ll guide you through the process of setting up a DHCP server on your Synology NAS within a subnet created on a UniFi Dream Machine Special Edition (UDM SE).
+    <p> UniFi Dream Machine In this blog post, I’ll guide you through the process of setting up a DHCP server on your Synology NAS within a subnet created on a UniFi Dream Machine Special Edition (UDM SE).
 Synology NAS Prerequisites Before we start, ensure you have the following:
-UDM SE: UniFi Dream Machine Special Edition. Synology NAS: Network Attached Storage device from Synology. Raspberry Pi: Any model will suffice. Ethernet cables: To connect your devices....</p>
+UDM SE: UniFi Dream Machine Special Edition. Synology NAS: Network Attached Storage device from Synology. Raspberry Pi: Any model will suffice. Ethernet cables: To connect your devices. Step-by-Step Guide 1. Create a Subnet on UDM SE Log in to your UniFi Router: Access your UDM SE via the UniFi Network application.
+...</p>
   </div>
   <footer class="entry-footer"><span title='2024-06-19 11:28:58 +0200 CEST'>June 19, 2024</span>&nbsp;·&nbsp;3 min</footer>
   <a class="entry-link" aria-label="post link to Setting Up a DHCP Server on Synology NAS in a UniFi Dream Machine SE Subnet" href="https://juliakostrikova.com/posts/homelab/dhcp-nas/"></a>
@@ -221,7 +229,8 @@ UDM SE: UniFi Dream Machine Special Edition. Synology NAS: Network Attached Stor
     </h2>
   </header>
   <div class="entry-content">
-    <p>RPI 5 on Ubuntu 24.04 (headless): Connect to WiFi / Mobile Hotspot Introduction In my free time, I enjoy tinkering with my home lab, exploring new projects and challenges. Recently, I decided to connect my Raspberry Pi 5 to a mobile hotspot—a seemingly straightforward task. However, it turned out not so smooth. In this post, I’ll walk you through how I resolved the error brcmfmac: brcmf_set_channel: set chanspec fail, reason -52 and successfully connected Raspberry Pi to a mobile hotspot....</p>
+    <p>RPI 5 on Ubuntu 24.04 (headless): Connect to WiFi / Mobile Hotspot Introduction In my free time, I enjoy tinkering with my home lab, exploring new projects and challenges. Recently, I decided to connect my Raspberry Pi 5 to a mobile hotspot—a seemingly straightforward task. However, it turned out not so smooth. In this post, I’ll walk you through how I resolved the error brcmfmac: brcmf_set_channel: set chanspec fail, reason -52 and successfully connected Raspberry Pi to a mobile hotspot.
+...</p>
   </div>
   <footer class="entry-footer"><span title='2024-05-25 11:28:58 +0200 CEST'>May 25, 2024</span>&nbsp;·&nbsp;3 min</footer>
   <a class="entry-link" aria-label="post link to RPI 5 on Ubuntu 24.04 (Headless): Connect to WiFi / Mobile Hotspot" href="https://juliakostrikova.com/posts/homelab/mobile-hotspot-on-rpi5/"></a>
@@ -229,7 +238,7 @@ UDM SE: UniFi Dream Machine Special Edition. Synology NAS: Network Attached Stor
     </main>
     
 <footer class="footer">
-    <span>&copy; 2025 <a href="https://juliakostrikova.com">Yuliia Kostrikova</a></span>
+    <span>&copy; 2026 <a href="https://juliakostrikova.com/">Yuliia Kostrikova</a></span>
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

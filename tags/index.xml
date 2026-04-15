@@ -6,39 +6,7 @@
     <description>Recent content in Tags on Yuliia Kostrikova</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Sun, 08 Mar 2026 09:23:03 +0100</lastBuildDate><atom:link href="https://juliakostrikova.com/tags/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Ai</title>
-      <link>https://juliakostrikova.com/tags/ai/</link>
-      <pubDate>Sun, 08 Mar 2026 09:23:03 +0100</pubDate>
-      <guid>https://juliakostrikova.com/tags/ai/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Aws</title>
-      <link>https://juliakostrikova.com/tags/aws/</link>
-      <pubDate>Sun, 08 Mar 2026 09:23:03 +0100</pubDate>
-      <guid>https://juliakostrikova.com/tags/aws/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Infrastructure</title>
-      <link>https://juliakostrikova.com/tags/infrastructure/</link>
-      <pubDate>Sun, 08 Mar 2026 09:23:03 +0100</pubDate>
-      <guid>https://juliakostrikova.com/tags/infrastructure/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Terraform</title>
-      <link>https://juliakostrikova.com/tags/terraform/</link>
-      <pubDate>Sun, 08 Mar 2026 09:23:03 +0100</pubDate>
-      <guid>https://juliakostrikova.com/tags/terraform/</guid>
-      <description></description>
-    </item>
-    
+    <lastBuildDate>Sun, 08 Jun 2025 00:30:58 +0200</lastBuildDate><atom:link href="https://juliakostrikova.com/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Bare Metal</title>
       <link>https://juliakostrikova.com/tags/bare-metal/</link>
@@ -96,7 +64,7 @@
     </item>
     
     <item>
-      <title>PXE Boot</title>
+      <title>Pxe Boot</title>
       <link>https://juliakostrikova.com/tags/pxe-boot/</link>
       <pubDate>Sun, 08 Jun 2025 00:30:58 +0200</pubDate>
       <guid>https://juliakostrikova.com/tags/pxe-boot/</guid>
@@ -156,6 +124,14 @@
       <link>https://juliakostrikova.com/tags/system-design/</link>
       <pubDate>Sun, 28 Jan 2024 13:05:09 +0100</pubDate>
       <guid>https://juliakostrikova.com/tags/system-design/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Aws</title>
+      <link>https://juliakostrikova.com/tags/aws/</link>
+      <pubDate>Sat, 20 Jan 2024 19:35:26 +0200</pubDate>
+      <guid>https://juliakostrikova.com/tags/aws/</guid>
       <description></description>
     </item>
     
